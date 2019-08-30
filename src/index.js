@@ -157,13 +157,13 @@ class Endb extends EventEmitter {
   has(key) {
     if (key === null || typeof key !== 'string') return null;
     key = this[_prefixKey](key);
-    Promise.resolve()
+    return Promise.resolve()
       .then(() => {
         if (this.options.store instanceof Map) {
           return this.options.store.has(key);
         }
         const data = this.get(key);
-        return !!data;
+        return data ? true : false;
       });
   }
 
