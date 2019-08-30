@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+</head>
+
+<body>
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                    
+                        <img src="./docs/icon.png" alt="logo">
+                    
+                    
+                        <h1 class="navbar-item">Endb</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/endb/endb" target="_blank">GitHub</a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://npmjs.com/package/endb" target="_blank">NPM</a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Endb.html">Endb</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Title</p>
+                        <h1>Home</h1>
+                    </header>
+
+                    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Endb</h1>
+<p><a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="NPM Version"></a>
+<a href="https://travis-ci.org/enhancd/endb"><img src="https://travis-ci.org/enhancd/endb.svg?branch=master" alt="Build Status"></a>
+<a href="https://david-dm.org/enhancd/endb"><img src="https://img.shields.io/david/enhancd/endb.svg?maxAge=3600" alt="NPM Dependencies"></a>
+<a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="NPM Downloads"></a>
+<a href="https://github.com/enhancd/endb"><img src="https://badgen.net/github/stars/enhancd/endb" alt="GitHub Stars"></a>
+<a href="https://github.com/enhancd/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/enhancd/endb" alt="License"></a>
+<a href="https://www.patreon.com/endb"><img src="https://img.shields.io/badge/donate-patreon-F96854.svg" alt="Patreon"></a></p>
+<p>Simple key-value database with cache and multi adapter support.
+Supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.</p>
+<p>New to Endb? Check out the <a href="https://endb.js.org">API Reference</a></p>
+<ul>
+<li>High performance, efficiency, and simplicity</li>
+<li>Simple <a href="#Usage">Promise-based API</a></li>
+<li>Suitable as cache or persistent database</li>
+<li>Supports <a href="#Usage">adapters</a> &amp; <a href="#Namespaces">namespaces</a></li>
+<li>Handles all JSON types including Buffer</li>
+</ul>
+<h2>Installation</h2>
+<pre class="prettyprint source lang-bash"><code>npm install --save endb
+</code></pre>
+<p>By default, data is stored in the memory. You can optionally install an adapter.</p>
+<pre class="prettyprint source lang-bash"><code>$ npm install --save level # LevelDB
+$ npm install --save mongojs # MongoDB
+$ npm install --save redis
+
+# To use SQL database, install an additional 'sql' package and the adapter
+$ npm install --save sql
+
+$ npm install --save mysql2 # MySQL
+$ npm install --save pg # PostgreSQL
+$ npm install --save sqlite3 # SQLite
+</code></pre>
+<h2>Usage</h2>
+<pre class="prettyprint source lang-js"><code>const Endb = require('endb');
+
+// Supported Adapters
+const endb = new Endb();
+const endb = new Endb('leveldb://path/to/database');
+const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
+const endb = new Endb('mysql://user:pass@localhost:3306/dbname');
+const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
+const endb = new Endb('redis://user:pass@localhost:6379');
+const endb = new Endb('sqlite://path/to/database.sqlite');
+
+// Handles database connection error
+endb.on('error', err => console.log('Connection Error: ', err));
+
+await endb.set('foo', 'bar'); // true
+await endb.get('foo'); // 'bar'
+await endb.get('foo', { raw: true }); // { value: 'bar' }
+await endb.has('foo'); // true
+await endb.has('bar'); // false
+await endb.delete('foo'); // true
+await endb.clear(); // undefined
+</code></pre>
+<h2>Namespaces</h2>
+<p>You can set a namespace to avoid key collisions and namespaces allow you to clear only a certain namespace while using the same database.</p>
+<pre class="prettyprint source lang-js"><code>const users = new Endb('redis://user:pass@localhost:6379', { namespace: 'users' });
+const cache = new Endb('redis://user:pass@localhost:6379', { namespace: 'cache' });
+
+await users.set('foo', 'users'); // true
+await cache.set('foo', 'cache'); // true
+await users.get('foo'); // 'users'
+await cache.get('foo'); // 'cache'
+await users.clear(); // undefined
+await users.get('foo'); // undefined
+await cache.get('foo'); // 'cache'
+</code></pre>
+<h2>Custom Serializers</h2>
+<p>It uses JSON buffer for serialization and derialization of data to ensure consistency.
+You can optionally pass your own (de)serialization functions to support extra data types or to (de)serialize to something other than JSON.</p>
+<pre class="prettyprint source lang-js"><code>const db = new Endb({
+    serialize: JSON.stringify,
+    deserialize: JSON.parse
+});
+</code></pre>
+<h2>Third-party Adapters</h2>
+<p>You can also use third-party adapters or build &amp; integrate your own.
+It will integrate these adapters and handle complex types internally.</p>
+<pre class="prettyprint source lang-js"><code>const custom = require('./custom');
+const endb = new Endb({ store: custom });
+</code></pre>
+<p>For instance, <a href="https://github.com/sindresorhus/quick-lru"><code>quick-lru</code></a> is compatible with Endb since it implements Map.</p>
+<pre class="prettyprint source lang-js"><code>const QuickLRU = require('quick-lru');
+const endb = new Endb({ store: new QuickLRU({ maxSize: 1000 }) });
+</code></pre>
+<p>The following are third-party adapters compatible:</p>
+<ul>
+<li><a href="https://github.com/sindresorhus/quick-lru">quick-lru</a> - Simple &quot;Least Recently Used&quot; (LRU) cache</li>
+<li>To include your own third-party adapter here, open a pull-request</li>
+</ul>
+<h2>License</h2>
+<p>Copyright (c) enhancd. All rights reserved.</p>
+<p>Licensed under the <a href="https://github.com/enhancd/endb/blob/master/LICENSE">MIT</a> license.</p></article>
+    </section>
+
+
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script> prettyPrint(); </script>
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
