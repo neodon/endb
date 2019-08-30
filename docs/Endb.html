@@ -1285,7 +1285,14 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);Endb.set('userExists', true).then(console.log).catch(console.error);Endb.set('profile', {  id: 1234567890,  username: 'user',  description: 'A test user',  verified: true}).then(console.log).catch(console.error);</code></pre>
+    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
+Endb.set('userExists', true).then(console.log).catch(console.error);
+Endb.set('profile', {
+  id: 1234567890,
+  username: 'user',
+  description: 'A test user',
+  verified: true
+}).then(console.log).catch(console.error);</code></pre>
 
 
 </div>
@@ -1743,7 +1750,18 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const endb = new Endb(); // Memoryconst endb = new Endb({    namespace: 'endb',    serialize: JSON.stringify,    deserialize: JSON.parse});const endb = new Endb('leveldb://path/to/database');const endb = new Endb('redis://user:pass@localhost:6379');const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');const endb = new Endb('sqlite://path/to/database.sqlite');const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
+    <pre class="prettyprint"><code>const endb = new Endb(); // Memory
+const endb = new Endb({
+    namespace: 'endb',
+    serialize: JSON.stringify,
+    deserialize: JSON.parse
+});
+const endb = new Endb('leveldb://path/to/database');
+const endb = new Endb('redis://user:pass@localhost:6379');
+const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
+const endb = new Endb('sqlite://path/to/database.sqlite');
+const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
+const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
 
 </div>
@@ -2841,7 +2859,14 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);Endb.set('userExists', true).then(console.log).catch(console.error);Endb.set('profile', {  id: 1234567890,  username: 'user',  description: 'A test user',  verified: true}).then(console.log).catch(console.error);</code></pre>
+    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
+Endb.set('userExists', true).then(console.log).catch(console.error);
+Endb.set('profile', {
+  id: 1234567890,
+  username: 'user',
+  description: 'A test user',
+  verified: true
+}).then(console.log).catch(console.error);</code></pre>
 
 
 </div>
