@@ -196,6 +196,11 @@ class Endb extends EventEmitter {
     if (key === null) return null;
     return this.options.namespace ? `${this.options.namespace}:${key}` : key;
   }
+
+  [_removePrefixKey](key) {
+    if (key === null) return null;
+    return this.options.namespace ? key.replace(`${this.options.namespace}:`, '') : key;
+  }
 }
 
 module.exports = Endb;
