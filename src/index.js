@@ -2,7 +2,8 @@
 
 const EventEmitter = require('events');
 const { parse, stringify } = require('./util');
-const _prefixKey = Symbol('prefixKey');
+const _addKeyPrefix = Symbol('addKeyPrefix');
+const _removeKeyPrefix = Symbol('removeKeyPrefix');
 const load = (options = {}) => {
   const adapters = {
     level: './adapters/leveldb',
@@ -119,7 +120,7 @@ class Endb extends EventEmitter {
      */
   delete(key) {
     if (key === null || typeof key !== 'string') return null;
-    key = this[_prefixKey](key);
+    key = this[_addKeyPrefix](key);
     return Promise.resolve()
       .then(() => this.options.store.delete(key));
   }
@@ -135,7 +136,7 @@ class Endb extends EventEmitter {
      */
   get(key, options = {}) {
     if (key === null || typeof key !== 'string') return null;
-    key = this[_prefixKey](key);
+    key = this[_addKeyPrefix](key);
     return Promise.resolve()
       .then(() => this.options.store.get(key))
       .then(data => {
@@ -156,7 +157,7 @@ class Endb extends EventEmitter {
      */
   has(key) {
     if (key === null || typeof key !== 'string') return null;
-    key = this[_prefixKey](key);
+    key = this[_addKeyPrefix](key);
     return Promise.resolve()
       .then(() => {
         if (this.options.store instanceof Map) {
@@ -184,7 +185,7 @@ class Endb extends EventEmitter {
      */
   set(key, value) {
     if (key === null || typeof key !== 'string') return null;
-    key = this[_prefixKey](key);
+    key = this[_addKeyPrefix](key);
     return Promise.resolve()
       .then(() => {
         return this.options.store.set(key, this.options.serialize({ value }));
@@ -192,12 +193,12 @@ class Endb extends EventEmitter {
       .then(() => true);
   }
 
-  [_prefixKey](key) {
+  [_addKeyPrefix](key) {
     if (key === null) return null;
     return this.options.namespace ? `${this.options.namespace}:${key}` : key;
   }
 
-  [_removePrefixKey](key) {
+  [_removeKeyPrefix](key) {
     if (key === null) return null;
     return this.options.namespace ? key.replace(`${this.options.namespace}:`, '') : key;
   }
