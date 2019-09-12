@@ -6,7 +6,6 @@
 [![NPM Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
 [![GitHub Stars](https://badgen.net/github/stars/enhancd/endb)](https://github.com/enhancd/endb)
 [![License](https://badgen.net/github/license/enhancd/endb)](https://github.com/enhancd/endb/blob/master/LICENSE)
-[![Patreon](https://img.shields.io/badge/donate-patreon-F96854.svg)](https://www.patreon.com/endb)
 
 Simple key-value database with cache and multi adapter support.
 Supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
