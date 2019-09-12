@@ -1,9 +1,8 @@
 'use strict';
 
-const { promisify } = require('util');
 const { safeRequire } = require('../Util');
-const EndbSql = require('./sql');
 const { Database } = safeRequire('sqlite3');
+const EndbSql = require('./sql');
 
 class EndbSqlite extends EndbSql {
   constructor(options = {}) {
@@ -23,7 +22,7 @@ class EndbSqlite extends EndbSql {
           resolve(db);
         }
       });
-    }).then(db => promisify(db.all).bind(db));
+    }).then(db => require('util').promisify(db.all).bind(db));
     super(options);
   }
 }

@@ -1,9 +1,9 @@
 'use strict';
 
-const test = require('ava');
-const Endb = require('../src/index');
+import { serial } from 'ava';
+import { Endb } from '../src/index';
 
-test.serial('Custom Serializers', async t => {
+serial('Custom Serializers', async t => {
   t.plan(2);
   const endb = new Endb({
     store: new Map(),

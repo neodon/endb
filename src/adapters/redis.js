@@ -1,7 +1,6 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { promisify } = require('util');
 const { safeRequire } = require('../Util');
 const { createClient } = safeRequire('redis');
 
@@ -14,7 +13,7 @@ class EndbRedis extends EventEmitter {
     }
     const client = createClient(options);
     this.db = ['get', 'keys', 'set', 'sadd', 'del', 'srem', 'smembers'].reduce((obj, method) => {
-      obj[method] = promisify(client[method].bind(client));
+      obj[method] = require('util').promisify(client[method].bind(client));
       return obj;
     }, {});
     client.on('error', (err) => this.emit('error', err));

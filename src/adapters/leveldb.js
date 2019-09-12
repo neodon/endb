@@ -1,7 +1,6 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { promisify } = require('util');
 const { safeRequire } = require('../Util');
 const Level = safeRequire('level');
 
@@ -17,7 +16,7 @@ class EndbLevel extends EventEmitter {
         });
         this.db = ['del', 'createKeyStream', 'createReadStream', 'get', 'put', 'close']
             .reduce((obj, method) => {
-                obj[method] = promisify(level[method].bind(level));
+                obj[method] = require('util').promisify(level[method].bind(level));
                 return obj;
             }, {});
     }

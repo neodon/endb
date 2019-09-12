@@ -1,9 +1,9 @@
 'use strict';
 
-const test = require('ava');
-const Endb = require('../src/index');
+import { serial } from 'ava';
+import { Endb } from '../src/index';
 
-test.serial('Raw Value', async t => {
+serial('Raw Value', async t => {
   const endb = new Endb();
   t.is(await endb.set('foo', 'bar'), true);
   t.is(await endb.get('foo'), 'bar');

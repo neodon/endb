@@ -1,7 +1,6 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { promisify } = require('util');
 const { safeRequire } = require('../Util');
 const mongojs = safeRequire('mongojs');
 
@@ -26,7 +25,7 @@ class EndbMongo extends EventEmitter {
       background: true,
     });
     this.db = ['update', 'find', 'findOne', 'remove'].reduce((obj, method) => {
-      obj[method] = promisify(collection[method].bind(collection));
+      obj[method] = require('util').promisify(collection[method].bind(collection));
       return obj;
     }, {});
     mongo.on('error', err => this.emit('error', err));

@@ -1,9 +1,9 @@
 'use strict';
 
-const test = require('ava');
-const Endb = require('../src/index');
+import { serial } from 'ava';
+import { Endb } from '../src/index';
 
-test.serial('Class', t => {
+serial('Class', t => {
   t.is(typeof Endb, 'function');
   t.throws(() => Endb());
   t.notThrows(() => new Endb());

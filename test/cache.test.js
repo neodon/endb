@@ -1,9 +1,9 @@
 'use strict';
 
-const test = require('ava');
-const Endb = require('../src/index');
+import { serial } from 'ava';
+import { Endb } from '../src/index';
 
-test.serial('Adapters (Cache)', async t => {
+serial('Adapters (Cache)', async t => {
   const store = new Map();
   const endb = new Endb({ store });
   t.is(store.size, 0);
