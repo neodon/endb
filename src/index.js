@@ -1,7 +1,28 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { addKeyPrefix, removeKeyPrefix, load, parse, stringify } = require('./Util');
+const { addKeyPrefix, parse, stringify } = require('./Util');
+const load = (options = {}) => {
+    const adapters = {
+        level: './adapters/leveldb',
+        leveldb: './adapters/leveldb',
+        mongo: './adapters/mongodb',
+        mongodb: './adapters/mongodb',
+        mysql: './adapters/mysql',
+        postgres: './adapters/postgres',
+        postgresql: './adapters/postgres',
+        redis: './adapters/redis',
+        sqlite: './adapters/sqlite',
+        sqlite3: './adapters/sqlite',
+    };
+    if (options.adapter || options.uri) {
+        const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
+        if (adapters[adapter] !== undefined) {
+            return new(require(adapters[adapter]))(options);
+        }
+    }
+    return new Map();
+};
 
 /**
  * @class Endb
@@ -101,7 +122,7 @@ class Endb extends EventEmitter {
      */
     delete(key) {
         if (typeof key !== 'string') return null;
-        key = addKeyPrefix(key);
+        key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => this.options.store.delete(key));
     }
@@ -117,7 +138,7 @@ class Endb extends EventEmitter {
      */
     get(key, options = {}) {
         if (typeof key !== 'string') return null;
-        key = addKeyPrefix(key);
+        key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => this.options.store.get(key))
             .then(data => {
@@ -138,7 +159,7 @@ class Endb extends EventEmitter {
      */
     has(key) {
         if (typeof key !== 'string') return null;
-        key = addKeyPrefix(key);
+        key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => {
                 if (this.options.store instanceof Map) {
@@ -166,7 +187,7 @@ class Endb extends EventEmitter {
      */
     set(key, value) {
         if (typeof key !== 'string') return null;
-        key = addKeyPrefix(key);
+        key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => {
                 return this.options.store.set(key, this.options.serialize({ value }));

@@ -1,0 +1,24 @@
+# Dependency directories
+node_modules/
+jspm_packages/
+bower_components
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Miscellaneous
+.tmp/
+docs/
+.jsdoc.json
+.eslintrc.js
+.travis.yml
+
+# Git
+.github/
+.gitattributes
+.gitignore
+.nojekyll

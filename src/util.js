@@ -1,10 +1,6 @@
 'use strict';
 
 class Util {
-    constructor() {
-        throw new Error('Util class cannot be constructed');
-    }
-
     static safeRequire(id) {
         try {
             return require(id);
@@ -50,36 +46,14 @@ class Util {
         return (typeof x === 'object' && x !== null && x.type === 'Buffer' && (Array.isArray(x.data) || typeof x.data === 'string'));
     }
 
-    static load(options = {}) {
-        const adapters = {
-            level: './adapters/leveldb',
-            leveldb: './adapters/leveldb',
-            mongo: './adapters/mongodb',
-            mongodb: './adapters/mongodb',
-            mysql: './adapters/mysql',
-            postgres: './adapters/postgres',
-            postgresql: './adapters/postgres',
-            redis: './adapters/redis',
-            sqlite: './adapters/sqlite',
-            sqlite3: './adapters/sqlite',
-        };
-        if (options.adapter || options.uri) {
-            const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
-            if (adapters[adapter] !== undefined) {
-                return new(require(adapters[adapter]))(options);
-            }
-        }
-        return new Map();
+    static addKeyPrefix({ key, namespace }) {
+        if (key === null) return null;
+        return namespace ? `${namespace}:${key}` : key;
     }
 
-    static addKeyPrefix(key) {
+    static removeKeyPrefix({ key, namespace }) {
         if (key === null) return null;
-        return this.options.namespace ? `${this.options.namespace}:${key}` : key;
-    }
-
-    static removeKeyPrefix(key) {
-        if (key === null) return null;
-        return this.options.namespace ? key.replace(`${this.options.namespace}:`, '') : key;
+        return namespace ? key.replace(`${namespace}:`, '') : key;
     }
 }
 
