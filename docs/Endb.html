@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <title>JSDoc: Endb</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -23,10 +24,10 @@
         <div class="container">
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
-                    
+                     
                         <img src="./docs/icon.png" alt="logo">
                     
-                    
+                     
                         <h1 class="navbar-item">Endb</h1>
                     
                     <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
@@ -35,7 +36,7 @@
                         <span aria-hidden="true"></span>
                     </a>
                 </div>
-                
+                 
                 <div class="navbar-menu">
                     <div class="navbar-end">
                     
@@ -68,7 +69,7 @@
                         <p>Class</p>
                         <h1>Endb</h1>
                     </header>
-
+                    
                     
 
 
@@ -118,6 +119,8 @@
 
 
 
+
+
 <dl class="details">
 
     
@@ -153,7 +156,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line6">line 6</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line27">line 27</a>
             </span>
         </p>
     
@@ -248,6 +251,8 @@
 
 
 
+
+
 <dl class="details">
 
     
@@ -283,7 +288,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line61">line 61</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line82">line 82</a>
             </span>
         </p>
     
@@ -336,7 +341,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -360,6 +367,8 @@
         <p>Deletes all the elements (keys and values) from the database.</p>
     </div>
     
+
+
 
 
 
@@ -408,7 +417,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line86">line 86</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line107">line 107</a>
             </span>
         </p>
     
@@ -461,7 +470,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.clear().then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.clear().then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -485,6 +496,8 @@
         <p>Deletes an element (key and value) from the database.</p>
     </div>
     
+
+
 
 
 
@@ -583,7 +596,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line102">line 102</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line123">line 123</a>
             </span>
         </p>
     
@@ -636,7 +649,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -660,6 +675,8 @@
         <p>Gets an element (key and value) specified from the database.</p>
     </div>
     
+
+
 
 
 
@@ -857,7 +874,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line118">line 118</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
             </span>
         </p>
     
@@ -910,7 +927,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -934,6 +953,8 @@
         <p>Checks if the database has the element.</p>
     </div>
     
+
+
 
 
 
@@ -1032,7 +1053,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line160">line 160</a>
             </span>
         </p>
     
@@ -1085,7 +1106,9 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -1109,6 +1132,8 @@
         <p>Sets an element (key and a value) to the database.</p>
     </div>
     
+
+
 
 
 
@@ -1232,7 +1257,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line167">line 167</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line188">line 188</a>
             </span>
         </p>
     
@@ -1285,7 +1310,8 @@
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
+    
+        <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
 Endb.set('userExists', true).then(console.log).catch(console.error);
 Endb.set('profile', {
   id: 1234567890,
@@ -1293,6 +1319,7 @@ Endb.set('profile', {
   description: 'A test user',
   verified: true
 }).then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -1343,6 +1370,8 @@ Endb.set('profile', {
 
     
     
+
+
 
 
 
@@ -1722,7 +1751,7 @@ Endb.set('profile', {
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line38">line 38</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line59">line 59</a>
             </span>
         </p>
     
@@ -1750,7 +1779,8 @@ Endb.set('profile', {
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>const endb = new Endb(); // Memory
+    
+        <pre class="prettyprint"><code>const endb = new Endb(); // Memory
 const endb = new Endb({
     namespace: 'endb',
     serialize: JSON.stringify,
@@ -1762,6 +1792,7 @@ const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
 const endb = new Endb('sqlite://path/to/database.sqlite');
 const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
 const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
+    
 
 
 </div>
@@ -1822,6 +1853,8 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
 
 
+
+
 <dl class="details">
 
     
@@ -1857,7 +1890,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line61">line 61</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line82">line 82</a>
             </span>
         </p>
     
@@ -1910,7 +1943,9 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -1934,6 +1969,8 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p>Deletes all the elements (keys and values) from the database.</p>
     </div>
     
+
+
 
 
 
@@ -1982,7 +2019,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line86">line 86</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line107">line 107</a>
             </span>
         </p>
     
@@ -2035,7 +2072,9 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.clear().then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.clear().then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -2059,6 +2098,8 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p>Deletes an element (key and value) from the database.</p>
     </div>
     
+
+
 
 
 
@@ -2157,7 +2198,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line102">line 102</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line123">line 123</a>
             </span>
         </p>
     
@@ -2210,7 +2251,9 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -2234,6 +2277,8 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p>Gets an element (key and value) specified from the database.</p>
     </div>
     
+
+
 
 
 
@@ -2431,7 +2476,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line118">line 118</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
             </span>
         </p>
     
@@ -2484,7 +2529,9 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -2508,6 +2555,8 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p>Checks if the database has the element.</p>
     </div>
     
+
+
 
 
 
@@ -2606,7 +2655,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line160">line 160</a>
             </span>
         </p>
     
@@ -2659,7 +2708,9 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);</code></pre>
+    
+        <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -2683,6 +2734,8 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p>Sets an element (key and a value) to the database.</p>
     </div>
     
+
+
 
 
 
@@ -2806,7 +2859,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line167">line 167</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line188">line 188</a>
             </span>
         </p>
     
@@ -2859,7 +2912,8 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
+    
+        <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
 Endb.set('userExists', true).then(console.log).catch(console.error);
 Endb.set('profile', {
   id: 1234567890,
@@ -2867,6 +2921,7 @@ Endb.set('profile', {
   description: 'A test user',
   verified: true
 }).then(console.log).catch(console.error);</code></pre>
+    
 
 
 </div>
@@ -2890,7 +2945,16 @@ Endb.set('profile', {
         </div>
     </div>
 
-<script> prettyPrint(); </script>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Sep 12 2019 20:02:26 GMT+0400 (Gulf Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
+</footer>
+
 <script src="scripts/app.min.js"></script>
 <script src="scripts/linenumber.js"> </script>
 </body>
