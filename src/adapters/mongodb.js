@@ -2,7 +2,7 @@
 
 const EventEmitter = require('events');
 const { promisify } = require('util');
-const { safeRequire } = require('../util');
+const { safeRequire } = require('../Util');
 const mongojs = safeRequire('mongojs');
 
 class EndbMongo extends EventEmitter {

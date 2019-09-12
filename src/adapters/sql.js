@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { parse, safeRequire } = require('../util');
+const { parse, safeRequire } = require('../Util');
 const { Sql } = safeRequire('sql');
 
 class EndbSql extends EventEmitter {

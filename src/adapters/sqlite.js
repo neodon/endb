@@ -1,7 +1,7 @@
 'use strict';
 
 const { promisify } = require('util');
-const { safeRequire } = require('../util');
+const { safeRequire } = require('../Util');
 const EndbSql = require('./sql');
 const { Database } = safeRequire('sqlite3');
 
