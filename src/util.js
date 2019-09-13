@@ -5,8 +5,7 @@ class Util {
         try {
             return require(id);
         } catch (err) {
-            console.error('\x1b[2m\x1b[32m%s\x1b[0m',
-                `To continue, you'll have to install ${id}. Run "npm install ${id}" to install it.`);
+            console.error('\x1b[2m\x1b[32m%s\x1b[0m', `To continue, you'll have to install ${id}. Run "npm install ${id}" to install it.`);
             return false;
         }
     }

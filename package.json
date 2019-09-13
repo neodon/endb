@@ -4,7 +4,7 @@
     "description": "Simple key-value database with cache and multi adapter support.",
     "main": "src/index.js",
     "scripts": {
-        "test": "ava --serial",
+        "test": "npx ava --serial",
         "lint": "eslint src",
         "docs": "jsdoc -c .jsdoc.json",
         "prepublishOnly": "npm run test"
@@ -30,13 +30,6 @@
         "ava": "^2.3.0",
         "better-docs": "^1.1.6",
         "eslint": "^6.2.2",
-        "jsdoc": "^3.6.3",
-        "level": "^5.0.1",
-        "mongojs": "^2.6.0",
-        "mysql2": "^1.7.0",
-        "pg": "^7.12.1",
-        "redis": "^2.8.0",
-        "sql": "^0.78.0",
-        "sqlite3": "^4.1.0"
+        "jsdoc": "^3.6.3"
     }
 }

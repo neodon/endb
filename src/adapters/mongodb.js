@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { safeRequire } = require('../Util');
+const { safeRequire } = require('../util');
 const mongojs = safeRequire('mongojs');
 
 class EndbMongo extends EventEmitter {

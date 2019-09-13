@@ -1,6 +1,6 @@
 'use strict';
 
-const { safeRequire } = require('../Util');
+const { safeRequire } = require('../util');
 const { Database } = safeRequire('sqlite3');
 const EndbSql = require('./sql');
 

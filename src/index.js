@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { addKeyPrefix, parse, stringify } = require('./Util');
+const { addKeyPrefix, parse, stringify } = require('./util');
 const load = (options = {}) => {
     const adapters = {
         level: './adapters/leveldb',
@@ -18,7 +18,7 @@ const load = (options = {}) => {
     if (options.adapter || options.uri) {
         const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
         if (adapters[adapter] !== undefined) {
-            return new(require(adapters[adapter]))(options);
+            return new (require(adapters[adapter]))(options);
         }
     }
     return new Map();
@@ -204,4 +204,4 @@ module.exports.MySQL = require('./adapters/mysql');
 module.exports.Postgres = require('./adapters/postgres');
 module.exports.Redis = require('./adapters/redis');
 module.exports.SQLite = require('./adapters/sqlite');
-module.exports.Util = require('./Util');
+module.exports.util = require('./util');

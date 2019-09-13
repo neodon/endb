@@ -1,7 +1,7 @@
 'use strict';
 
 const EndbSql = require('./sql');
-const { safeRequire } = require('../Util');
+const { safeRequire } = require('../util');
 const { Pool } = safeRequire('pg');
 
 class EndbPostgres extends EndbSql {
