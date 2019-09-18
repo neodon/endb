@@ -156,7 +156,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line27">line 27</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line6">line 6</a>
             </span>
         </p>
     
@@ -218,6 +218,241 @@
         <div class='vertical-section'>
             <h3 class="title"><span>Methods</span></h3>
             <div class="members">
+            
+                <div class="member">
+
+    
+    <h4 class="name" id=".multi">
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            multi<span class="signature">(names, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object.&lt;<a href="Endb.html">Endb</a>>}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary">Creates multiple instances of Endb.</p>
+    
+    
+    <div class="description">
+        <p>Creates multiple instances of Endb.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>names</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;string></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>An array of strings. Each element will create new instance.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>The options for the instances.</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line169">line 169</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>An object containing created instances.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Object.&lt;<a href="Endb.html">Endb</a>></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const { users, members } = Endb.multi(['users', 'members']);
+// With options
+const { users, members } = Endb.multi(['users', 'members'], {
+    adapter: 'sqlite'
+});
+
+await users.set('foo', 'bar');
+await members.set('bar', 'foo');</code></pre>
+    
+
+
+</div>
             
                 <div class="member">
 
@@ -288,7 +523,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line82">line 82</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line58">line 58</a>
             </span>
         </p>
     
@@ -319,7 +554,7 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>All the elements.</p></div>
+    <div class='param-desc column is-7'><p>All the elements (keys and values).</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -417,7 +652,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line107">line 107</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line89">line 89</a>
             </span>
         </p>
     
@@ -448,7 +683,7 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>undefined</p></div>
+    <div class='param-desc column is-7'><p>Returns undefined</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -596,7 +831,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line123">line 123</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line105">line 105</a>
             </span>
         </p>
     
@@ -668,11 +903,11 @@
     
 
     
-    <p class="summary">Gets an element (key and value) specified from the database.</p>
+    <p class="summary">Gets an element (key and value) from the database.</p>
     
     
     <div class="description">
-        <p>Gets an element (key and value) specified from the database.</p>
+        <p>Gets an element (key and value) from the database.</p>
     </div>
     
 
@@ -874,7 +1109,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line121">line 121</a>
             </span>
         </p>
     
@@ -946,11 +1181,11 @@
     
 
     
-    <p class="summary">Checks if the database has the element.</p>
+    <p class="summary">Checks if the database has an element (key and value).</p>
     
     
     <div class="description">
-        <p>Checks if the database has the element.</p>
+        <p>Checks if the database has an element (key and value).</p>
     </div>
     
 
@@ -1053,7 +1288,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line160">line 160</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line141">line 141</a>
             </span>
         </p>
     
@@ -1084,7 +1319,7 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>Whether or not, the element exists</p></div>
+    <div class='param-desc column is-7'><p>Whether or not, the element exists in the database.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1257,7 +1492,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line188">line 188</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
             </span>
         </p>
     
@@ -1751,7 +1986,7 @@ Endb.set('profile', {
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line59">line 59</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line38">line 38</a>
             </span>
         </p>
     
@@ -1824,6 +2059,241 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
                 <div class="member">
 
     
+    <h4 class="name" id=".multi">
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            multi<span class="signature">(names, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object.&lt;<a href="Endb.html">Endb</a>>}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary">Creates multiple instances of Endb.</p>
+    
+    
+    <div class="description">
+        <p>Creates multiple instances of Endb.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>names</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;string></span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>An array of strings. Each element will create new instance.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>The options for the instances.</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line169">line 169</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>An object containing created instances.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Object.&lt;<a href="Endb.html">Endb</a>></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const { users, members } = Endb.multi(['users', 'members']);
+// With options
+const { users, members } = Endb.multi(['users', 'members'], {
+    adapter: 'sqlite'
+});
+
+await users.set('foo', 'bar');
+await members.set('bar', 'foo');</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+    
     <h4 class="name" id="all">
         
         <span class="code-name">
@@ -1890,7 +2360,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line82">line 82</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line58">line 58</a>
             </span>
         </p>
     
@@ -1921,7 +2391,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>All the elements.</p></div>
+    <div class='param-desc column is-7'><p>All the elements (keys and values).</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -2019,7 +2489,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line107">line 107</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line89">line 89</a>
             </span>
         </p>
     
@@ -2050,7 +2520,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>undefined</p></div>
+    <div class='param-desc column is-7'><p>Returns undefined</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -2198,7 +2668,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line123">line 123</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line105">line 105</a>
             </span>
         </p>
     
@@ -2270,11 +2740,11 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
     
 
     
-    <p class="summary">Gets an element (key and value) specified from the database.</p>
+    <p class="summary">Gets an element (key and value) from the database.</p>
     
     
     <div class="description">
-        <p>Gets an element (key and value) specified from the database.</p>
+        <p>Gets an element (key and value) from the database.</p>
     </div>
     
 
@@ -2476,7 +2946,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line139">line 139</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line121">line 121</a>
             </span>
         </p>
     
@@ -2548,11 +3018,11 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
     
 
     
-    <p class="summary">Checks if the database has the element.</p>
+    <p class="summary">Checks if the database has an element (key and value).</p>
     
     
     <div class="description">
-        <p>Checks if the database has the element.</p>
+        <p>Checks if the database has an element (key and value).</p>
     </div>
     
 
@@ -2655,7 +3125,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line160">line 160</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line141">line 141</a>
             </span>
         </p>
     
@@ -2686,7 +3156,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'><p>Whether or not, the element exists</p></div>
+    <div class='param-desc column is-7'><p>Whether or not, the element exists in the database.</p></div>
     
     
     <div class='column is-5 has-text-left'>
@@ -2859,7 +3329,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line188">line 188</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
             </span>
         </p>
     
@@ -2947,7 +3417,7 @@ Endb.set('profile', {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Sep 12 2019 20:02:26 GMT+0400 (Gulf Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Sep 18 2019 17:17:38 GMT+0400 (Gulf Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
