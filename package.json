@@ -4,7 +4,7 @@
     "description": "Simple key-value database with cache and multi adapter support.",
     "main": "src/index.js",
     "scripts": {
-        "test": "npx ava --serial",
+        "test": "ava --serial",
         "lint": "eslint src",
         "docs": "jsdoc -c .jsdoc.json",
         "prepublishOnly": "npm run test"

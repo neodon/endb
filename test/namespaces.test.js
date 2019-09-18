@@ -1,7 +1,7 @@
 'use strict';
 
 import { serial } from 'ava';
-import { Endb } from '../src/index';
+import Endb from '../src/index';
 
 serial('Namespaces', async t => {
   const endb1 = new Endb({

@@ -14,7 +14,7 @@ yarn-error.log*
 .tmp/
 docs/
 .jsdoc.json
-.eslintrc.js
+.eslintrc.json
 .travis.yml
 
 # Git

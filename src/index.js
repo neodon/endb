@@ -1,28 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { addKeyPrefix, parse, stringify } = require('./util');
-const load = (options = {}) => {
-    const adapters = {
-        level: './adapters/leveldb',
-        leveldb: './adapters/leveldb',
-        mongo: './adapters/mongodb',
-        mongodb: './adapters/mongodb',
-        mysql: './adapters/mysql',
-        postgres: './adapters/postgres',
-        postgresql: './adapters/postgres',
-        redis: './adapters/redis',
-        sqlite: './adapters/sqlite',
-        sqlite3: './adapters/sqlite',
-    };
-    if (options.adapter || options.uri) {
-        const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
-        if (adapters[adapter] !== undefined) {
-            return new (require(adapters[adapter]))(options);
-        }
-    }
-    return new Map();
-};
+const { addKeyPrefix, parse, stringify, load } = require('./util');
 
 /**
  * @class Endb
@@ -63,19 +42,16 @@ class Endb extends EventEmitter {
             serialize: stringify,
             deserialize: parse,
         }, (typeof uri === 'string') ? { uri } : uri, options);
-        if (!this.options.store) {
-            const opts = Object.assign({}, this.options);
-            this.options.store = load(opts);
-        }
-        if (typeof this.options.store.on === 'function') {
+        if (!this.options.store)
+            this.options.store = load(Object.assign({}, this.options));
+        if (typeof this.options.store.on === 'function')
             this.options.store.on('error', err => this.emit('error', err));
-        }
         this.options.store.namespace = this.options.namespace;
     }
 
     /**
      * Gets all the elements (keys and values) from the database.
-     * @returns {Promise<Object|any[]>} All the elements.
+     * @returns {Promise<Object|any[]>} All the elements (keys and values).
      * @example
      * Endb.all().then(console.log).catch(console.error);
      */
@@ -83,12 +59,11 @@ class Endb extends EventEmitter {
         return Promise.resolve()
             .then(() => {
                 if (this.options.store instanceof Map) {
-                    const array = [];
+                    const obj = {};
                     for (const [key, value] of this.options.store) {
-                        const data = { key, value: this.options.deserialize(value).value };
-                        array.push(data);
+                        obj[key] = this.options.deserialize(value).value;
                     }
-                    return array;
+                    return obj;
                 }
                 return this.options.store.all();
             })
@@ -98,9 +73,16 @@ class Endb extends EventEmitter {
             });
     }
 
+    async add(key, value) {
+        let fetched = await this.get(key);
+        if (!fetched) fetched = 0;
+        if (isNaN(value)) throw new TypeError('Value is not a number.');
+        return await this.set(key, parseInt(fetched, 10) + parseInt(value, 10));
+    }
+
     /**
      * Deletes all the elements (keys and values) from the database.
-     * @returns {Promise<void>} undefined
+     * @returns {Promise<void>} Returns undefined
      * @example
      * Endb.clear().then(console.log).catch(console.error);
      */
@@ -121,14 +103,14 @@ class Endb extends EventEmitter {
      * Endb.delete('key').then(console.log).catch(console.error);
      */
     delete(key) {
-        if (typeof key !== 'string') return null;
+        if (typeof key !== 'string') throw new TypeError('Key must be a string');
         key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => this.options.store.delete(key));
     }
 
     /**
-     * Gets an element (key and value) specified from the database.
+     * Gets an element (key and value) from the database.
      * @param {string} key The key of the element.
      * @param {Object} [options={}] The options for the get.
      * @param {boolean} [options.raw=false] Get data as raw or not.
@@ -143,17 +125,16 @@ class Endb extends EventEmitter {
             .then(() => this.options.store.get(key))
             .then(data => {
                 data = typeof data === 'string' ? this.options.deserialize(data) : data;
-                if (data === undefined) {
+                if (data === undefined)
                     return undefined;
-                }
                 return (options && options.raw) ? data : data.value;
             });
     }
 
     /**
-     * Checks if the database has the element.
+     * Checks if the database has an element (key and value).
      * @param {string} key The key of the element.
-     * @returns {Promise<boolean>} Whether or not, the element exists
+     * @returns {Promise<boolean>} Whether or not, the element exists in the database.
      * @example
      * Endb.has('key').then(console.log).catch(console.error);
      */
@@ -168,6 +149,31 @@ class Endb extends EventEmitter {
                 const data = this.get(key);
                 return data ? true : false;
             });
+    }
+
+    /**
+     * Creates multiple instances of Endb.
+     * @param {string[]} names An array of strings. Each element will create new instance.
+     * @param {Object} [options] The options for the instances.
+     * @returns {Object<Endb>} An object containing created instances.
+     * @example
+     * const { users, members } = Endb.multi(['users', 'members']);
+     * // With options
+     * const { users, members } = Endb.multi(['users', 'members'], {
+     *     adapter: 'sqlite'
+     * });
+     *
+     * await users.set('foo', 'bar');
+     * await members.set('bar', 'foo');
+     */
+    static multi(names, options = {}) {
+        if (!names.length || names.length < 1)
+            throw new TypeError('Names must be an array of strings');
+        const instances = {};
+        for (const name of names) {
+            instances[name] = new Endb(options);
+        }
+        return instances;
     }
 
     /**
@@ -194,14 +200,15 @@ class Endb extends EventEmitter {
             })
             .then(() => true);
     }
+
+    async subtract(key, value) {
+        let fetched = await this.get(key);
+        if (!fetched) fetched = 0;
+        if (isNaN(value)) throw new TypeError('Value is not a number.');
+        return await this.set(key, parseInt(fetched, 10) - parseInt(value, 10));
+    }
 }
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.Level = require('./adapters/leveldb');
-module.exports.Mongo = require('./adapters/mongodb');
-module.exports.MySQL = require('./adapters/mysql');
-module.exports.Postgres = require('./adapters/postgres');
-module.exports.Redis = require('./adapters/redis');
-module.exports.SQLite = require('./adapters/sqlite');
 module.exports.util = require('./util');

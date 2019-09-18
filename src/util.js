@@ -5,7 +5,7 @@ class Util {
         try {
             return require(id);
         } catch (err) {
-            console.error('\x1b[2m\x1b[32m%s\x1b[0m', `To continue, you'll have to install ${id}. Run "npm install ${id}" to install it.`);
+            console.error(Util.colorize(`Install ${id} to continue; run "npm install ${id}" to install it.`).cyan);
             return false;
         }
     }
@@ -53,6 +53,54 @@ class Util {
     static removeKeyPrefix({ key, namespace }) {
         if (key === null) return null;
         return namespace ? key.replace(`${namespace}:`, '') : key;
+    }
+
+    static load(options) {
+        const adapters = {
+            level: './adapters/leveldb',
+            leveldb: './adapters/leveldb',
+            mongo: './adapters/mongodb',
+            mongodb: './adapters/mongodb',
+            mysql: './adapters/mysql',
+            postgres: './adapters/postgres',
+            postgresql: './adapters/postgres',
+            redis: './adapters/redis',
+            sqlite: './adapters/sqlite',
+            sqlite3: './adapters/sqlite',
+        };
+        if (options.adapter || options.uri) {
+            const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
+            if (adapters[adapter] !== undefined) {
+                return new(require(adapters[adapter]))(options);
+            }
+        }
+        return new Map();
+    }
+
+    static colorize(content) {
+        const colors = {
+            black: `\x1b[30m${content}\x1b[0m`,
+            red: `\x1b[31m${content}\x1b[0m`,
+            green: `\x1b[32m${content}\x1b[0m`,
+            yellow: `\x1b[33m${content}\x1b[0m`,
+            blue: `\x1b[34m${content}\x1b[0m`,
+            magenta: `\x1b[35m${content}\x1b[0m`,
+            cyan: `\x1b[36m${content}\x1b[0m`,
+            white: `\x1b[37m${content}\x1b[0m`,
+            bgBlack: `\x1b[40m${content}\x1b[0m`,
+            bgRed: `\x1b[41m${content}\x1b[0m`,
+            bgGreen: `\x1b[42m${content}\x1b[0m`,
+            bgYellow: `\x1b[43m${content}\x1b[0m`,
+            bgBlue: `\x1b[44m${content}\x1b[0m`,
+            bgMagenta: `\x1b[45m${content}\x1b[0m`,
+            bgCyan: `\x1b[46m${content}\x1b[0m`,
+            bgWhite: `\x1b[47m${content}\x1b[0m`
+        };
+        return colors;
+    }
+
+    static mapObject(arr, fn) {
+        return (a => ((a = [arr, arr.map(fn)]), a[0].reduce((acc, val, ind) => ((acc[val] = a[1][ind]), acc), {})))();
     }
 }
 
