@@ -1,11 +1,11 @@
 # Endb
 
 [![NPM Version](https://badgen.net/npm/v/endb)](https://www.npmjs.com/package/endb)
-[![Build Status](https://travis-ci.org/enhancd/endb.svg?branch=master)](https://travis-ci.org/enhancd/endb)
-[![NPM Dependencies](https://img.shields.io/david/enhancd/endb.svg?maxAge=3600)](https://david-dm.org/enhancd/endb)
+[![Build Status](https://travis-ci.org/chroventer/endb.svg?branch=master)](https://travis-ci.org/chroventer/endb)
+[![NPM Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
 [![NPM Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
-[![GitHub Stars](https://badgen.net/github/stars/enhancd/endb)](https://github.com/enhancd/endb)
-[![License](https://badgen.net/github/license/enhancd/endb)](https://github.com/enhancd/endb/blob/master/LICENSE)
+[![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
+[![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
 Simple key-value database with cache and multi adapter support.
 Supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
@@ -101,8 +101,3 @@ const endb = new Endb({ store: new QuickLRU({ maxSize: 1000 }) });
 The following are third-party adapters compatible:
 * [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache
 * To include your own third-party adapter here, open a pull-request
-
-## License
-Copyright (c) enhancd. All rights reserved.
-
-Licensed under the [MIT](https://github.com/enhancd/endb/blob/master/LICENSE) license.

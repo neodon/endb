@@ -11,7 +11,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/enhancd/endb.git"
+        "url": "git+https://github.com/chroventer/endb.git"
     },
     "keywords": [
         "database",
@@ -19,10 +19,10 @@
         "adapter",
         "cache"
     ],
-    "author": "enhancd (https://github.com/enhancd)",
+    "author": "chroventer (https://github.com/chroventer)",
     "license": "MIT",
     "bugs": {
-        "url": "https://github.com/enhancd/endb/issues"
+        "url": "https://github.com/chroventer/endb/issues"
     },
     "homepage": "https://endb.js.org",
     "dependencies": {},
