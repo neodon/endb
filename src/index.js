@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { addKeyPrefix, parse, stringify, load } = require('./util');
+const { addKeyPrefix, load, math, parse, stringify } = require('./util');
 
 /**
  * @class Endb
@@ -22,18 +22,21 @@ class Endb extends EventEmitter {
      * @param {string} [options.table] The name of the table. (SQL database)
      * @param {number} [options.keySize] The size of the key. (SQL database)
      * @example
-     * const endb = new Endb(); // Memory
+     * const endb = new Endb();
      * const endb = new Endb({
      *     namespace: 'endb',
      *     serialize: JSON.stringify,
      *     deserialize: JSON.parse
      * });
      * const endb = new Endb('leveldb://path/to/database');
-     * const endb = new Endb('redis://user:pass@localhost:6379');
      * const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
-     * const endb = new Endb('sqlite://path/to/database.sqlite');
-     * const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
      * const endb = new Endb('mysql://user:pass@localhost:3306/dbname');
+     * const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
+     * const endb = new Endb('redis://user:pass@localhost:6379');
+     * const endb = new Endb('sqlite://path/to/database.sqlite');
+     *
+     * // Handles database connection error
+     * endb.on('error', err => console.log('Connection Error: ', err));
      */
     constructor(uri, options = {}) {
         super();
@@ -42,10 +45,12 @@ class Endb extends EventEmitter {
             serialize: stringify,
             deserialize: parse,
         }, (typeof uri === 'string') ? { uri } : uri, options);
-        if (!this.options.store)
+        if (!this.options.store) {
             this.options.store = load(Object.assign({}, this.options));
-        if (typeof this.options.store.on === 'function')
+        }
+        if (typeof this.options.store.on === 'function') {
             this.options.store.on('error', err => this.emit('error', err));
+        }
         this.options.store.namespace = this.options.namespace;
     }
 
@@ -71,13 +76,6 @@ class Endb extends EventEmitter {
                 data = typeof data === 'string' ? this.options.deserialize(data) : data;
                 return data === undefined ? undefined : data;
             });
-    }
-
-    async add(key, value) {
-        let fetched = await this.get(key);
-        if (!fetched) fetched = 0;
-        if (isNaN(value)) throw new TypeError('Value is not a number.');
-        return await this.set(key, parseInt(fetched, 10) + parseInt(value, 10));
     }
 
     /**
@@ -119,7 +117,7 @@ class Endb extends EventEmitter {
      * Endb.get('key').then(console.log).catch(console.error);
      */
     get(key, options = {}) {
-        if (typeof key !== 'string') return null;
+        if (typeof key !== 'string') throw new TypeError('Key must be a string');
         key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => this.options.store.get(key))
@@ -137,9 +135,16 @@ class Endb extends EventEmitter {
      * @returns {Promise<boolean>} Whether or not, the element exists in the database.
      * @example
      * Endb.has('key').then(console.log).catch(console.error);
+     *
+     * const element = await Endb.has('key');
+     * if (element) {
+     *     console.log('exists');
+     * } else {
+     *     console.log('does not exist');
+     * }
      */
     has(key) {
-        if (typeof key !== 'string') return null;
+        if (typeof key !== 'string') throw new TypeError('Key must be a string');
         key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => {
@@ -149,6 +154,29 @@ class Endb extends EventEmitter {
                 const data = this.get(key);
                 return data ? true : false;
             });
+    }
+
+    /**
+     * Performs a mathematical operation on an element.
+     * @param {string} key The key of the element.
+     * @param {string} operation The mathematical operationto execute.
+     * Possible operations: add, sub, multiply, div, exp, and module.
+     * @param {number} operand The operand of the operation
+     * @returns {Promise<boolean>}
+     * @example
+     * await Endb.set('key', 0);
+     * await Endb.math('key', 'add', 100);
+     * await Endb.math('key', 'div', 5);
+     * await Endb.math('key', 'subtract', 15);
+     * const element = await Endb.get('key');
+     * console.log(element); // 5
+     */
+    async math(key, operation, operand) {
+        if (typeof key !== 'string') throw new TypeError('Key must be a string');
+        if (operation === 'random' || operation === 'rand') {
+            return await this.set(key, Math.round(Math.random() * operand));
+        }
+        return await this.set(key, math(await this.get(key), operation, operand));
     }
 
     /**
@@ -167,8 +195,9 @@ class Endb extends EventEmitter {
      * await members.set('bar', 'foo');
      */
     static multi(names, options = {}) {
-        if (!names.length || names.length < 1)
+        if (!names.length || names.length < 1) {
             throw new TypeError('Names must be an array of strings');
+        }
         const instances = {};
         for (const name of names) {
             instances[name] = new Endb(options);
@@ -192,20 +221,15 @@ class Endb extends EventEmitter {
      * }).then(console.log).catch(console.error);
      */
     set(key, value) {
-        if (typeof key !== 'string') return null;
+        if (typeof key !== 'string') {
+            throw new TypeError('Key must be a string');
+        }
         key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => {
                 return this.options.store.set(key, this.options.serialize({ value }));
             })
             .then(() => true);
-    }
-
-    async subtract(key, value) {
-        let fetched = await this.get(key);
-        if (!fetched) fetched = 0;
-        if (isNaN(value)) throw new TypeError('Value is not a number.');
-        return await this.set(key, parseInt(fetched, 10) - parseInt(value, 10));
     }
 }
 

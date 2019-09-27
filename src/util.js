@@ -102,6 +102,38 @@ class Util {
     static mapObject(arr, fn) {
         return (a => ((a = [arr, arr.map(fn)]), a[0].reduce((acc, val, ind) => ((acc[val] = a[1][ind]), acc), {})))();
     }
+
+    static math(base, op, opand) {
+        if (base == undefined || op == undefined || opand == undefined)
+            throw new Error('Missing required parameters.');
+        switch (op) {
+            case 'add':
+            case 'addition':
+            case '+':
+                return base + opand;
+            case 'sub':
+            case 'subtract':
+            case '-':
+                return base - opand;
+            case 'mult':
+            case 'multiply':
+            case '*':
+                return base * opand;
+            case 'div':
+            case 'divide':
+            case '/':
+                return base / opand;
+            case 'exp':
+            case 'exponent':
+            case '^':
+                return Math.pow(base, opand);
+            case 'mod':
+            case 'modulo':
+            case '%':
+                return base % opand;
+        }
+        return null;
+    }
 }
 
 module.exports = Util;
