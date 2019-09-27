@@ -19,7 +19,7 @@
         "adapter",
         "cache"
     ],
-    "author": "chroventer (https://github.com/chroventer)",
+    "author": "chroventer <chroventer@gmail.com> (https://github.com/chroventer)",
     "license": "MIT",
     "bugs": {
         "url": "https://github.com/chroventer/endb/issues"
