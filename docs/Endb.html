@@ -387,7 +387,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line169">line 169</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line197">line 197</a>
             </span>
         </p>
     
@@ -523,7 +523,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line58">line 58</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line63">line 63</a>
             </span>
         </p>
     
@@ -652,7 +652,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line89">line 89</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line87">line 87</a>
             </span>
         </p>
     
@@ -831,7 +831,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line105">line 105</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line103">line 103</a>
             </span>
         </p>
     
@@ -1109,7 +1109,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line121">line 121</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line119">line 119</a>
             </span>
         </p>
     
@@ -1288,7 +1288,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line141">line 141</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line146">line 146</a>
             </span>
         </p>
     
@@ -1342,7 +1342,251 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);</code></pre>
+        <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);
+
+const element = await Endb.has('key');
+if (element) {
+    console.log('exists');
+} else {
+    console.log('does not exist');
+}</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+    
+    <h4 class="name" id="math">
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            math<span class="signature">(key, operation, operand)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary">Performs a mathematical operation on an element.</p>
+    
+    
+    <div class="description">
+        <p>Performs a mathematical operation on an element.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The key of the element.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>operation</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The mathematical operationto execute.
+Possible operations: add, sub, multiply, div, exp, and module.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>operand</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The operand of the operation</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line174">line 174</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;boolean></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>await Endb.set('key', 0);
+await Endb.math('key', 'add', 100);
+await Endb.math('key', 'div', 5);
+await Endb.math('key', 'subtract', 15);
+const element = await Endb.get('key');
+console.log(element); // 5</code></pre>
     
 
 
@@ -1492,7 +1736,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line223">line 223</a>
             </span>
         </p>
     
@@ -1986,7 +2230,7 @@ Endb.set('profile', {
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line38">line 38</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line41">line 41</a>
             </span>
         </p>
     
@@ -2015,18 +2259,21 @@ Endb.set('profile', {
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>const endb = new Endb(); // Memory
+        <pre class="prettyprint"><code>const endb = new Endb();
 const endb = new Endb({
     namespace: 'endb',
     serialize: JSON.stringify,
     deserialize: JSON.parse
 });
 const endb = new Endb('leveldb://path/to/database');
-const endb = new Endb('redis://user:pass@localhost:6379');
 const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
-const endb = new Endb('sqlite://path/to/database.sqlite');
+const endb = new Endb('mysql://user:pass@localhost:3306/dbname');
 const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
-const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
+const endb = new Endb('redis://user:pass@localhost:6379');
+const endb = new Endb('sqlite://path/to/database.sqlite');
+
+// Handles database connection error
+endb.on('error', err => console.log('Connection Error: ', err));</code></pre>
     
 
 
@@ -2224,7 +2471,7 @@ const endb = new Endb('mysql://user:pass@localhost:3306/dbname');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line169">line 169</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line197">line 197</a>
             </span>
         </p>
     
@@ -2360,7 +2607,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line58">line 58</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line63">line 63</a>
             </span>
         </p>
     
@@ -2489,7 +2736,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line89">line 89</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line87">line 87</a>
             </span>
         </p>
     
@@ -2668,7 +2915,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line105">line 105</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line103">line 103</a>
             </span>
         </p>
     
@@ -2946,7 +3193,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line121">line 121</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line119">line 119</a>
             </span>
         </p>
     
@@ -3125,7 +3372,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line141">line 141</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line146">line 146</a>
             </span>
         </p>
     
@@ -3179,7 +3426,251 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);</code></pre>
+        <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);
+
+const element = await Endb.has('key');
+if (element) {
+    console.log('exists');
+} else {
+    console.log('does not exist');
+}</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+    
+    <h4 class="name" id="math">
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            math<span class="signature">(key, operation, operand)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary">Performs a mathematical operation on an element.</p>
+    
+    
+    <div class="description">
+        <p>Performs a mathematical operation on an element.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The key of the element.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>operation</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The mathematical operationto execute.
+Possible operations: add, sub, multiply, div, exp, and module.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>operand</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The operand of the operation</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line174">line 174</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;boolean></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>await Endb.set('key', 0);
+await Endb.math('key', 'add', 100);
+await Endb.math('key', 'div', 5);
+await Endb.math('key', 'subtract', 15);
+const element = await Endb.get('key');
+console.log(element); // 5</code></pre>
     
 
 
@@ -3329,7 +3820,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line223">line 223</a>
             </span>
         </p>
     
@@ -3417,7 +3908,7 @@ Endb.set('profile', {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Sep 18 2019 17:17:38 GMT+0400 (Gulf Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Sep 27 2019 13:46:17 GMT+0400 (Gulf Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
