@@ -1,4 +1,6 @@
-# Endb
+<div align="center">
+    <a href="https://endb.js.org"><img src="media/logo.png" alt="endb"/></a>
+</div>
 
 [![NPM Version](https://badgen.net/npm/v/endb)](https://www.npmjs.com/package/endb)
 [![Build Status](https://travis-ci.org/chroventer/endb.svg?branch=master)](https://travis-ci.org/chroventer/endb)
@@ -12,6 +14,7 @@ Supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
 
 New to Endb? Check out the [API Reference](https://endb.js.org)
 
+## Features
 * High performance, efficiency, and simplicity
 * Simple [Promise-based API](#Usage)
 * Suitable as cache or persistent database
@@ -20,20 +23,20 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 
 ## Installation
 ```bash
-npm install --save endb
+npm install endb
 ```
 By default, data is stored in the memory. You can optionally install an adapter.
 ```bash
-$ npm install --save level # LevelDB
-$ npm install --save mongojs # MongoDB
-$ npm install --save redis
+$ npm install level # LevelDB
+$ npm install mongojs # MongoDB
+$ npm install redis
 
 # To use SQL database, install an additional 'sql' package and the adapter
-$ npm install --save sql
+$ npm install sql
 
-$ npm install --save mysql2 # MySQL
-$ npm install --save pg # PostgreSQL
-$ npm install --save sqlite3 # SQLite
+$ npm install mysql2 # MySQL
+$ npm install pg # PostgreSQL
+$ npm install sqlite3 # SQLite
 ```
 
 ## Usage
