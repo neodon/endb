@@ -53,8 +53,10 @@ const endb = new Endb('sqlite://path/to/database.sqlite');
 endb.on('error', err => console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
+await endb.set('num', 10); // true
+await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
-await endb.get('foo', { raw: true }); // { value: 'bar' }
+await db.all();
 await endb.has('foo'); // true
 await endb.has('bar'); // false
 await endb.delete('foo'); // true
@@ -85,19 +87,3 @@ const db = new Endb({
     deserialize: JSON.parse
 });
 ```
-
-## Third-party Adapters
-You can also use third-party adapters or build & integrate your own.
-It will integrate these adapters and handle complex types internally.
-```js
-const custom = require('./custom');
-const endb = new Endb({ store: custom });
-```
-For instance, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is compatible with Endb since it implements Map.
-```js
-const QuickLRU = require('quick-lru');
-const endb = new Endb({ store: new QuickLRU({ maxSize: 1000 }) });
-```
-The following are third-party adapters compatible:
-* [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache
-* To include your own third-party adapter here, open a pull-request

@@ -89,10 +89,6 @@ class Endb extends EventEmitter {
             .then(() => this.options.store.clear());
     }
 
-    close() {
-        return 'Endb#close: NOT IMPLEMENTED YET!';
-    }
-
     /**
      * Deletes an element (key and value) from the database.
      * @param {string} key The key of an element.
