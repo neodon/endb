@@ -22,3 +22,5 @@ docs/
 .gitattributes
 .gitignore
 .nojekyll
+media/
+logo.psxprj
