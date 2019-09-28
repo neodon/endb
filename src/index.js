@@ -56,7 +56,7 @@ class Endb extends EventEmitter {
 
     /**
      * Gets all the elements (keys and values) from the database.
-     * @returns {Promise<Object|any[]>} All the elements (keys and values).
+     * @returns {Promise<Object>} All the elements (keys and values).
      * @example
      * Endb.all().then(console.log).catch(console.error);
      */
