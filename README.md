@@ -1,6 +1,8 @@
 <div align="center">
     <a href="https://endb.js.org"><img src="media/logo.png" alt="endb"/></a>
 </div>
+<br/>
+<br/>
 
 [![NPM Version](https://badgen.net/npm/v/endb)](https://www.npmjs.com/package/endb)
 [![Build Status](https://travis-ci.org/chroventer/endb.svg?branch=master)](https://travis-ci.org/chroventer/endb)
