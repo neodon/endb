@@ -47,6 +47,3 @@ jspm_packages/
 
 # Misc
 .jsdoc.json
-.npmrc
-.npmignore
-logo.psxprj
