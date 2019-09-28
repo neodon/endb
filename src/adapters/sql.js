@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { parse, safeRequire } = require('../util');
+const { parse, safeRequire, removeKeyPrefix } = require('../util');
 const { Sql } = safeRequire('sql');
 
 class EndbSql extends EventEmitter {
@@ -38,7 +38,7 @@ class EndbSql extends EventEmitter {
       const r = {};
       for (const i in rows) {
         const row = rows[i];
-        r[row.key] = parse(row.value);
+        r[removeKeyPrefix({ key: row.key, namespace: this.options.namespace })] = parse(row.value).value;
       }
       return r;
     };
