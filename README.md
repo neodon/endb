@@ -20,8 +20,9 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 * High performance, efficiency, and simplicity
 * Simple [Promise-based API](#Usage)
 * Suitable as cache or persistent database
-* Supports [adapters](#Usage) & [namespaces](#Namespaces)
+* Supports [adapters](#Usage), [namespaces](#Namespaces), [serializers](#Custom-Serializers)
 * Handles all JSON types including Buffer
+* Connection errors are sent (connection errors won't kill the process)
 
 ## Installation
 ```bash
