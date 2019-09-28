@@ -10,6 +10,6 @@ serial('Adapters (Cache)', async t => {
   t.is(await endb.set('foo', 'bar'), true);
   t.is(await endb.has('foo'), true);
   t.is(await endb.get('foo'), 'bar');
-  t.deepEqual(await endb.all(), { 'endb:foo': 'bar' });
+  t.deepEqual(await endb.all(), { foo: 'bar' });
   t.is(store.size, 1);
 });
