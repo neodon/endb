@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { addKeyPrefix, removeKeyPrefix, load, math, parse, stringify, colorize } = require('./util');
+const { addKeyPrefix, removeKeyPrefix, load, math, parse, stringify } = require('./util');
 
 /**
  * @class Endb
@@ -63,18 +63,19 @@ class Endb extends EventEmitter {
     all() {
         return Promise.resolve()
             .then(() => {
-                console.log(colorize('Endb#all() is an experimental function; if you find any bug, please report it.').yellow);
                 if (this.options.store instanceof Map) {
-                    const obj = {};
+                    const arr = [];
                     for (const [key, value] of this.options.store) {
-                        obj[removeKeyPrefix({ key, namespace: this.options.namespace })] = this.options.deserialize(value).value;
+                        arr.push({
+                            key: removeKeyPrefix({ key, namespace: this.options.namespace }),
+                            value: this.options.deserialize(value).value
+                        });
                     }
-                    return obj;
+                    return arr;
                 }
                 return this.options.store.all();
             })
             .then(data => {
-                data = typeof data === 'string' ? this.options.deserialize(data) : data;
                 return data === undefined ? undefined : data;
             });
     }
@@ -148,8 +149,7 @@ class Endb extends EventEmitter {
                 if (this.options.store instanceof Map) {
                     return this.options.store.has(key);
                 }
-                const data = this.get(key);
-                return data ? true : false;
+                return typeof (this.get(key, { raw: true })) === 'object';
             });
     }
 
