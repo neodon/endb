@@ -6,7 +6,6 @@ import Endb from '../src/index';
 serial('Custom Serializers', async t => {
   t.plan(2);
   const endb = new Endb({
-    store: new Map(),
     serialize: JSON.stringify,
     deserialize: JSON.parse,
   });
