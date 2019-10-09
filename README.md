@@ -12,18 +12,19 @@
 [![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
 Simple key-value database with cache and multi adapter support.
-Supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
+Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
+You can also integrate your own adapter (open a pull-request).
 
 New to Endb? Check out the [API Reference](https://endb.js.org)
 
 ## Features
 
-* High performance, efficiency, and simplicity
-* Simple [Promise-based API](#Usage)
-* Suitable as cache or persistent database
-* Supports [adapters](#Usage), [namespaces](#Namespaces), [serializers](#Custom-Serializers)
-* Handles all JSON types including Buffer
-* Connection errors are sent (connection errors won't kill the process)
+* High performance, efficiency, and simplicity.
+* Simple [Promise-based API](#Usage).
+* Suitable as cache or persistent database.
+* Supports [adapters](#Usage), [namespaces](#Namespaces), [serializers](#Custom-Serializers).
+* Handles all JSON types including Buffer.
+* Connection errors are sent to instance (connection errors won't kill the process).
 
 ## Installation
 
@@ -31,7 +32,7 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 npm install endb
 ```
 
-By default, data is stored in memory. You can optionally install an adapter.
+By default, data is stored in memory. Optionally, You can install an adapter.
 
 ```bash
 $ npm install level # LevelDB
@@ -48,10 +49,9 @@ $ npm install sqlite3 # SQLite
 
 ## Usage
 
-```js
+```javascript
 const Endb = require('endb');
 
-// Supported Adapters
 const endb = new Endb();
 const endb = new Endb('leveldb://path/to/database');
 const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
@@ -64,12 +64,15 @@ const endb = new Endb('sqlite://path/to/database.sqlite');
 endb.on('error', err => console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
+await endb.set('exists', true); // true
 await endb.set('num', 10); // true
 await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
-await endb.all();
+await endb.get('exists'); // true
+await endb.all(); // { ... }
 await endb.has('foo'); // true
 await endb.has('bar'); // false
+await endb.find(element => element.value === 'bar'); // { ... }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
 ```
@@ -78,7 +81,7 @@ await endb.clear(); // undefined
 
 You can set a namespace to avoid key collisions and namespaces allow you to clear only a certain namespace while using the same database.
 
-```js
+```javascript
 const users = new Endb('redis://user:pass@localhost:6379', { namespace: 'users' });
 const cache = new Endb('redis://user:pass@localhost:6379', { namespace: 'cache' });
 
@@ -93,10 +96,10 @@ await cache.get('foo'); // 'cache'
 
 ## Custom Serializers
 
-It uses JSON buffer for serialization and deserialization of data to ensure consistency.
-You can optionally pass your own (de)serialization functions to support extra data types or to (de)serialize to something other than JSON.
+Endb uses its own parse and stringify functions for serialization and deserialization of data to ensure consistency.
+Optionally, You can pass your own (de)serialization functions to support extra data types or to (de)serialize to something else.
 
-```js
+```javascript
 const endb = new Endb({
     serialize: JSON.stringify,
     deserialize: JSON.parse

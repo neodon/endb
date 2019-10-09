@@ -176,7 +176,7 @@ class Endb extends EventEmitter {
      * Performs a mathematical operation on an element.
      * @param {string} key The key of the element.
      * @param {string} operation The mathematical operationto execute.
-     * Possible operations: add, sub, multiply, div, exp, and module.
+     * Possible operations: addition, subtraction, multiply, division, exp, and module.
      * @param {number} operand The operand of the operation
      * @returns {Promise<boolean>}
      * @example
@@ -185,6 +185,11 @@ class Endb extends EventEmitter {
      * await Endb.math('key', 'subtract', 15);
      * const element = await Endb.get('key');
      * console.log(element); // 5
+     *
+     * const operations = ['add', 'sub', 'div', 'mult', 'exp', 'mod'];
+     * operations.forEach(operation => {
+     *   await Endb.math('key', operation, 100);
+     * });
      */
     async math(key, operation, operand) {
         if (typeof key !== 'string') throw new TypeError('Key must be a string');
