@@ -106,6 +106,23 @@ class Endb extends EventEmitter {
     }
 
     /**
+     * Finds or searches for a single item where the given function returns a truthy value.
+     * @param {Function} fn The function to execute on each element.
+     * @param {*} [thisArg] Value to use as `this` inside function.
+     * @returns {Promise<*|undefined>}
+     * @example
+     * Endb.find(element => element.value === 'value');
+     */
+    async find(fn, thisArg) {
+        if (typeof thisArg !== undefined) fn = fn.bind(thisArg);
+        const elements = await this.all();
+        for (let i = 0; i < await elements.length; i++) {
+            if (fn(elements[i])) return elements[i];
+        }
+        return undefined;
+    }
+
+    /**
      * Gets an element (key and value) from the database.
      * @param {string} key The key of the element.
      * @param {Object} [options={}] The options for the get.
