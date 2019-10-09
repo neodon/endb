@@ -1,6 +1,9 @@
 'use strict';
 
 class Util {
+    constructor() {
+        throw new Error('Util class may not be constructed.');
+    }
 
     static addKeyPrefix({ key, namespace }) {
         if (key === null) return null;

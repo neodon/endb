@@ -111,7 +111,8 @@ class Endb extends EventEmitter {
      * @param {*} [thisArg] Value to use as `this` inside function.
      * @returns {Promise<*|undefined>}
      * @example
-     * Endb.find(element => element.value === 'value');
+     * const element = await Endb.find(element => element.value === 'value');
+     * console.log(element);
      */
     async find(fn, thisArg) {
         if (typeof thisArg !== undefined) fn = fn.bind(thisArg);
@@ -129,7 +130,8 @@ class Endb extends EventEmitter {
      * @param {boolean} [options.raw=false] Get data as raw or not.
      * @returns {Promise<*>} The value of the element.
      * @example
-     * Endb.get('key').then(console.log).catch(console.error);
+     * const value = await Endb.get('key');
+     * console.log(value);
      */
     get(key, options = {}) {
         if (typeof key !== 'string') throw new TypeError('Key must be a string');
@@ -178,7 +180,6 @@ class Endb extends EventEmitter {
      * @param {number} operand The operand of the operation
      * @returns {Promise<boolean>}
      * @example
-     * await Endb.set('key', 0);
      * await Endb.math('key', 'add', 100);
      * await Endb.math('key', 'div', 5);
      * await Endb.math('key', 'subtract', 15);
@@ -249,4 +250,4 @@ class Endb extends EventEmitter {
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.util = require('./util');
+module.exports.Util = require('./util');
