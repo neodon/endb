@@ -25,7 +25,7 @@
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
                      
-                        <img src="./docs/icon.png" alt="logo">
+                        <img src="./media/logo.png" alt="logo">
                     
                      
                         <h1 class="navbar-item">Endb</h1>
@@ -387,7 +387,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line217">line 217</a>
             </span>
         </p>
     
@@ -652,7 +652,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line88">line 88</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line89">line 89</a>
             </span>
         </p>
     
@@ -831,7 +831,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line100">line 100</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line101">line 101</a>
             </span>
         </p>
     
@@ -886,6 +886,233 @@ await members.set('bar', 'foo');</code></pre>
     
     
         <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+    
+    <h4 class="name" id="find">
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            find<span class="signature">(fn, thisArg<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(*|undefined)>}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary">Finds or searches for a single item where the given function returns a truthy value.</p>
+    
+    
+    <div class="description">
+        <p>Finds or searches for a single item where the given function returns a truthy value.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>fn</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>The function to execute on each element.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>thisArg</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>Value to use as <code>this</code> inside function.</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line117">line 117</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;(*|undefined)></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const element = await Endb.find(element => element.value === 'value');
+console.log(element);</code></pre>
     
 
 
@@ -1109,7 +1336,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line116">line 116</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line136">line 136</a>
             </span>
         </p>
     
@@ -1163,7 +1390,8 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);</code></pre>
+        <pre class="prettyprint"><code>const value = await Endb.get('key');
+console.log(value);</code></pre>
     
 
 
@@ -1288,7 +1516,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line143">line 143</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line163">line 163</a>
             </span>
         </p>
     
@@ -1457,7 +1685,7 @@ if (element) {
   
 
   <td class="description last"><p>The mathematical operationto execute.
-Possible operations: add, sub, multiply, div, exp, and module.</p></td>
+Possible operations: addition, subtraction, multiply, division, exp, and module.</p></td>
 </tr>
 
 
@@ -1529,7 +1757,7 @@ Possible operations: add, sub, multiply, div, exp, and module.</p></td>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line171">line 171</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
             </span>
         </p>
     
@@ -1581,12 +1809,16 @@ Possible operations: add, sub, multiply, div, exp, and module.</p></td>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>await Endb.set('key', 0);
-await Endb.math('key', 'add', 100);
+        <pre class="prettyprint"><code>await Endb.math('key', 'add', 100);
 await Endb.math('key', 'div', 5);
 await Endb.math('key', 'subtract', 15);
 const element = await Endb.get('key');
-console.log(element); // 5</code></pre>
+console.log(element); // 5
+
+const operations = ['add', 'sub', 'div', 'mult', 'exp', 'mod'];
+operations.forEach(operation => {
+  await Endb.math('key', operation, 100);
+});</code></pre>
     
 
 
@@ -1736,7 +1968,7 @@ console.log(element); // 5</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line220">line 220</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line243">line 243</a>
             </span>
         </p>
     
@@ -2471,7 +2703,7 @@ endb.on('error', err => console.log('Connection Error: ', err));</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line217">line 217</a>
             </span>
         </p>
     
@@ -2736,7 +2968,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line88">line 88</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line89">line 89</a>
             </span>
         </p>
     
@@ -2915,7 +3147,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line100">line 100</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line101">line 101</a>
             </span>
         </p>
     
@@ -2970,6 +3202,233 @@ await members.set('bar', 'foo');</code></pre>
     
     
         <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+    
+    <h4 class="name" id="find">
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            find<span class="signature">(fn, thisArg<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(*|undefined)>}</span>
+        </span>
+    </h4>
+    
+
+    
+    <p class="summary">Finds or searches for a single item where the given function returns a truthy value.</p>
+    
+    
+    <div class="description">
+        <p>Finds or searches for a single item where the given function returns a truthy value.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>fn</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>The function to execute on each element.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>thisArg</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last"><p>Value to use as <code>this</code> inside function.</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line117">line 117</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;(*|undefined)></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const element = await Endb.find(element => element.value === 'value');
+console.log(element);</code></pre>
     
 
 
@@ -3193,7 +3652,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line116">line 116</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line136">line 136</a>
             </span>
         </p>
     
@@ -3247,7 +3706,8 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);</code></pre>
+        <pre class="prettyprint"><code>const value = await Endb.get('key');
+console.log(value);</code></pre>
     
 
 
@@ -3372,7 +3832,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line143">line 143</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line163">line 163</a>
             </span>
         </p>
     
@@ -3541,7 +4001,7 @@ if (element) {
   
 
   <td class="description last"><p>The mathematical operationto execute.
-Possible operations: add, sub, multiply, div, exp, and module.</p></td>
+Possible operations: addition, subtraction, multiply, division, exp, and module.</p></td>
 </tr>
 
 
@@ -3613,7 +4073,7 @@ Possible operations: add, sub, multiply, div, exp, and module.</p></td>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line171">line 171</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line194">line 194</a>
             </span>
         </p>
     
@@ -3665,12 +4125,16 @@ Possible operations: add, sub, multiply, div, exp, and module.</p></td>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>await Endb.set('key', 0);
-await Endb.math('key', 'add', 100);
+        <pre class="prettyprint"><code>await Endb.math('key', 'add', 100);
 await Endb.math('key', 'div', 5);
 await Endb.math('key', 'subtract', 15);
 const element = await Endb.get('key');
-console.log(element); // 5</code></pre>
+console.log(element); // 5
+
+const operations = ['add', 'sub', 'div', 'mult', 'exp', 'mod'];
+operations.forEach(operation => {
+  await Endb.math('key', operation, 100);
+});</code></pre>
     
 
 
@@ -3820,7 +4284,7 @@ console.log(element); // 5</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line220">line 220</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line243">line 243</a>
             </span>
         </p>
     
@@ -3908,7 +4372,7 @@ Endb.set('profile', {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Sep 28 2019 15:46:35 GMT+0400 (Gulf Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Oct 09 2019 19:08:26 GMT+0400 (Gulf Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

@@ -27,7 +27,7 @@
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
                      
-                        <img src="./docs/icon.png" alt="logo">
+                        <img src="./media/logo.png" alt="logo">
                     
                      
                         <h1 class="navbar-item">Endb</h1>
@@ -82,7 +82,7 @@
             <pre class="prettyprint source linenums"><code>'use strict';
 
 const EventEmitter = require('events');
-const { addKeyPrefix, removeKeyPrefix, load, math, parse, stringify, colorize } = require('./util');
+const { addKeyPrefix, removeKeyPrefix, load, math, parse, stringify } = require('./util');
 
 /**
  * @class Endb
@@ -144,18 +144,19 @@ class Endb extends EventEmitter {
     all() {
         return Promise.resolve()
             .then(() => {
-                console.log(colorize('Endb#all() is an experimental function; if you find any bug, please report it.').yellow);
                 if (this.options.store instanceof Map) {
-                    const obj = {};
+                    const arr = [];
                     for (const [key, value] of this.options.store) {
-                        obj[removeKeyPrefix({ key, namespace: this.options.namespace })] = this.options.deserialize(value).value;
+                        arr.push({
+                            key: removeKeyPrefix({ key, namespace: this.options.namespace }),
+                            value: this.options.deserialize(value).value
+                        });
                     }
-                    return obj;
+                    return arr;
                 }
                 return this.options.store.all();
             })
             .then(data => {
-                data = typeof data === 'string' ? this.options.deserialize(data) : data;
                 return data === undefined ? undefined : data;
             });
     }
@@ -186,13 +187,32 @@ class Endb extends EventEmitter {
     }
 
     /**
+     * Finds or searches for a single item where the given function returns a truthy value.
+     * @param {Function} fn The function to execute on each element.
+     * @param {*} [thisArg] Value to use as `this` inside function.
+     * @returns {Promise&lt;*|undefined>}
+     * @example
+     * const element = await Endb.find(element => element.value === 'value');
+     * console.log(element);
+     */
+    async find(fn, thisArg) {
+        if (typeof thisArg !== undefined) fn = fn.bind(thisArg);
+        const elements = await this.all();
+        for (let i = 0; i &lt; await elements.length; i++) {
+            if (fn(elements[i])) return elements[i];
+        }
+        return undefined;
+    }
+
+    /**
      * Gets an element (key and value) from the database.
      * @param {string} key The key of the element.
      * @param {Object} [options={}] The options for the get.
      * @param {boolean} [options.raw=false] Get data as raw or not.
      * @returns {Promise&lt;*>} The value of the element.
      * @example
-     * Endb.get('key').then(console.log).catch(console.error);
+     * const value = await Endb.get('key');
+     * console.log(value);
      */
     get(key, options = {}) {
         if (typeof key !== 'string') throw new TypeError('Key must be a string');
@@ -229,8 +249,7 @@ class Endb extends EventEmitter {
                 if (this.options.store instanceof Map) {
                     return this.options.store.has(key);
                 }
-                const data = this.get(key);
-                return data ? true : false;
+                return typeof (this.get(key, { raw: true })) === 'object';
             });
     }
 
@@ -238,16 +257,20 @@ class Endb extends EventEmitter {
      * Performs a mathematical operation on an element.
      * @param {string} key The key of the element.
      * @param {string} operation The mathematical operationto execute.
-     * Possible operations: add, sub, multiply, div, exp, and module.
+     * Possible operations: addition, subtraction, multiply, division, exp, and module.
      * @param {number} operand The operand of the operation
      * @returns {Promise&lt;boolean>}
      * @example
-     * await Endb.set('key', 0);
      * await Endb.math('key', 'add', 100);
      * await Endb.math('key', 'div', 5);
      * await Endb.math('key', 'subtract', 15);
      * const element = await Endb.get('key');
      * console.log(element); // 5
+     *
+     * const operations = ['add', 'sub', 'div', 'mult', 'exp', 'mod'];
+     * operations.forEach(operation => {
+     *   await Endb.math('key', operation, 100);
+     * });
      */
     async math(key, operation, operand) {
         if (typeof key !== 'string') throw new TypeError('Key must be a string');
@@ -313,7 +336,8 @@ class Endb extends EventEmitter {
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.util = require('./util');</code></pre>
+module.exports.Util = require('./util');
+</code></pre>
         </article>
     </section>
 
@@ -327,7 +351,7 @@ module.exports.util = require('./util');</code></pre>
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Sep 28 2019 15:46:35 GMT+0400 (Gulf Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Oct 09 2019 19:08:26 GMT+0400 (Gulf Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>

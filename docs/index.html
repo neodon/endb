@@ -25,7 +25,7 @@
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
                      
-                        <img src="./docs/icon.png" alt="logo">
+                        <img src="./media/logo.png" alt="logo">
                     
                      
                         <h1 class="navbar-item">Endb</h1>
@@ -106,21 +106,22 @@
 <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="GitHub Stars"></a>
 <a href="https://github.com/chroventer/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/chroventer/endb" alt="License"></a></p>
 <p>Simple key-value database with cache and multi adapter support.
-Supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.</p>
+Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
+You can also integrate your own adapter (open a pull-request).</p>
 <p>New to Endb? Check out the <a href="https://endb.js.org">API Reference</a></p>
 <h2>Features</h2>
 <ul>
-<li>High performance, efficiency, and simplicity</li>
-<li>Simple <a href="#Usage">Promise-based API</a></li>
-<li>Suitable as cache or persistent database</li>
-<li>Supports <a href="#Usage">adapters</a>, <a href="#Namespaces">namespaces</a>, <a href="#Custom-Serializers">serializers</a></li>
-<li>Handles all JSON types including Buffer</li>
-<li>Connection errors are sent (connection errors won't kill the process)</li>
+<li>High performance, efficiency, and simplicity.</li>
+<li>Simple <a href="#Usage">Promise-based API</a>.</li>
+<li>Suitable as cache or persistent database.</li>
+<li>Supports <a href="#Usage">adapters</a>, <a href="#Namespaces">namespaces</a>, <a href="#Custom-Serializers">serializers</a>.</li>
+<li>Handles all JSON types including Buffer.</li>
+<li>Connection errors are sent to instance (connection errors won't kill the process).</li>
 </ul>
 <h2>Installation</h2>
 <pre class="prettyprint source lang-bash"><code>npm install endb
 </code></pre>
-<p>By default, data is stored in the memory. You can optionally install an adapter.</p>
+<p>By default, data is stored in memory. Optionally, You can install an adapter.</p>
 <pre class="prettyprint source lang-bash"><code>$ npm install level # LevelDB
 $ npm install mongojs # MongoDB
 $ npm install redis
@@ -133,9 +134,8 @@ $ npm install pg # PostgreSQL
 $ npm install sqlite3 # SQLite
 </code></pre>
 <h2>Usage</h2>
-<pre class="prettyprint source lang-js"><code>const Endb = require('endb');
+<pre class="prettyprint source lang-javascript"><code>const Endb = require('endb');
 
-// Supported Adapters
 const endb = new Endb();
 const endb = new Endb('leveldb://path/to/database');
 const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
@@ -148,18 +148,21 @@ const endb = new Endb('sqlite://path/to/database.sqlite');
 endb.on('error', err => console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
+await endb.set('exists', true); // true
 await endb.set('num', 10); // true
 await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
-await db.all();
+await endb.get('exists'); // true
+await endb.all(); // { ... }
 await endb.has('foo'); // true
 await endb.has('bar'); // false
+await endb.find(element => element.value === 'bar'); // { ... }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
 </code></pre>
 <h2>Namespaces</h2>
 <p>You can set a namespace to avoid key collisions and namespaces allow you to clear only a certain namespace while using the same database.</p>
-<pre class="prettyprint source lang-js"><code>const users = new Endb('redis://user:pass@localhost:6379', { namespace: 'users' });
+<pre class="prettyprint source lang-javascript"><code>const users = new Endb('redis://user:pass@localhost:6379', { namespace: 'users' });
 const cache = new Endb('redis://user:pass@localhost:6379', { namespace: 'cache' });
 
 await users.set('foo', 'users'); // true
@@ -171,9 +174,9 @@ await users.get('foo'); // undefined
 await cache.get('foo'); // 'cache'
 </code></pre>
 <h2>Custom Serializers</h2>
-<p>It uses JSON buffer for serialization and derialization of data to ensure consistency.
-You can optionally pass your own (de)serialization functions to support extra data types or to (de)serialize to something other than JSON.</p>
-<pre class="prettyprint source lang-js"><code>const db = new Endb({
+<p>Endb uses its own parse and stringify functions for serialization and deserialization of data to ensure consistency.
+Optionally, You can pass your own (de)serialization functions to support extra data types or to (de)serialize to something else.</p>
+<pre class="prettyprint source lang-javascript"><code>const endb = new Endb({
     serialize: JSON.stringify,
     deserialize: JSON.parse
 });
@@ -192,7 +195,7 @@ You can optionally pass your own (de)serialization functions to support extra da
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sat Sep 28 2019 15:46:35 GMT+0400 (Gulf Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Wed Oct 09 2019 19:08:26 GMT+0400 (Gulf Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
