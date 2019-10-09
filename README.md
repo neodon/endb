@@ -17,6 +17,7 @@ Supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
 New to Endb? Check out the [API Reference](https://endb.js.org)
 
 ## Features
+
 * High performance, efficiency, and simplicity
 * Simple [Promise-based API](#Usage)
 * Suitable as cache or persistent database
@@ -25,10 +26,13 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 * Connection errors are sent (connection errors won't kill the process)
 
 ## Installation
+
 ```bash
 npm install endb
 ```
-By default, data is stored in the memory. You can optionally install an adapter.
+
+By default, data is stored in memory. You can optionally install an adapter.
+
 ```bash
 $ npm install level # LevelDB
 $ npm install mongojs # MongoDB
@@ -43,6 +47,7 @@ $ npm install sqlite3 # SQLite
 ```
 
 ## Usage
+
 ```js
 const Endb = require('endb');
 
@@ -62,7 +67,7 @@ await endb.set('foo', 'bar'); // true
 await endb.set('num', 10); // true
 await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
-await db.all();
+await endb.all();
 await endb.has('foo'); // true
 await endb.has('bar'); // false
 await endb.delete('foo'); // true
@@ -70,7 +75,9 @@ await endb.clear(); // undefined
 ```
 
 ## Namespaces
+
 You can set a namespace to avoid key collisions and namespaces allow you to clear only a certain namespace while using the same database.
+
 ```js
 const users = new Endb('redis://user:pass@localhost:6379', { namespace: 'users' });
 const cache = new Endb('redis://user:pass@localhost:6379', { namespace: 'cache' });
@@ -85,10 +92,12 @@ await cache.get('foo'); // 'cache'
 ```
 
 ## Custom Serializers
-It uses JSON buffer for serialization and derialization of data to ensure consistency.
+
+It uses JSON buffer for serialization and deserialization of data to ensure consistency.
 You can optionally pass your own (de)serialization functions to support extra data types or to (de)serialize to something other than JSON.
+
 ```js
-const db = new Endb({
+const endb = new Endb({
     serialize: JSON.stringify,
     deserialize: JSON.parse
 });
