@@ -1,15 +1,18 @@
 <div align="center">
-    <a href="https://endb.js.org"><img src="media/logo.png" alt="endb"/></a>
+    <br />
+    <p>
+        <a href="https://endb.js.org"><img src="media/logo.png" alt="endb" /></a>
+    </p>
+    <br />
+    <p>
+        <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="Version" /></a>
+        <a href="https://travis-ci.org/chroventer/endb"><img src="https://travis-ci.org/chroventer/endb.svg?branch=master" alt="Build Status" /></a>
+        <a href="https://david-dm.org/chroventer/endb"><img src="https://img.shields.io/david/chroventer/endb.svg?maxAge=3600" alt="Dependencies" /></a>
+        <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="Downloads" /></a>
+        <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="Stars" /></a>
+        <a href="https://github.com/chroventer/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/chroventer/endb" alt="License" /></a>
+    </p>
 </div>
-<br/>
-<br/>
-
-[![NPM Version](https://badgen.net/npm/v/endb)](https://www.npmjs.com/package/endb)
-[![Build Status](https://travis-ci.org/chroventer/endb.svg?branch=master)](https://travis-ci.org/chroventer/endb)
-[![NPM Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
-[![NPM Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
-[![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
-[![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
 Simple key-value database with cache and multi adapter support.
 Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
