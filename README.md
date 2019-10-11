@@ -14,7 +14,7 @@
     </p>
 </div>
 
-Simple key-value storage for multi adapters.
+Simple key-value storage for multi adapter.
 Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
 You can also integrate your own adapter (open a pull-request).
 

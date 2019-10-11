@@ -1,7 +1,7 @@
 {
     "name": "endb",
     "version": "0.16.1",
-    "description": "Simple key-value storage for multi adapters.",
+    "description": "Simple key-value storage for multi adapter.",
     "main": "src/index.js",
     "scripts": {
         "test": "ava --serial",
