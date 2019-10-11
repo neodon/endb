@@ -1,7 +1,7 @@
 {
     "name": "endb",
     "version": "0.16.1",
-    "description": "Simple key-value database with cache and multi adapter support.",
+    "description": "Simple key-value storage for multi adapters.",
     "main": "src/index.js",
     "scripts": {
         "test": "ava --serial",
