@@ -15,6 +15,7 @@
     },
     "keywords": [
         "database",
+        "store",
         "key-value",
         "adapter",
         "cache"

@@ -26,7 +26,7 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 * Simple [Promise-based API](#Usage).
 * Suitable as cache or persistent database.
 * Supports [adapters](#Usage), [namespaces](#Namespaces), [serializers](#Custom-Serializers).
-* Handles all JSON types including Buffer.
+* Handles all JSON types including `Buffer`.
 * Connection errors are sent to instance (connection errors won't kill the process).
 
 ## Installation
@@ -95,6 +95,33 @@ await cache.get('foo'); // 'cache'
 await users.clear(); // undefined
 await users.get('foo'); // undefined
 await cache.get('foo'); // 'cache'
+```
+
+## Third-party Adapters
+
+You can integrate and use a third-party adapter or build your own.
+
+```js
+const Endb = require('endb');
+const myAdapter = require('./my-adapter');
+
+const endb = new Endb({ store: myAdapter });
+```
+
+Any store that follows the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API will work.
+
+```js
+new Endb({ store: new Map() });
+```
+
+For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated module that implements the Map API.
+However, extension methods (all and find) may not work.
+
+```js
+const Endb = require('endb');
+const QuickLRU = require('quick-lru');
+
+const endb = new Endb({ store: new QuickLRU() });
 ```
 
 ## Custom Serializers
