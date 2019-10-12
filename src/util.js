@@ -32,10 +32,19 @@ class Util {
         return colors;
     }
 
+    static isArrayLike(obj) {
+        if (!obj) return false;
+        return obj instanceof Array || Array.isArray(obj) || (obj.length >= 0 && obj.splice instanceof Function);
+    }
+
     static isBufferLike(x) {
         return (typeof x === 'object' && x !== null && x.type === 'Buffer' && (Array.isArray(x.data) || typeof x.data === 'string'));
     }
 
+    static isObject(value) {
+        const type = typeof value;
+	    return value !== null && (type === 'object' || type === 'function');
+    }
 
     static load(options) {
         const adapters = {
