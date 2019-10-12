@@ -37,6 +37,19 @@ class Endb extends EventEmitter {
      *
      * // Handles database connection error
      * endb.on('error', err => console.log('Connection Error: ', err));
+     *
+     * await endb.set('foo', 'bar'); // true
+     * await endb.set('exists', true); // true
+     * await endb.set('num', 10); // true
+     * await endb.math('num', 'add', 40); // true
+     * await endb.get('foo'); // 'bar'
+     * await endb.get('exists'); // true
+     * await endb.all(); // { ... }
+     * await endb.has('foo'); // true
+     * await endb.has('bar'); // false
+     * await endb.find(element => element.value === 'bar'); // { ... }
+     * await endb.delete('foo'); // true
+     * await endb.clear(); // undefined
      */
     constructor(uri, options = {}) {
         super();
