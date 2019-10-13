@@ -34,6 +34,7 @@
         "better-docs": {
             "name": "Endb",
             "logo": "./media/logo.png",
+            "trackingCode": "UA-149839118-1",
             "navigation": [
                 {
                     "label": "GitHub",
