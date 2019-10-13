@@ -47,7 +47,7 @@ class Endb extends EventEmitter {
      * await endb.all(); // { ... }
      * await endb.has('foo'); // true
      * await endb.has('bar'); // false
-     * await endb.find(element => element.value === 'bar'); // { ... }
+     * await endb.find(value => value === 'bar'); // { ... }
      * await endb.delete('foo'); // true
      * await endb.clear(); // undefined
      */
@@ -124,14 +124,14 @@ class Endb extends EventEmitter {
      * @param {*} [thisArg] Value to use as `this` inside function.
      * @returns {Promise<*|undefined>}
      * @example
-     * const element = await Endb.find(element => element.value === 'value');
+     * const element = await Endb.find(value => value === 'value');
      * console.log(element);
      */
     async find(fn, thisArg) {
         if (typeof thisArg !== undefined) fn = fn.bind(thisArg);
         const elements = await this.all();
         for (let i = 0; i < await elements.length; i++) {
-            if (fn(elements[i])) return elements[i];
+            if (fn(elements[i].value)) return elements[i];
         }
         return undefined;
     }
