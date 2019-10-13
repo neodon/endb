@@ -1,6 +1,6 @@
 'use strict';
 
-class Util {
+module.exports = class Util {
     constructor() {
         throw new Error('Util class may not be constructed.');
     }
@@ -158,5 +158,3 @@ class Util {
         }, space);
     }
 }
-
-module.exports = Util;
