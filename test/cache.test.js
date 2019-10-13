@@ -15,7 +15,7 @@ serial('Adapters (Cache)', async t => {
   t.is(await endb.get('key'), 'value');
   t.is(await endb.delete('key'), true);
   t.deepEqual(await endb.all(), [ { key: 'foo', value: 'bar' } ]);
-  t.deepEqual(await endb.find(element => element.value === 'bar'), { key: 'foo', value: 'bar' });
+  t.deepEqual(await endb.find(value => value === 'bar'), { key: 'foo', value: 'bar' });
   t.is(store.size, 1);
   t.is(await endb.clear(), undefined);
 });
