@@ -75,7 +75,7 @@ await endb.get('exists'); // true
 await endb.all(); // { ... }
 await endb.has('foo'); // true
 await endb.has('bar'); // false
-await endb.find(element => element.value === 'bar'); // { ... }
+await endb.find(value => value === 'bar'); // { ... }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
 ```
