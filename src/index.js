@@ -72,6 +72,9 @@ class Endb extends EventEmitter {
      * @returns {Promise<Object>} All the elements (keys and values).
      * @example
      * Endb.all().then(console.log).catch(console.error);
+     *
+     * const elements = await Endb.all();
+     * console.log(elements);
      */
     all() {
         return Promise.resolve()
@@ -124,6 +127,8 @@ class Endb extends EventEmitter {
      * @param {*} [thisArg] Value to use as `this` inside function.
      * @returns {Promise<*|undefined>}
      * @example
+     * Endb.find(value => value === 'value').then(console.log).catch(console.error);
+     *
      * const element = await Endb.find(value => value === 'value');
      * console.log(element);
      */
@@ -143,6 +148,8 @@ class Endb extends EventEmitter {
      * @param {boolean} [options.raw=false] Get data as raw or not.
      * @returns {Promise<*>} The value of the element.
      * @example
+     * Endb.get('key').then(console.log).catch(console.error);
+     *
      * const value = await Endb.get('key');
      * console.log(value);
      */
@@ -193,6 +200,8 @@ class Endb extends EventEmitter {
      * @param {number} operand The operand of the operation
      * @returns {Promise<boolean>}
      * @example
+     * Endb.math('key', 'add', 100).then(console.log).catch(console.error);
+     *
      * await Endb.math('key', 'add', 100);
      * await Endb.math('key', 'div', 5);
      * await Endb.math('key', 'subtract', 15);
