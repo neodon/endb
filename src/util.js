@@ -73,8 +73,6 @@ module.exports = class Util {
     }
 
     static math(base, op, opand) {
-        if (base == undefined || op == undefined || opand == undefined)
-            throw new Error('Missing required parameters.');
         switch (op) {
             case 'add':
             case 'addition':
