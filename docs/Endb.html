@@ -390,7 +390,7 @@
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line230">line 230</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line239">line 239</a>
             </span>
         </p>
     
@@ -527,7 +527,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line76">line 76</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line79">line 79</a>
             </span>
         </p>
     
@@ -581,7 +581,10 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);</code></pre>
+        <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);
+
+const elements = await Endb.all();
+console.log(elements);</code></pre>
     
 
 
@@ -657,7 +660,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line102">line 102</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line105">line 105</a>
             </span>
         </p>
     
@@ -837,7 +840,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line114">line 114</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line117">line 117</a>
             </span>
         </p>
     
@@ -1066,7 +1069,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line130">line 130</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line135">line 135</a>
             </span>
         </p>
     
@@ -1118,7 +1121,9 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>const element = await Endb.find(value => value === 'value');
+        <pre class="prettyprint"><code>Endb.find(value => value === 'value').then(console.log).catch(console.error);
+
+const element = await Endb.find(value => value === 'value');
 console.log(element);</code></pre>
     
 
@@ -1344,7 +1349,7 @@ console.log(element);</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line149">line 149</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line156">line 156</a>
             </span>
         </p>
     
@@ -1398,7 +1403,9 @@ console.log(element);</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>const value = await Endb.get('key');
+        <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);
+
+const value = await Endb.get('key');
 console.log(value);</code></pre>
     
 
@@ -1525,7 +1532,7 @@ console.log(value);</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line176">line 176</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line183">line 183</a>
             </span>
         </p>
     
@@ -1767,7 +1774,7 @@ Possible operations: addition, subtraction, multiply, division, exp, and module.
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line207">line 207</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line216">line 216</a>
             </span>
         </p>
     
@@ -1819,7 +1826,9 @@ Possible operations: addition, subtraction, multiply, division, exp, and module.
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>await Endb.math('key', 'add', 100);
+        <pre class="prettyprint"><code>Endb.math('key', 'add', 100).then(console.log).catch(console.error);
+
+await Endb.math('key', 'add', 100);
 await Endb.math('key', 'div', 5);
 await Endb.math('key', 'subtract', 15);
 const element = await Endb.get('key');
@@ -1979,7 +1988,7 @@ operations.forEach(operation => {
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line256">line 256</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line265">line 265</a>
             </span>
         </p>
     
@@ -2729,7 +2738,7 @@ await endb.clear(); // undefined</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line230">line 230</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line239">line 239</a>
             </span>
         </p>
     
@@ -2866,7 +2875,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line76">line 76</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line79">line 79</a>
             </span>
         </p>
     
@@ -2920,7 +2929,10 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);</code></pre>
+        <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);
+
+const elements = await Endb.all();
+console.log(elements);</code></pre>
     
 
 
@@ -2996,7 +3008,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line102">line 102</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line105">line 105</a>
             </span>
         </p>
     
@@ -3176,7 +3188,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line114">line 114</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line117">line 117</a>
             </span>
         </p>
     
@@ -3405,7 +3417,7 @@ await members.set('bar', 'foo');</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line130">line 130</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line135">line 135</a>
             </span>
         </p>
     
@@ -3457,7 +3469,9 @@ await members.set('bar', 'foo');</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>const element = await Endb.find(value => value === 'value');
+        <pre class="prettyprint"><code>Endb.find(value => value === 'value').then(console.log).catch(console.error);
+
+const element = await Endb.find(value => value === 'value');
 console.log(element);</code></pre>
     
 
@@ -3683,7 +3697,7 @@ console.log(element);</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line149">line 149</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line156">line 156</a>
             </span>
         </p>
     
@@ -3737,7 +3751,9 @@ console.log(element);</code></pre>
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>const value = await Endb.get('key');
+        <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);
+
+const value = await Endb.get('key');
 console.log(value);</code></pre>
     
 
@@ -3864,7 +3880,7 @@ console.log(value);</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line176">line 176</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line183">line 183</a>
             </span>
         </p>
     
@@ -4106,7 +4122,7 @@ Possible operations: addition, subtraction, multiply, division, exp, and module.
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line207">line 207</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line216">line 216</a>
             </span>
         </p>
     
@@ -4158,7 +4174,9 @@ Possible operations: addition, subtraction, multiply, division, exp, and module.
     <h5>Example</h5>
     
     
-        <pre class="prettyprint"><code>await Endb.math('key', 'add', 100);
+        <pre class="prettyprint"><code>Endb.math('key', 'add', 100).then(console.log).catch(console.error);
+
+await Endb.math('key', 'add', 100);
 await Endb.math('key', 'div', 5);
 await Endb.math('key', 'subtract', 15);
 const element = await Endb.get('key');
@@ -4318,7 +4336,7 @@ operations.forEach(operation => {
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line256">line 256</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line265">line 265</a>
             </span>
         </p>
     
@@ -4406,7 +4424,7 @@ Endb.set('profile', {
 
 <footer class="footer">
     <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Oct 13 2019 19:45:38 GMT+0400 (Gulf Standard Time)</p>
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Fri Oct 18 2019 17:53:09 GMT+0400 (Gulf Standard Time)</p>
         <p class="sidebar-created-by">
             <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
             <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
