@@ -278,3 +278,4 @@ class Endb extends EventEmitter {
 module.exports = Endb;
 module.exports.Endb = Endb;
 module.exports.Util = require('./util');
+module.exports.version = require('../package').version;
