@@ -8,10 +8,8 @@ class EndbMongo extends EventEmitter {
     constructor(url, options = {}) {
         super();
         url = url || {};
-        if (typeof url === 'string')
-            url = { url };
-        if (url.uri)
-            url = Object.assign({ url: url.uri }, url);
+        if (typeof url === 'string') url = { url };
+        if (url.uri) url = Object.assign({ url: url.uri }, url);
         options = Object.assign({
             url: 'mongodb://127.0.0.1:27017',
             collection: 'endb',
