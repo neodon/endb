@@ -91,9 +91,7 @@ class Endb extends EventEmitter {
                 }
                 return this.options.store.all();
             })
-            .then(data => {
-                return data === undefined ? undefined : data;
-            });
+            .then(data => data === undefined ? undefined : data);
     }
 
     /**
@@ -119,29 +117,6 @@ class Endb extends EventEmitter {
         key = addKeyPrefix({ key, namespace: this.options.namespace });
         return Promise.resolve()
             .then(() => this.options.store.delete(key));
-    }
-
-    /**
-     * Ensures that the element exists by setting it if it does not exist; otherwise, returning the element if it exists.
-     * @param {string} key The key of an element.
-     * @param {*} value The value of an element.
-     * @return {Promise<*>} The value of the element.
-     * @example
-     * endb.ensure('key', 'value').then(console.log).catch(console.error);
-     * 
-     * const element = await Endb.ensure('key', 'value');
-     * console.log(element);
-     */
-    async ensure(key, value) {
-        if (typeof key !== 'string') throw new TypeError('Key must be a string');
-        key = addKeyPrefix({ key, namespace: this.options.namespace });
-        const element = await this.has(key);
-        if (!element) {
-            await this.set(key, value);
-            return value;
-        } else {
-            return await this.get(key);
-        }
     }
 
     /**

@@ -9,7 +9,6 @@ serial('Adapters (Cache)', async t => {
   t.is(store.size, 0);
   t.is(await endb.set('foo', 'bar'), true);
   t.is(await endb.set('key', 'value'), true);
-  t.is(await endb.ensure('foo', 'bar'), 'bar');
   t.is(await endb.has('foo'), true);
   t.is(await endb.has('endb'), false);
   t.is(await endb.get('foo'), 'bar');
