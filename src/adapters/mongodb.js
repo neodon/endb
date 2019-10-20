@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const { safeRequire } = require('../util');
+const { removeKeyPrefix, safeRequire } = require('../util');
 const mongojs = safeRequire('mongojs');
 
 class EndbMongo extends EventEmitter {
@@ -10,12 +10,12 @@ class EndbMongo extends EventEmitter {
         url = url || {};
         if (typeof url === 'string') url = { url };
         if (url.uri) url = Object.assign({ url: url.uri }, url);
-        options = Object.assign({
+        this.options = Object.assign({
             url: 'mongodb://127.0.0.1:27017',
             collection: 'endb',
         }, url, options);
-        this.mongo = mongojs(options.uri);
-        const collection = this.mongo.collection(options.collection);
+        this.mongo = mongojs(this.options.uri);
+        const collection = this.mongo.collection(this.options.collection);
         collection.createIndex({ key: 1 }, {
             unique: true,
             background: true,
@@ -30,7 +30,14 @@ class EndbMongo extends EventEmitter {
     all() {
         return this.db.find()
             .then(data => {
-                return data.map(doc => doc === null ? undefined : doc.value);
+                const arr = [];
+                for (const i in data) {
+                    arr.push({
+                        key: removeKeyPrefix({ key: data[i].key, namespace: this.options.namespace }),
+                        value: this.options.deserialize(data[i].value).value
+                    });
+                }
+                return arr;
             });
     }
 
@@ -50,13 +57,11 @@ class EndbMongo extends EventEmitter {
 
     get(key) {
         return this.db.findOne({ key })
-            .then(data => {
-                return data === null ? undefined : data.value;
-            });
+            .then(data => data === null ? undefined : data.value);
     }
 
     set(key, value) {
-        return this.db.update({ key }, { key, value }, { upsert: true });
+        return this.db.update({ key }, { $set: { key, value } }, { upsert: true });
     }
 }
 
