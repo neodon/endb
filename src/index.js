@@ -122,6 +122,29 @@ class Endb extends EventEmitter {
     }
 
     /**
+     * Ensures that the element exists by setting it if it does not exist; otherwise, returning the element if it exists.
+     * @param {string} key The key of an element.
+     * @param {*} value The value of an element.
+     * @return {Promise<*>} The value of the element.
+     * @example
+     * endb.ensure('key', 'value').then(console.log).catch(console.error);
+     * 
+     * const element = await Endb.ensure('key', 'value');
+     * console.log(element);
+     */
+    async ensure(key, value) {
+        if (typeof key !== 'string') throw new TypeError('Key must be a string');
+        key = addKeyPrefix({ key, namespace: this.options.namespace });
+        const element = await this.has(key);
+        if (!element) {
+            await this.set(key, value);
+            return value;
+        } else {
+            return await this.get(key);
+        }
+    }
+
+    /**
      * Finds or searches for a single item where the given function returns a truthy value.
      * @param {Function} fn The function to execute on each element.
      * @param {*} [thisArg] Value to use as `this` inside function.
@@ -135,7 +158,7 @@ class Endb extends EventEmitter {
     async find(fn, thisArg) {
         if (typeof thisArg !== undefined) fn = fn.bind(thisArg);
         const elements = await this.all();
-        for (let i = 0; i < await elements.length; i++) {
+        for (let i = 0; i < elements.length; i++) {
             if (fn(elements[i].value)) return elements[i];
         }
         return undefined;
@@ -159,9 +182,8 @@ class Endb extends EventEmitter {
         return Promise.resolve()
             .then(() => this.options.store.get(key))
             .then(data => {
+                if (data === undefined) return undefined;
                 data = typeof data === 'string' ? this.options.deserialize(data) : data;
-                if (data === undefined)
-                    return undefined;
                 return (options && options.raw) ? data : data.value;
             });
     }
@@ -180,16 +202,13 @@ class Endb extends EventEmitter {
      *     console.log('does not exist');
      * }
      */
-    has(key) {
+    async has(key) {
         if (typeof key !== 'string') throw new TypeError('Key must be a string');
         key = addKeyPrefix({ key, namespace: this.options.namespace });
-        return Promise.resolve()
-            .then(() => {
-                if (this.options.store instanceof Map) {
-                    return this.options.store.has(key);
-                }
-                return typeof (this.get(key, { raw: true })) === 'object';
-            });
+        if (this.options.store instanceof Map) {
+            return await this.options.store.has(key);
+        }
+        return typeof (await this.get(key, { raw: true })) === 'object';
     }
 
     /**
