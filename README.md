@@ -69,7 +69,6 @@ endb.on('error', err => console.log('Connection Error: ', err));
 await endb.set('foo', 'bar'); // true
 await endb.set('exists', true); // true
 await endb.set('num', 10); // true
-await endb.ensure('foo', 'bar') // 'bar'
 await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
 await endb.get('exists'); // true
