@@ -4,9 +4,9 @@
     "description": "Simple key-value storage for multi adapter.",
     "main": "src/index.js",
     "scripts": {
-        "test": "ava --serial",
+        "build:test": "ava --serial",
         "lint": "eslint src",
-        "docs": "jsdoc -c .jsdoc.json",
+        "build:docs": "jsdoc -c .jsdoc.json",
         "prepublishOnly": "npm run test"
     },
     "repository": {
@@ -28,7 +28,6 @@
     "homepage": "https://endb.js.org",
     "devDependencies": {
         "ava": "^2.3.0",
-        "better-docs": "^1.1.6",
         "eslint": "^6.2.2",
         "jsdoc": "^3.6.3"
     }
