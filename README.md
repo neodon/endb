@@ -24,8 +24,8 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 - [Promise-based API](#Usage).
 - Suitable as cache or persistent database.
 - [Adapters](#Usage)
-- [Namespaces](#Namespaces)
-- [Serializers](#Custom-Serializers)
+- [Namespaces](https://endb.js.org/tutorial-Namespaces.html)
+- [Serializers](https://endb.js.org/tutorial-Custom%20Serializers.html)
 - JSON types including `Buffer`
 - Connection errors are sent through (connection errors won't kill the process).
 
