@@ -20,12 +20,14 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 
 ## Why Endb?
 
-* High performance, efficiency, and simplicity.
-* Simple [Promise-based API](#Usage).
-* Suitable as cache or persistent database.
-* Supports [adapters](#Usage), [namespaces](#Namespaces), [serializers](#Custom-Serializers).
-* Handles all JSON types including `Buffer`.
-* Connection errors are sent to instance (connection errors won't kill the process).
+- High performance, efficiency, and simplicity.
+- [Promise-based API](#Usage).
+- Suitable as cache or persistent database.
+- [Adapters](#Usage)
+- [Namespaces](#Namespaces)
+- [Serializers](#Custom-Serializers)
+- JSON types including `Buffer`
+- Connection errors are sent through (connection errors won't kill the process).
 
 ## Installation
 
@@ -78,23 +80,6 @@ await endb.delete('foo'); // true
 await endb.clear(); // undefined
 ```
 
-## Namespaces
-
-You can set a namespace to avoid key collisions and namespaces allow you to clear only a certain namespace while using the same database.
-
-```javascript
-const users = new Endb('redis://user:pass@localhost:6379', { namespace: 'users' });
-const cache = new Endb('redis://user:pass@localhost:6379', { namespace: 'cache' });
-
-await users.set('foo', 'users'); // true
-await cache.set('foo', 'cache'); // true
-await users.get('foo'); // 'users'
-await cache.get('foo'); // 'cache'
-await users.clear(); // undefined
-await users.get('foo'); // undefined
-await cache.get('foo'); // 'cache'
-```
-
 ## Third-party Adapters
 
 You can integrate and use a third-party adapter or build your own.
@@ -120,16 +105,4 @@ const Endb = require('endb');
 const QuickLRU = require('quick-lru');
 
 const endb = new Endb({ store: new QuickLRU() });
-```
-
-## Custom Serializers
-
-Endb uses its own parse and stringify functions for serialization and deserialization of data to ensure consistency.
-Optionally, You can pass your own (de)serialization functions to support extra data types or to (de)serialize to something else.
-
-```javascript
-const endb = new Endb({
-    serialize: JSON.stringify,
-    deserialize: JSON.parse
-});
 ```
