@@ -1,15 +1,15 @@
 {
     "plugins": [
         "plugins/markdown",
-        "plugins/summarize"
+        "plugins/summarize",
+        "plugins/overloadHelper",
+        "plugins/sourcetag"
     ],
     "source": {
         "include": [
             "src",
             "README.md"
-        ],
-        "includePattern": ".js$",
-        "excludePattern": "(node_modules/|docs/|test/)"
+        ]
     },
     "sourceType": "module",
     "tags": {
@@ -19,32 +19,17 @@
         ]
     },
     "opts": {
-        "template": "./node_modules/better-docs",
         "encoding": "utf8",
         "destination": "docs/",
         "readme": "README.md",
         "recurse": true,
-        "verbose": true
+        "verbose": true,
+        "tutorials": "docs/tutorials"
     },
     "templates": {
         "collapse": true,
         "cleverLinks": false,
         "monospaceLinks": false,
-        "linenums": true,
-        "better-docs": {
-            "name": "Endb",
-            "logo": "./media/logo.png",
-            "trackingCode": "UA-149839118-1",
-            "navigation": [
-                {
-                    "label": "GitHub",
-                    "href": "https://github.com/endb/endb"
-                },
-                {
-                    "label": "NPM",
-                    "href": "https://npmjs.com/package/endb"
-                }
-            ]
-        }
+        "linenums": true
     }
 }
