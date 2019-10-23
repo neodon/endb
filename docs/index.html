@@ -1,77 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    UA-149839118-1
     <meta charset="utf-8">
     <title>JSDoc: Home</title>
 
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="./build/entry.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
 </head>
 
 <body>
-    <div id="stickyNavbarOverlay"></div>
-    <div class="top-navbar">
-        <div class="container">
-            <nav class="navbar" role="navigation" aria-label="main navigation">
-                <div class="navbar-brand">
-                     
-                        <img src="./media/logo.png" alt="logo">
-                    
-                     
-                        <h1 class="navbar-item">Endb</h1>
-                    
-                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                        <span aria-hidden="true"></span>
-                    </a>
-                </div>
-                 
-                <div class="navbar-menu">
-                    <div class="navbar-end">
-                    
-                        <div class="navbar-item">
-                            <a href="https://github.com/endb/endb" target="_blank">GitHub</a>
-                        </div>
-                    
-                        <div class="navbar-item">
-                            <a href="https://npmjs.com/package/endb" target="_blank">NPM</a>
-                        </div>
-                    
-                    </div>
-                </div>
-                
-            </nav>
-        </div>
-    </div>
-    <div class="container">
-        <div class="columns">
-            <div class="column is-3" id="sidebarNav">
-                <div class="sidebar">
-                    <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Endb.html">Endb</a></li></ul></div>
-                    </nav>
-                </div>
-            </div>
-            <div class="column is-9-desktop">
-                <div class="content" id="main-content-wrapper">
-                    <header class="page-title">
-                        <p>Title</p>
-                        <h1>Home</h1>
-                    </header>
-                    
-                    
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
 
 
 
@@ -96,11 +44,9 @@
 
     <section>
         <article><div align="center">
-    <br />
     <p>
         <a href="https://endb.js.org"><img src="media/logo.png" alt="endb" /></a>
     </p>
-    <br />
     <p>
         <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="Version" /></a>
         <a href="https://travis-ci.org/chroventer/endb"><img src="https://travis-ci.org/chroventer/endb.svg?branch=master" alt="Build Status" /></a>
@@ -110,18 +56,20 @@
         <a href="https://github.com/chroventer/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/chroventer/endb" alt="License" /></a>
     </p>
 </div>
-<p>Simple key-value storage for multi adapter.
+<p>🗃 Simple key-value storage for multi adapter.
 Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
 You can also integrate your own adapter (open a pull-request).</p>
 <p>New to Endb? Check out the <a href="https://endb.js.org">API Reference</a></p>
-<h2>Features</h2>
+<h2>Why Endb?</h2>
 <ul>
 <li>High performance, efficiency, and simplicity.</li>
-<li>Simple <a href="#Usage">Promise-based API</a>.</li>
+<li><a href="#Usage">Promise-based API</a>.</li>
 <li>Suitable as cache or persistent database.</li>
-<li>Supports <a href="#Usage">adapters</a>, <a href="#Namespaces">namespaces</a>, <a href="#Custom-Serializers">serializers</a>.</li>
-<li>Handles all JSON types including <code>Buffer</code>.</li>
-<li>Connection errors are sent to instance (connection errors won't kill the process).</li>
+<li><a href="#Usage">Adapters</a></li>
+<li><a href="#Namespaces">Namespaces</a></li>
+<li><a href="#Custom-Serializers">Serializers</a></li>
+<li>JSON types including <code>Buffer</code></li>
+<li>Connection errors are sent through (connection errors won't kill the process).</li>
 </ul>
 <h2>Installation</h2>
 <pre class="prettyprint source lang-bash"><code>npm install endb
@@ -155,7 +103,6 @@ endb.on('error', err => console.log('Connection Error: ', err));
 await endb.set('foo', 'bar'); // true
 await endb.set('exists', true); // true
 await endb.set('num', 10); // true
-await endb.ensure('foo', 'bar') // 'bar'
 await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
 await endb.get('exists'); // true
@@ -165,19 +112,6 @@ await endb.has('bar'); // false
 await endb.find(value => value === 'bar'); // { ... }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
-</code></pre>
-<h2>Namespaces</h2>
-<p>You can set a namespace to avoid key collisions and namespaces allow you to clear only a certain namespace while using the same database.</p>
-<pre class="prettyprint source lang-javascript"><code>const users = new Endb('redis://user:pass@localhost:6379', { namespace: 'users' });
-const cache = new Endb('redis://user:pass@localhost:6379', { namespace: 'cache' });
-
-await users.set('foo', 'users'); // true
-await cache.set('foo', 'cache'); // true
-await users.get('foo'); // 'users'
-await cache.get('foo'); // 'cache'
-await users.clear(); // undefined
-await users.get('foo'); // undefined
-await cache.get('foo'); // 'cache'
 </code></pre>
 <h2>Third-party Adapters</h2>
 <p>You can integrate and use a third-party adapter or build your own.</p>
@@ -195,14 +129,6 @@ However, extension methods (all and find) may not work.</p>
 const QuickLRU = require('quick-lru');
 
 const endb = new Endb({ store: new QuickLRU() });
-</code></pre>
-<h2>Custom Serializers</h2>
-<p>Endb uses its own parse and stringify functions for serialization and deserialization of data to ensure consistency.
-Optionally, You can pass your own (de)serialization functions to support extra data types or to (de)serialize to something else.</p>
-<pre class="prettyprint source lang-javascript"><code>const endb = new Endb({
-    serialize: JSON.stringify,
-    deserialize: JSON.parse
-});
 </code></pre></article>
     </section>
 
@@ -211,22 +137,19 @@ Optionally, You can pass your own (de)serialization functions to support extra d
 
 
 
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Oct 20 2019 20:13:02 GMT+0400 (Gulf Standard Time)</p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-        </p>
-    </div>
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Endb.html">Endb</a></li></ul><h3>Tutorials</h3><ul><li><a href="tutorial-Custom Serializers.html">Custom Serializers</a></li><li><a href="tutorial-Namespaces.html">Namespaces</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Oct 23 2019 22:03:56 GMT+0400 (Gulf Standard Time)
 </footer>
 
-<script src="scripts/app.min.js"></script>
+<script> prettyPrint(); </script>
 <script src="scripts/linenumber.js"> </script>
 </body>
 </html>
