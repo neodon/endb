@@ -1,9 +1,7 @@
 <div align="center">
-    <br />
     <p>
         <a href="https://endb.js.org"><img src="media/logo.png" alt="endb" /></a>
     </p>
-    <br />
     <p>
         <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="Version" /></a>
         <a href="https://travis-ci.org/chroventer/endb"><img src="https://travis-ci.org/chroventer/endb.svg?branch=master" alt="Build Status" /></a>
@@ -14,13 +12,13 @@
     </p>
 </div>
 
-Simple key-value storage for multi adapter.
+🗃 Simple key-value storage for multi adapter.
 Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
 You can also integrate your own adapter (open a pull-request).
 
 New to Endb? Check out the [API Reference](https://endb.js.org)
 
-## Features
+## Why Endb?
 
 * High performance, efficiency, and simplicity.
 * Simple [Promise-based API](#Usage).
