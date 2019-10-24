@@ -25,7 +25,7 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 - Suitable as cache or persistent database.
 - [Adapters](#Usage)
 - [Namespaces](https://endb.js.org/tutorial-Namespaces.html)
-- [Serializers](https://endb.js.org/tutorial-Custom-Serializers.html)
+- [Custom Serializers](https://endb.js.org/tutorial-Custom-Serializers.html)
 - [Third-Party Adapters](https://endb.js.org/tutorial-Third-Party-Adapters.html)
 - JSON types including `Buffer`
 - Connection errors are sent through (connection errors won't kill the process).
@@ -79,3 +79,9 @@ await endb.find(v => v === 'bar'); // { ... }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
 ```
+
+## Links
+
+- [Documentation](https://endb.js.org)
+- [NPM](https://npmjs.com/package/endb)
+- [Discord](https://discord.gg/cetqPMv)
