@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Tutorial: Namespaces</title>
+    <title>JSDoc: Tutorial: Custom-Serializers</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,33 +17,27 @@
 
 <div id="main">
 
-    <h1 class="page-title">Tutorial: Namespaces</h1>
+    <h1 class="page-title">Tutorial: Custom-Serializers</h1>
 
     <section>
 
 <header>
     
 
-    <h2>Namespaces</h2>
+    <h2>Custom-Serializers</h2>
 </header>
 
 <article>
-    <ul>
-<li><strong>Isolation</strong>: Namespaces isolate elements within a database.</li>
-<li><strong>Avoid Key-Collisions</strong>: Endb namespaces separate elements (keys &amp; values) by prefixing the key with a certain name.</li>
-<li><strong>Clear Certain Namespace</strong>: Namespaces allow you to clear only a certain namespace while using the same database.</li>
-</ul>
-<pre class="prettyprint source lang-javascript"><code>const users = new Endb({ namespace: 'users' });
-const members = new Endb({ namespace: 'cache' });
-
-await users.set('foo', 'users'); // true
-await members.set('foo', 'members'); // true
-await users.get('foo'); // 'users'
-await members.get('foo'); // 'members'
-await users.clear(); // undefined
-await users.get('foo'); // undefined
-await members.get('foo'); // 'members'
+    <p>By default, Endb uses its own parse and stringify methods for data serialization to ensure consistency.
+Optionally, You can pass your own serialization methods to support extra data types.</p>
+<pre class="prettyprint source lang-javascript"><code>const endb = new Endb({
+    serialize: JSON.stringify,
+    deserialize: JSON.parse
+});
 </code></pre>
+<blockquote>
+<p>Warning: Using custom serializers means you lose any guarantee of data consistency. You should do extensive testing with your serialisation functions and chosen storage engine.</p>
+</blockquote>
 </article>
 
 </section>

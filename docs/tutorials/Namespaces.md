@@ -1,4 +1,6 @@
-Endb supports namespaces to avoid key collisions. Namespaces allow you to perform operations only for a certain namespace while using the same database.
+- **Isolation**: Namespaces isolate elements within a database.
+- **Avoid Key-Collisions**: Endb namespaces separate elements (keys & values) by prefixing the key with a certain name.
+- **Clear Certain Namespace**: Namespaces allow you to clear only a certain namespace while using the same database.
 
 ```javascript
 const users = new Endb({ namespace: 'users' });

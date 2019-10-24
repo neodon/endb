@@ -1,6 +1,6 @@
 <div align="center">
     <p>
-        <a href="https://endb.js.org"><img src="media/logo.png" alt="endb" /></a>
+        <a href="https://endb.js.org"><img src="docs/media/logo.png" alt="endb" /></a>
     </p>
     <p>
         <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="Version" /></a>
@@ -25,7 +25,8 @@ New to Endb? Check out the [API Reference](https://endb.js.org)
 - Suitable as cache or persistent database.
 - [Adapters](#Usage)
 - [Namespaces](https://endb.js.org/tutorial-Namespaces.html)
-- [Serializers](https://endb.js.org/tutorial-Custom%20Serializers.html)
+- [Serializers](https://endb.js.org/tutorial-Custom-Serializers.html)
+- [Third-Party Adapters](https://endb.js.org/tutorial-Third-Party-Adapters.html)
 - JSON types including `Buffer`
 - Connection errors are sent through (connection errors won't kill the process).
 
@@ -54,7 +55,6 @@ $ npm install sqlite3 # SQLite
 
 ```javascript
 const Endb = require('endb');
-
 const endb = new Endb();
 const endb = new Endb('leveldb://path/to/database');
 const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
@@ -75,34 +75,7 @@ await endb.get('exists'); // true
 await endb.all(); // { ... }
 await endb.has('foo'); // true
 await endb.has('bar'); // false
-await endb.find(value => value === 'bar'); // { ... }
+await endb.find(v => v === 'bar'); // { ... }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
-```
-
-## Third-party Adapters
-
-You can integrate and use a third-party adapter or build your own.
-
-```js
-const Endb = require('endb');
-const myAdapter = require('./my-adapter');
-
-const endb = new Endb({ store: myAdapter });
-```
-
-Any store that follows the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API will work.
-
-```js
-new Endb({ store: new Map() });
-```
-
-For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated module that implements the Map API.
-However, extension methods (all and find) may not work.
-
-```js
-const Endb = require('endb');
-const QuickLRU = require('quick-lru');
-
-const endb = new Endb({ store: new QuickLRU() });
 ```
