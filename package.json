@@ -4,7 +4,7 @@
     "description": "Simple key-value storage for multi adapter.",
     "main": "src/index.js",
     "scripts": {
-        "test": "xo && ava && npm run lint",
+        "test": "ava && npm run lint",
         "test:watch": "ava --watch",
         "lint": "xo src",
         "build:docs": "jsdoc -c .jsdoc.json",
