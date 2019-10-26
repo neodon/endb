@@ -53,7 +53,7 @@ class Endb extends EventEmitter {
 	 * await endb.all(); // { ... }
 	 * await endb.has('foo'); // true
 	 * await endb.has('bar'); // false
-	 * await endb.find(value => value === 'bar'); // { ... }
+	 * await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
 	 * await endb.delete('foo'); // true
 	 * await endb.clear(); // undefined
 	 */

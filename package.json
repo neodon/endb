@@ -4,7 +4,7 @@
     "description": "Simple key-value storage for multi adapter.",
     "main": "src/index.js",
     "scripts": {
-        "test": "ava && npm run lint",
+        "test": "npm run lint && ava",
         "test:watch": "ava --watch",
         "lint": "xo src",
         "build:docs": "jsdoc -c .jsdoc.json",
@@ -27,9 +27,10 @@
         "url": "https://github.com/chroventer/endb/issues"
     },
     "homepage": "https://endb.js.org",
+    "dependencies": {},
     "devDependencies": {
-        "ava": "^2.4.0",
         "jsdoc": "^3.6.3",
+        "ava": "^2.4.0",
         "xo": "^0.25.3"
     },
     "xo": {
