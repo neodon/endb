@@ -13,10 +13,11 @@
 </div>
 
 🗃 Simple key-value storage for multi adapter.
-Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
-You can also integrate your own adapter (open a pull-request).
 
-New to Endb? Check out the [API Reference](https://endb.js.org)
+Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
+You can also [integrate your own adapter](https://github.com/chroventer/endb/pulls).
+
+New to Endb? Check out the [Documentation](https://endb.js.org).
 
 ## Why Endb?
 
