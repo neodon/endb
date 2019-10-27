@@ -19,6 +19,7 @@
         ]
     },
     "opts": {
+        "template": "node_modules/endoc",
         "encoding": "utf8",
         "destination": "docs/",
         "readme": "README.md",
@@ -30,6 +31,10 @@
         "collapse": true,
         "cleverLinks": false,
         "monospaceLinks": false,
-        "linenums": true
+        "linenums": true,
+        "endoc": {
+            "title": "Endb",
+            "footer": false
+        }
     }
 }

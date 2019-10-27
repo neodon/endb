@@ -29,8 +29,9 @@
     "homepage": "https://endb.js.org",
     "dependencies": {},
     "devDependencies": {
-        "jsdoc": "^3.6.3",
         "ava": "^2.4.0",
+        "endoc": "github:chroventer/endoc",
+        "jsdoc": "^3.6.3",
         "xo": "^0.25.3"
     },
     "xo": {
