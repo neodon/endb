@@ -1,40 +1,31 @@
 {
-    "plugins": [
-        "plugins/markdown",
-        "plugins/summarize",
-        "plugins/overloadHelper",
-        "plugins/sourcetag"
-    ],
-    "source": {
-        "include": [
-            "src",
-            "README.md"
-        ]
-    },
-    "sourceType": "module",
-    "tags": {
-        "allowUnknownTags": true,
-        "dictionaries": [
-            "jsdoc"
-        ]
-    },
-    "opts": {
-        "template": "node_modules/endoc",
-        "encoding": "utf8",
-        "destination": "docs/",
-        "readme": "README.md",
-        "recurse": true,
-        "verbose": true,
-        "tutorials": "docs/tutorials"
-    },
-    "templates": {
-        "collapse": true,
-        "cleverLinks": false,
-        "monospaceLinks": false,
-        "linenums": true,
-        "endoc": {
-            "title": "Endb",
-            "footer": false
-        }
-    }
+  "plugins": [
+    "plugins/markdown",
+    "plugins/summarize",
+    "plugins/overloadHelper",
+    "plugins/sourcetag"
+  ],
+  "source": {
+    "include": ["src", "README.md"]
+  },
+  "sourceType": "module",
+  "tags": {
+    "allowUnknownTags": true,
+    "dictionaries": ["jsdoc"]
+  },
+  "opts": {
+    "template": "node_modules/minami",
+    "encoding": "utf8",
+    "destination": "docs/",
+    "readme": "README.md",
+    "recurse": true,
+    "verbose": true,
+    "tutorials": "docs/tutorials"
+  },
+  "templates": {
+    "collapse": true,
+    "cleverLinks": false,
+    "monospaceLinks": false,
+    "linenums": true
+  }
 }

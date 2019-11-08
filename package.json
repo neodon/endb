@@ -27,11 +27,11 @@
         "url": "https://github.com/chroventer/endb/issues"
     },
     "homepage": "https://endb.js.org",
-    "dependencies": {},
     "devDependencies": {
         "ava": "^2.4.0",
-        "endoc": "github:chroventer/endoc",
+        "jaguarjs-jsdoc": "^1.1.0",
         "jsdoc": "^3.6.3",
+        "minami": "^1.2.3",
         "xo": "^0.25.3"
     },
     "xo": {
