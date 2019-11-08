@@ -6,6 +6,6 @@ import Endb from '../src';
 test('Class', t => {
 	console.log(typeof Endb);
 	t.is(typeof Endb, 'function');
-	t.throws(() => Endb());
+	t.throws(() => Endb()); // eslint-disable-line new-cap
 	t.notThrows(() => new Endb());
 });
