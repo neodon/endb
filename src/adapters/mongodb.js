@@ -1,10 +1,10 @@
 'use strict';
 
-const EventEmitter = require('events');
-const {removeKeyPrefix, safeRequire} = require('../util');
-const mongojs = safeRequire('mongojs');
+const {EventEmitter} = require('events');
+const util = require('../util');
+const mongojs = util.safeRequire('mongojs');
 
-class EndbMongo extends EventEmitter {
+module.exports = class MongoDB extends EventEmitter {
 	constructor(url, options = {}) {
 		super();
 		url = url || {};
@@ -24,8 +24,8 @@ class EndbMongo extends EventEmitter {
 			url,
 			options
 		);
-		this.mongo = mongojs(this.options.uri);
-		const collection = this.mongo.collection(this.options.collection);
+		this.client = mongojs(this.options.uri);
+		const collection = this.client.collection(this.options.collection);
 		collection.createIndex(
 			{key: 1},
 			{
@@ -39,7 +39,7 @@ class EndbMongo extends EventEmitter {
 			);
 			return obj;
 		}, {});
-		this.mongo.on('error', err => this.emit('error', err));
+		this.client.on('error', err => this.emit('error', err));
 	}
 
 	all() {
@@ -47,10 +47,7 @@ class EndbMongo extends EventEmitter {
 			const arr = [];
 			for (const i in data) {
 				arr.push({
-					key: removeKeyPrefix({
-						key: data[i].key,
-						namespace: this.options.namespace
-					}),
+					key: util.removeKeyPrefix(data[i].key, this.options.namespace),
 					value: this.options.deserialize(data[i].value).value
 				});
 			}
@@ -66,7 +63,7 @@ class EndbMongo extends EventEmitter {
 	}
 
 	close() {
-		return this.mongo.close();
+		return this.client.close();
 	}
 
 	delete(key) {
@@ -82,6 +79,4 @@ class EndbMongo extends EventEmitter {
 	set(key, value) {
 		return this.db.update({key}, {$set: {key, value}}, {upsert: true});
 	}
-}
-
-module.exports = EndbMongo;
+};

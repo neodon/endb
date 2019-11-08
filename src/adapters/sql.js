@@ -1,10 +1,10 @@
 'use strict';
 
-const EventEmitter = require('events');
-const {safeRequire, removeKeyPrefix} = require('../util');
-const {Sql} = safeRequire('sql');
+const {EventEmitter} = require('events');
+const util = require('../util');
+const sql = util.safeRequire('sql');
 
-class EndbSql extends EventEmitter {
+module.exports = class SQL extends EventEmitter {
 	constructor(options = {}) {
 		super();
 		this.options = Object.assign(
@@ -14,12 +14,9 @@ class EndbSql extends EventEmitter {
 			},
 			options
 		);
-		if (!Sql) {
-			return undefined;
-		}
 
-		const sql = new Sql(this.options.dialect);
-		this.entry = sql.define({
+		this.sql = new sql.Sql(this.options.dialect);
+		this.entry = this.sql.define({
 			name: this.options.table,
 			columns: [
 				{
@@ -49,10 +46,7 @@ class EndbSql extends EventEmitter {
 			const arr = [];
 			for (const i in rows) {
 				arr.push({
-					key: removeKeyPrefix({
-						key: rows[i].key,
-						namespace: this.options.namespace
-					}),
+					key: util.removeKeyPrefix(rows[i].key, this.options.namespace),
 					value: this.options.deserialize(rows[i].value).value
 				});
 			}
@@ -69,34 +63,29 @@ class EndbSql extends EventEmitter {
 	}
 
 	delete(key) {
-		return this.query(
-			this.entry
-				.select()
-				.where({key})
-				.toString()
-		).then(rows => {
+		const select = this.entry
+			.select()
+			.where({key})
+			.toString();
+		const del = this.entry
+			.delete()
+			.where({key})
+			.toString();
+		return this.query(select).then(rows => {
 			const row = rows[0];
-			if (typeof row === 'undefined') {
-				return false;
-			}
-
-			return this.query(
-				this.entry
-					.delete()
-					.where({key})
-					.toString()
-			).then(() => true);
+			if (row === undefined) return false;
+			return this.query(del).then(() => true);
 		});
 	}
 
 	get(key) {
-		return this.query(
-			this.entry
-				.select()
-				.where({key})
-				.toString()
-		).then(rows => {
+		const select = this.entry
+			.select()
+			.where({key})
+			.toString();
+		return this.query(select).then(rows => {
 			const row = rows[0];
+			if (row === undefined) return undefined;
 			return row === undefined ? undefined : row.value;
 		});
 	}
@@ -121,6 +110,4 @@ class EndbSql extends EventEmitter {
 
 		return this.query(upsert);
 	}
-}
-
-module.exports = EndbSql;
+};

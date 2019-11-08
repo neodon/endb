@@ -1,10 +1,10 @@
 'use strict';
 
-const {safeRequire} = require('../util');
-const EndbSql = require('./sql');
-const {createConnection} = safeRequire('mysql2/promise');
+const util = require('../util');
+const Sql = require('./Sql');
+const mysql = util.safeRequire('mysql2/promise');
 
-class EndbMysql extends EndbSql {
+module.exports = class MySQL extends Sql {
 	constructor(options = {}) {
 		if (typeof options === 'string') {
 			options = {uri: options};
@@ -19,12 +19,10 @@ class EndbMysql extends EndbSql {
 		);
 		options.connect = () =>
 			Promise.resolve()
-				.then(() => createConnection(options.uri))
+				.then(() => mysql.createConnection(options.uri))
 				.then(connection => {
 					return sql => connection.execute(sql).then(data => data[0]);
 				});
 		super(options);
 	}
-}
-
-module.exports = EndbMysql;
+};

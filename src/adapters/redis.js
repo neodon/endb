@@ -1,10 +1,10 @@
 'use strict';
 
-const EventEmitter = require('events');
-const {safeRequire} = require('../util');
-const {createClient} = safeRequire('redis');
+const {EventEmitter} = require('events');
+const util = require('../util');
+const redis = util.safeRequire('redis');
 
-class EndbRedis extends EventEmitter {
+module.exports = class Redis extends EventEmitter {
 	constructor(uri, options = {}) {
 		super();
 		options = Object.assign({}, typeof uri === 'string' ? {uri} : uri, options);
@@ -12,7 +12,7 @@ class EndbRedis extends EventEmitter {
 			options.url = options.uri;
 		}
 
-		const client = createClient(options);
+		const client = redis.createClient(options);
 		this.db = [
 			'get',
 			'keys',
@@ -73,6 +73,4 @@ class EndbRedis extends EventEmitter {
 	_prefixNamespace() {
 		return this.namespace ? `namespace:${this.namespace}` : undefined;
 	}
-}
-
-module.exports = EndbRedis;
+};

@@ -1,10 +1,10 @@
 'use strict';
 
-const {safeRequire} = require('../util');
-const {Database} = safeRequire('sqlite3');
-const EndbSql = require('./sql');
+const util = require('../util');
+const sqlite3 = util.safeRequire('sqlite3');
+const Sql = require('./sql');
 
-class EndbSqlite extends EndbSql {
+module.exports = class SQLite extends Sql {
 	constructor(options = {}) {
 		options = Object.assign(
 			{
@@ -16,7 +16,7 @@ class EndbSqlite extends EndbSql {
 		options.path = options.uri.replace(/^sqlite:\/\//, '');
 		options.connect = () =>
 			new Promise((resolve, reject) => {
-				const db = new Database(options.path, err => {
+				const db = new sqlite3.Database(options.path, err => {
 					if (err) {
 						reject(err);
 					} else {
@@ -34,6 +34,4 @@ class EndbSqlite extends EndbSql {
 			);
 		super(options);
 	}
-}
-
-module.exports = EndbSqlite;
+};

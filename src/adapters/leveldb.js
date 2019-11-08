@@ -1,10 +1,10 @@
 'use strict';
 
-const EventEmitter = require('events');
-const {safeRequire} = require('../util');
-const Level = safeRequire('level');
+const {EventEmitter} = require('events');
+const util = require('../util');
+const Level = util.safeRequire('level');
 
-class EndbLevel extends EventEmitter {
+module.exports = class LevelDB extends EventEmitter {
 	constructor(uri, options = {}) {
 		super();
 		options = Object.assign(
@@ -15,7 +15,7 @@ class EndbLevel extends EventEmitter {
 			options
 		);
 		options.path = options.uri.replace(/^leveldb:\/\//, '');
-		const level = new Level(options.path, options, err => {
+		const client = new Level(options.path, options, err => {
 			this.emit('error', err);
 		});
 		this.db = [
@@ -26,7 +26,7 @@ class EndbLevel extends EventEmitter {
 			'put',
 			'close'
 		].reduce((obj, method) => {
-			obj[method] = require('util').promisify(level[method].bind(level));
+			obj[method] = require('util').promisify(client[method].bind(client));
 			return obj;
 		}, {});
 	}
@@ -65,6 +65,4 @@ class EndbLevel extends EventEmitter {
 	set(key, value) {
 		return this.db.put(key, value);
 	}
-}
-
-module.exports = EndbLevel;
+};

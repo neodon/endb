@@ -1,14 +1,7 @@
 'use strict';
 
-const EventEmitter = require('events');
-const {
-	addKeyPrefix,
-	removeKeyPrefix,
-	load,
-	math,
-	parse,
-	stringify
-} = require('./util');
+const {EventEmitter} = require('events');
+const util = require('./util');
 
 /**
  * @class Endb
@@ -18,15 +11,15 @@ const {
 class Endb extends EventEmitter {
 	/**
 	 * @constructor
-	 * @param {string} [uri] The connection string URI. (Default: undefined)
-	 * @param {Object} [options] The options for the database. (Default: {})
-	 * @param {string} [options.namespace] The name of the database. (Default: endb)
+	 * @param {string} [uri=undefined] The connection string URI.
+	 * @param {Object} [options={}] The options for the database.
+	 * @param {string} [options.namespace='endb'] The name of the database.
 	 * @param {Function} [options.serialize] A custom serialization function.
 	 * @param {Function} [options.deserialize] A custom deserialization function.
 	 * @param {string} [options.adapter] The adapter to be used.
-	 * @param {string} [options.collection] The name of the collection. (MongoDB)
-	 * @param {string} [options.table] The name of the table. (SQL database)
-	 * @param {number} [options.keySize] The size of the key. (SQL database)
+	 * @param {string} [options.collection='endb'] The name of the collection. (only for MongoDB)
+	 * @param {string} [options.table='endb'] The name of the table. (only for SQL adapters)
+	 * @param {number} [options.keySize=255] The size of the key. (only for SQL adapters)
 	 * @example
 	 * const endb = new Endb();
 	 * const endb = new Endb({
@@ -62,14 +55,15 @@ class Endb extends EventEmitter {
 		this.options = Object.assign(
 			{
 				namespace: 'endb',
-				serialize: stringify,
-				deserialize: parse
+				serialize: util.stringify,
+				deserialize: util.parse
 			},
 			typeof uri === 'string' ? {uri} : uri,
 			options
 		);
+
 		if (!this.options.store) {
-			this.options.store = load(Object.assign({}, this.options));
+			this.options.store = util.load(Object.assign({}, this.options));
 		}
 
 		if (typeof this.options.store.on === 'function') {
@@ -81,7 +75,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Gets all the elements (keys and values) from the database.
-	 * @returns {Promise<Object>} All the elements (keys and values).
+	 * @returns {Promise<any[]>} All the elements (keys and values).
 	 * @example
 	 * Endb.all().then(console.log).catch(console.error);
 	 *
@@ -95,7 +89,7 @@ class Endb extends EventEmitter {
 					const arr = [];
 					for (const [key, value] of this.options.store) {
 						arr.push({
-							key: removeKeyPrefix({key, namespace: this.options.namespace}),
+							key: util.removeKeyPrefix(key, this.options.namespace),
 							value: this.options.deserialize(value).value
 						});
 					}
@@ -126,16 +120,15 @@ class Endb extends EventEmitter {
 	 * Endb.delete('key').then(console.log).catch(console.error);
 	 */
 	delete(key) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string');
-		}
-
-		key = addKeyPrefix({key, namespace: this.options.namespace});
+		key = util.addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve().then(() => this.options.store.delete(key));
 	}
 
 	/**
 	 * Finds or searches for a single item where the given function returns a truthy value.
+   * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.
+   * The database elements is mapped by their `key`. If you want to find an element by key, you should use the `get` method instead.
+   * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
 	 * @param {Function} fn The function to execute on each element.
 	 * @param {*} [thisArg] Value to use as `this` inside function.
 	 * @returns {Promise<*|undefined>}
@@ -173,19 +166,17 @@ class Endb extends EventEmitter {
 	 * console.log(value);
 	 */
 	get(key, options = {}) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string');
-		}
-
-		key = addKeyPrefix({key, namespace: this.options.namespace});
+		key = util.addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => this.options.store.get(key))
+			.then(data =>
+				typeof data === 'string' ? this.options.deserialize(data) : data
+			)
 			.then(data => {
 				if (data === undefined) {
 					return undefined;
 				}
 
-				data = typeof data === 'string' ? this.options.deserialize(data) : data;
 				return options && options.raw ? data : data.value;
 			});
 	}
@@ -205,11 +196,7 @@ class Endb extends EventEmitter {
 	 * }
 	 */
 	async has(key) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string');
-		}
-
-		key = addKeyPrefix({key, namespace: this.options.namespace});
+		key = util.addKeyPrefix(key, this.options.namespace);
 		if (this.options.store instanceof Map) {
 			const data = await this.options.store.has(key);
 			return data;
@@ -240,10 +227,6 @@ class Endb extends EventEmitter {
 	 * });
 	 */
 	async math(key, operation, operand) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string');
-		}
-
 		if (operation === 'random' || operation === 'rand') {
 			const data = await this.set(key, Math.round(Math.random() * operand));
 			return data;
@@ -251,7 +234,7 @@ class Endb extends EventEmitter {
 
 		const data = await this.set(
 			key,
-			math(await this.get(key), operation, operand)
+			util.math(await this.get(key), operation, operand)
 		);
 		return data;
 	}
@@ -300,11 +283,7 @@ class Endb extends EventEmitter {
 	 * }).then(console.log).catch(console.error);
 	 */
 	set(key, value) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string');
-		}
-
-		key = addKeyPrefix({key, namespace: this.options.namespace});
+		key = util.addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => {
 				return this.options.store.set(key, this.options.serialize({value}));
@@ -315,5 +294,5 @@ class Endb extends EventEmitter {
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.Util = require('./util');
+module.exports.util = require('./util');
 module.exports.version = require('../package').version;

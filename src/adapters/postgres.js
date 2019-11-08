@@ -1,10 +1,10 @@
 'use strict';
 
-const {safeRequire} = require('../util');
-const EndbSql = require('./sql');
-const {Pool} = safeRequire('pg');
+const util = require('../util');
+const Sql = require('./Sql');
+const pg = util.safeRequire('pg');
 
-class EndbPostgres extends EndbSql {
+module.exports = class PostgreSQL extends Sql {
 	constructor(options = {}) {
 		options = Object.assign(
 			{
@@ -15,13 +15,11 @@ class EndbPostgres extends EndbSql {
 		);
 		options.connect = () =>
 			Promise.resolve().then(() => {
-				const pool = new Pool({
+				const client = new pg.Pool({
 					connectionString: options.uri
 				});
-				return sql => pool.query(sql).then(data => data.rows);
+				return sql => client.query(sql).then(data => data.rows);
 			});
 		super(options);
 	}
-}
-
-module.exports = EndbPostgres;
+};

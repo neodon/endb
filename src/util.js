@@ -1,11 +1,7 @@
 'use strict';
 
 module.exports = class Util {
-	constructor() {
-		throw new Error('Util class may not be constructed.');
-	}
-
-	static addKeyPrefix({key, namespace}) {
+	static addKeyPrefix(key, namespace) {
 		if (key === null) {
 			return null;
 		}
@@ -46,6 +42,7 @@ module.exports = class Util {
 			mongo: './adapters/mongodb',
 			mongodb: './adapters/mongodb',
 			mysql: './adapters/mysql',
+			mysql2: './adapters/mysql',
 			postgres: './adapters/postgres',
 			postgresql: './adapters/postgres',
 			redis: './adapters/redis',
@@ -113,24 +110,12 @@ module.exports = class Util {
 		});
 	}
 
-	static removeKeyPrefix({key, namespace}) {
+	static removeKeyPrefix(key, namespace) {
 		if (key === null) {
 			return null;
 		}
 
 		return namespace ? key.replace(`${namespace}:`, '') : key;
-	}
-
-	static rowsToObject(rows) {
-		const obj = {};
-		for (const i in rows) {
-			const row = rows[i];
-			obj[
-				Util.removeKeyPrefix({key: row.key, namespace: this.options.namespace})
-			] = Util.parse(row.value).value;
-		}
-
-		return obj;
 	}
 
 	static safeRequire(id) {
