@@ -5,31 +5,24 @@
     <p>
         <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="Version" /></a>
         <a href="https://travis-ci.org/chroventer/endb"><img src="https://travis-ci.org/chroventer/endb.svg?branch=master" alt="Build Status" /></a>
-        <a href="https://david-dm.org/chroventer/endb"><img src="https://img.shields.io/david/chroventer/endb.svg?maxAge=3600" alt="Dependencies" /></a>
-        <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="Downloads" /></a>
-        <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="Stars" /></a>
+        <a href="https://david-dm.org/chroventer/endb"><img src="https://img.shields.io/david/chroventer/endb.svg?maxAge=3600" alt="NPM Dependencies" /></a>
+        <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="NPM Downloads" /></a>
+        <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="GitHub Stars" /></a>
         <a href="https://github.com/chroventer/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/chroventer/endb" alt="License" /></a>
+        <a href="https://discord.gg/cetqPMv"><img src="https://discordapp.com/api/guilds/632514027427332116/embed.png" alt="Discord" /></a>
     </p>
 </div>
 
 🗃 Simple key-value storage for multi adapter.
-
-Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
-You can also [integrate your own adapter](https://github.com/chroventer/endb/pulls).
-
 New to Endb? Check out the [Documentation](https://endb.js.org).
 
-## Why Endb?
-
-- High performance, efficiency, and simplicity.
-- [Promise-based API](#Usage).
-- Suitable as cache or persistent database.
-- [Adapters](#Usage)
-- [Namespaces](https://endb.js.org/tutorial-Namespaces.html)
-- [Custom Serializers](https://endb.js.org/tutorial-Custom-Serializers.html)
-- [Third-Party Adapters](https://endb.js.org/tutorial-Third-Party-Adapters.html)
-- JSON types including `Buffer`
-- Connection errors are sent through (connection errors won't kill the process).
+- **Easy-to-use**: Endb is simplistic and efficient. It also has a simple promise-based API.
+- [**Adapters**](#Usage): Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite. You can also [integrate your own adapter](https://github.com/chroventer/endb/pulls)
+- [**Namespaces**](https://endb.js.org/tutorial-Namespaces.html): Namespaces isolate elements within a database, separate elements (keys & values) by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
+- [**Custom Serializers**](https://endb.js.org/tutorial-Custom-Serializers.html): Endb uses its own parse and stringify methods for data serialization to ensure consistency. Optionally, You can pass your own serialization methods to support extra data types.
+- [**Third-Party Adapters**](https://endb.js.org/tutorial-Third-Party-Adapters.html): Integrate and use third-party adapters or build your own.
+- **Data Types**: Endb handles all the JSON types including `Buffer`.
+- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance (connection errors won't kill the process).
 
 ## Installation
 

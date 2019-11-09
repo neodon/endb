@@ -1,13 +1,13 @@
 (function() {
-  var navbarHeight = document.querySelector('.main-navbar').offsetHeight
+	const navbarHeight = document.querySelector('.main-navbar').offsetHeight;
 
-  function scrollWithOffset() {
-    var targetElement = document.querySelector(':target')
-    window.scroll({top: targetElement.offsetTop - navbarHeight})
-  }
+	function scrollWithOffset() {
+		const targetElement = document.querySelector(':target');
+		window.scroll({top: targetElement.offsetTop - navbarHeight});
+	}
 
-  window.addEventListener('hashchange', scrollWithOffset, false)
-  window.addEventListener('DOMContentLoaded', scrollWithOffset, false)
+	window.addEventListener('hashchange', scrollWithOffset, false);
+	window.addEventListener('DOMContentLoaded', scrollWithOffset, false);
 
-  document.getElementById('show-menu').checked = false
-}())
+	document.querySelector('#show-menu').checked = false;
+})();

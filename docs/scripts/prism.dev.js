@@ -1,12 +1,12 @@
 /* PrismJS 1.13.0
 http://prismjs.com/download.html#themes=prism&languages=markup+css+clike+javascript+json&plugins=line-highlight+line-numbers */
-var _self = (typeof window !== 'undefined')
-	? window   // if in browser
-	: (
-		(typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
-		? self // if in worker
-		: {}   // if in node js
-	);
+const _self =
+	typeof window !== 'undefined'
+		? window // If in browser
+		: typeof WorkerGlobalScope !== 'undefined' &&
+		  self instanceof WorkerGlobalScope
+		? self // If in worker
+		: {}; // If in node js
 
 /**
  * Prism: Lightweight, robust, elegant syntax highlighting
@@ -14,570 +14,630 @@ var _self = (typeof window !== 'undefined')
  * @author Lea Verou http://lea.verou.me
  */
 
-var Prism = (function(){
+const Prism = (function() {
+	// Private helper vars
+	const lang = /\blang(?:uage)?-(\w+)\b/i;
+	let uniqueId = 0;
 
-// Private helper vars
-var lang = /\blang(?:uage)?-(\w+)\b/i;
-var uniqueId = 0;
-
-var _ = _self.Prism = {
-	manual: _self.Prism && _self.Prism.manual,
-	disableWorkerMessageHandler: _self.Prism && _self.Prism.disableWorkerMessageHandler,
-	util: {
-		encode: function (tokens) {
-			if (tokens instanceof Token) {
-				return new Token(tokens.type, _.util.encode(tokens.content), tokens.alias);
-			} else if (_.util.type(tokens) === 'Array') {
-				return tokens.map(_.util.encode);
-			} else {
-				return tokens.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/\u00a0/g, ' ');
-			}
-		},
-
-		type: function (o) {
-			return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
-		},
-
-		objId: function (obj) {
-			if (!obj['__id']) {
-				Object.defineProperty(obj, '__id', { value: ++uniqueId });
-			}
-			return obj['__id'];
-		},
-
-		// Deep clone a language definition (e.g. to extend it)
-		clone: function (o, visited) {
-			var type = _.util.type(o);
-			visited = visited || {};
-
-			switch (type) {
-				case 'Object':
-					if (visited[_.util.objId(o)]) {
-						return visited[_.util.objId(o)];
-					}
-					var clone = {};
-					visited[_.util.objId(o)] = clone;
-
-					for (var key in o) {
-						if (o.hasOwnProperty(key)) {
-							clone[key] = _.util.clone(o[key], visited);
-						}
-					}
-
-					return clone;
-
-				case 'Array':
-					if (visited[_.util.objId(o)]) {
-						return visited[_.util.objId(o)];
-					}
-					var clone = [];
-					visited[_.util.objId(o)] = clone;
-
-					o.forEach(function (v, i) {
-						clone[i] = _.util.clone(v, visited);
-					});
-
-					return clone;
-			}
-
-			return o;
-		}
-	},
-
-	languages: {
-		extend: function (id, redef) {
-			var lang = _.util.clone(_.languages[id]);
-
-			for (var key in redef) {
-				lang[key] = redef[key];
-			}
-
-			return lang;
-		},
-
-		/**
-		 * Insert a token before another token in a language literal
-		 * As this needs to recreate the object (we cannot actually insert before keys in object literals),
-		 * we cannot just provide an object, we need anobject and a key.
-		 * @param inside The key (or language id) of the parent
-		 * @param before The key to insert before. If not provided, the function appends instead.
-		 * @param insert Object with the key/value pairs to insert
-		 * @param root The object that contains `inside`. If equal to Prism.languages, it can be omitted.
-		 */
-		insertBefore: function (inside, before, insert, root) {
-			root = root || _.languages;
-			var grammar = root[inside];
-
-			if (arguments.length == 2) {
-				insert = arguments[1];
-
-				for (var newToken in insert) {
-					if (insert.hasOwnProperty(newToken)) {
-						grammar[newToken] = insert[newToken];
-					}
+	var _ = (_self.Prism = {
+		manual: _self.Prism && _self.Prism.manual,
+		disableWorkerMessageHandler:
+			_self.Prism && _self.Prism.disableWorkerMessageHandler,
+		util: {
+			encode(tokens) {
+				if (tokens instanceof Token) {
+					return new Token(
+						tokens.type,
+						_.util.encode(tokens.content),
+						tokens.alias
+					);
 				}
 
-				return grammar;
-			}
+				if (_.util.type(tokens) === 'Array') {
+					return tokens.map(_.util.encode);
+				}
 
-			var ret = {};
+				return tokens
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace(/\u00A0/g, ' ');
+			},
 
-			for (var token in grammar) {
+			type(o) {
+				return Object.prototype.toString.call(o).match(/\[object (\w+)\]/)[1];
+			},
 
-				if (grammar.hasOwnProperty(token)) {
+			objId(obj) {
+				if (!obj.__id) {
+					Object.defineProperty(obj, '__id', {value: ++uniqueId});
+				}
 
-					if (token == before) {
+				return obj.__id;
+			},
 
-						for (var newToken in insert) {
+			// Deep clone a language definition (e.g. to extend it)
+			clone(o, visited) {
+				const type = _.util.type(o);
+				visited = visited || {};
 
-							if (insert.hasOwnProperty(newToken)) {
-								ret[newToken] = insert[newToken];
+				switch (type) {
+					case 'Object':
+						if (visited[_.util.objId(o)]) {
+							return visited[_.util.objId(o)];
+						}
+
+						var clone = {};
+						visited[_.util.objId(o)] = clone;
+
+						for (const key in o) {
+							if (o.hasOwnProperty(key)) {
+								clone[key] = _.util.clone(o[key], visited);
 							}
 						}
-					}
 
-					ret[token] = grammar[token];
+						return clone;
+
+					case 'Array':
+						if (visited[_.util.objId(o)]) {
+							return visited[_.util.objId(o)];
+						}
+
+						var clone = [];
+						visited[_.util.objId(o)] = clone;
+
+						o.forEach(function(v, i) {
+							clone[i] = _.util.clone(v, visited);
+						});
+
+						return clone;
 				}
+
+				return o;
 			}
-
-			// Update references in other language definitions
-			_.languages.DFS(_.languages, function(key, value) {
-				if (value === root[inside] && key != inside) {
-					this[key] = ret;
-				}
-			});
-
-			return root[inside] = ret;
 		},
 
-		// Traverse a language definition with Depth First Search
-		DFS: function(o, callback, type, visited) {
-			visited = visited || {};
-			for (var i in o) {
-				if (o.hasOwnProperty(i)) {
-					callback.call(o, i, o[i], type || i);
+		languages: {
+			extend(id, redef) {
+				const lang = _.util.clone(_.languages[id]);
 
-					if (_.util.type(o[i]) === 'Object' && !visited[_.util.objId(o[i])]) {
-						visited[_.util.objId(o[i])] = true;
-						_.languages.DFS(o[i], callback, null, visited);
+				for (const key in redef) {
+					lang[key] = redef[key];
+				}
+
+				return lang;
+			},
+
+			/**
+			 * Insert a token before another token in a language literal
+			 * As this needs to recreate the object (we cannot actually insert before keys in object literals),
+			 * we cannot just provide an object, we need anobject and a key.
+			 * @param inside The key (or language id) of the parent
+			 * @param before The key to insert before. If not provided, the function appends instead.
+			 * @param insert Object with the key/value pairs to insert
+			 * @param root The object that contains `inside`. If equal to Prism.languages, it can be omitted.
+			 */
+			insertBefore(inside, before, insert, root) {
+				root = root || _.languages;
+				const grammar = root[inside];
+
+				if (arguments.length == 2) {
+					insert = arguments[1];
+
+					for (var newToken in insert) {
+						if (insert.hasOwnProperty(newToken)) {
+							grammar[newToken] = insert[newToken];
+						}
 					}
-					else if (_.util.type(o[i]) === 'Array' && !visited[_.util.objId(o[i])]) {
-						visited[_.util.objId(o[i])] = true;
-						_.languages.DFS(o[i], callback, i, visited);
+
+					return grammar;
+				}
+
+				const ret = {};
+
+				for (const token in grammar) {
+					if (grammar.hasOwnProperty(token)) {
+						if (token == before) {
+							for (var newToken in insert) {
+								if (insert.hasOwnProperty(newToken)) {
+									ret[newToken] = insert[newToken];
+								}
+							}
+						}
+
+						ret[token] = grammar[token];
+					}
+				}
+
+				// Update references in other language definitions
+				_.languages.DFS(_.languages, function(key, value) {
+					if (value === root[inside] && key != inside) {
+						this[key] = ret;
+					}
+				});
+
+				return (root[inside] = ret);
+			},
+
+			// Traverse a language definition with Depth First Search
+			DFS(o, callback, type, visited) {
+				visited = visited || {};
+				for (const i in o) {
+					if (o.hasOwnProperty(i)) {
+						callback.call(o, i, o[i], type || i);
+
+						if (
+							_.util.type(o[i]) === 'Object' &&
+							!visited[_.util.objId(o[i])]
+						) {
+							visited[_.util.objId(o[i])] = true;
+							_.languages.DFS(o[i], callback, null, visited);
+						} else if (
+							_.util.type(o[i]) === 'Array' &&
+							!visited[_.util.objId(o[i])]
+						) {
+							visited[_.util.objId(o[i])] = true;
+							_.languages.DFS(o[i], callback, i, visited);
+						}
 					}
 				}
 			}
-		}
-	},
-	plugins: {},
+		},
+		plugins: {},
 
-	highlightAll: function(async, callback) {
-		_.highlightAllUnder(document, async, callback);
-	},
+		highlightAll(async, callback) {
+			_.highlightAllUnder(document, async, callback);
+		},
 
-	highlightAllUnder: function(container, async, callback) {
-		var env = {
-			callback: callback,
-			selector: 'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
-		};
+		highlightAllUnder(container, async, callback) {
+			const env = {
+				callback,
+				selector:
+					'code[class*="language-"], [class*="language-"] code, code[class*="lang-"], [class*="lang-"] code'
+			};
 
-		_.hooks.run("before-highlightall", env);
+			_.hooks.run('before-highlightall', env);
 
-		var elements = env.elements || container.querySelectorAll(env.selector);
+			const elements = env.elements || container.querySelectorAll(env.selector);
 
-		for (var i=0, element; element = elements[i++];) {
-			_.highlightElement(element, async === true, env.callback);
-		}
-	},
-
-	highlightElement: function(element, async, callback) {
-		// Find language
-		var language, grammar, parent = element;
-
-		while (parent && !lang.test(parent.className)) {
-			parent = parent.parentNode;
-		}
-
-		if (parent) {
-			language = (parent.className.match(lang) || [,''])[1].toLowerCase();
-			grammar = _.languages[language];
-		}
-
-		// Set language on the element, if not present
-		element.className = element.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
-
-		if (element.parentNode) {
-			// Set language on the parent, for styling
-			parent = element.parentNode;
-
-			if (/pre/i.test(parent.nodeName)) {
-				parent.className = parent.className.replace(lang, '').replace(/\s+/g, ' ') + ' language-' + language;
+			for (var i = 0, element; (element = elements[i++]); ) {
+				_.highlightElement(element, async === true, env.callback);
 			}
-		}
+		},
 
-		var code = element.textContent;
+		highlightElement(element, async, callback) {
+			// Find language
+			let language;
+			let grammar;
+			let parent = element;
 
-		var env = {
-			element: element,
-			language: language,
-			grammar: grammar,
-			code: code
-		};
-
-		_.hooks.run('before-sanity-check', env);
-
-		if (!env.code || !env.grammar) {
-			if (env.code) {
-				_.hooks.run('before-highlight', env);
-				env.element.textContent = env.code;
-				_.hooks.run('after-highlight', env);
+			while (parent && !lang.test(parent.className)) {
+				parent = parent.parentNode;
 			}
-			_.hooks.run('complete', env);
-			return;
-		}
 
-		_.hooks.run('before-highlight', env);
+			if (parent) {
+				language = (parent.className.match(lang) || [, ''])[1].toLowerCase();
+				grammar = _.languages[language];
+			}
 
-		if (async && _self.Worker) {
-			var worker = new Worker(_.filename);
+			// Set language on the element, if not present
+			element.className =
+				element.className.replace(lang, '').replace(/\s+/g, ' ') +
+				' language-' +
+				language;
 
-			worker.onmessage = function(evt) {
-				env.highlightedCode = evt.data;
+			if (element.parentNode) {
+				// Set language on the parent, for styling
+				parent = element.parentNode;
+
+				if (/pre/i.test(parent.nodeName)) {
+					parent.className =
+						parent.className.replace(lang, '').replace(/\s+/g, ' ') +
+						' language-' +
+						language;
+				}
+			}
+
+			const code = element.textContent;
+
+			const env = {
+				element,
+				language,
+				grammar,
+				code
+			};
+
+			_.hooks.run('before-sanity-check', env);
+
+			if (!env.code || !env.grammar) {
+				if (env.code) {
+					_.hooks.run('before-highlight', env);
+					env.element.textContent = env.code;
+					_.hooks.run('after-highlight', env);
+				}
+
+				_.hooks.run('complete', env);
+				return;
+			}
+
+			_.hooks.run('before-highlight', env);
+
+			if (async && _self.Worker) {
+				const worker = new Worker(_.filename);
+
+				worker.addEventListener('message', function(evt) {
+					env.highlightedCode = evt.data;
+
+					_.hooks.run('before-insert', env);
+
+					env.element.innerHTML = env.highlightedCode;
+
+					callback && callback.call(env.element);
+					_.hooks.run('after-highlight', env);
+					_.hooks.run('complete', env);
+				});
+
+				worker.postMessage(
+					JSON.stringify({
+						language: env.language,
+						code: env.code,
+						immediateClose: true
+					})
+				);
+			} else {
+				env.highlightedCode = _.highlight(env.code, env.grammar, env.language);
 
 				_.hooks.run('before-insert', env);
 
 				env.element.innerHTML = env.highlightedCode;
 
-				callback && callback.call(env.element);
+				callback && callback.call(element);
+
 				_.hooks.run('after-highlight', env);
 				_.hooks.run('complete', env);
+			}
+		},
+
+		highlight(text, grammar, language) {
+			const env = {
+				code: text,
+				grammar,
+				language
 			};
+			_.hooks.run('before-tokenize', env);
+			env.tokens = _.tokenize(env.code, env.grammar);
+			_.hooks.run('after-tokenize', env);
+			return Token.stringify(_.util.encode(env.tokens), env.language);
+		},
 
-			worker.postMessage(JSON.stringify({
-				language: env.language,
-				code: env.code,
-				immediateClose: true
-			}));
-		}
-		else {
-			env.highlightedCode = _.highlight(env.code, env.grammar, env.language);
+		matchGrammar(text, strarr, grammar, index, startPos, oneshot, target) {
+			const {Token} = _;
 
-			_.hooks.run('before-insert', env);
-
-			env.element.innerHTML = env.highlightedCode;
-
-			callback && callback.call(element);
-
-			_.hooks.run('after-highlight', env);
-			_.hooks.run('complete', env);
-		}
-	},
-
-	highlight: function (text, grammar, language) {
-		var env = {
-			code: text,
-			grammar: grammar,
-			language: language
-		};
-		_.hooks.run('before-tokenize', env);
-		env.tokens = _.tokenize(env.code, env.grammar);
-		_.hooks.run('after-tokenize', env);
-		return Token.stringify(_.util.encode(env.tokens), env.language);
-	},
-
-	matchGrammar: function (text, strarr, grammar, index, startPos, oneshot, target) {
-		var Token = _.Token;
-
-		for (var token in grammar) {
-			if(!grammar.hasOwnProperty(token) || !grammar[token]) {
-				continue;
-			}
-
-			if (token == target) {
-				return;
-			}
-
-			var patterns = grammar[token];
-			patterns = (_.util.type(patterns) === "Array") ? patterns : [patterns];
-
-			for (var j = 0; j < patterns.length; ++j) {
-				var pattern = patterns[j],
-					inside = pattern.inside,
-					lookbehind = !!pattern.lookbehind,
-					greedy = !!pattern.greedy,
-					lookbehindLength = 0,
-					alias = pattern.alias;
-
-				if (greedy && !pattern.pattern.global) {
-					// Without the global flag, lastIndex won't work
-					var flags = pattern.pattern.toString().match(/[imuy]*$/)[0];
-					pattern.pattern = RegExp(pattern.pattern.source, flags + "g");
+			for (const token in grammar) {
+				if (!grammar.hasOwnProperty(token) || !grammar[token]) {
+					continue;
 				}
 
-				pattern = pattern.pattern || pattern;
+				if (token == target) {
+					return;
+				}
 
-				// Don’t cache length as it changes during the loop
-				for (var i = index, pos = startPos; i < strarr.length; pos += strarr[i].length, ++i) {
+				let patterns = grammar[token];
+				patterns = _.util.type(patterns) === 'Array' ? patterns : [patterns];
 
-					var str = strarr[i];
+				for (const pattern of patterns) {
+					const {inside} = pattern;
+					const lookbehind = Boolean(pattern.lookbehind);
+					const greedy = Boolean(pattern.greedy);
+					let lookbehindLength = 0;
+					const {alias} = pattern;
 
-					if (strarr.length > text.length) {
-						// Something went terribly wrong, ABORT, ABORT!
-						return;
+					if (greedy && !pattern.pattern.global) {
+						// Without the global flag, lastIndex won't work
+						const flags = pattern.pattern.toString().match(/[imuy]*$/)[0];
+						pattern.pattern = new RegExp(pattern.pattern.source, flags + 'g');
 					}
 
-					if (str instanceof Token) {
-						continue;
-					}
+					pattern = pattern.pattern || pattern;
 
-					if (greedy && i != strarr.length - 1) {
-						pattern.lastIndex = pos;
-						var match = pattern.exec(text);
-						if (!match) {
-							break;
+					// Don’t cache length as it changes during the loop
+					for (
+						let i = index, pos = startPos;
+						i < strarr.length;
+						pos += strarr[i].length, ++i
+					) {
+						let str = strarr[i];
+
+						if (strarr.length > text.length) {
+							// Something went terribly wrong, ABORT, ABORT!
+							return;
 						}
 
-						var from = match.index + (lookbehind ? match[1].length : 0),
-						    to = match.index + match[0].length,
-						    k = i,
-						    p = pos;
-
-						for (var len = strarr.length; k < len && (p < to || (!strarr[k].type && !strarr[k - 1].greedy)); ++k) {
-							p += strarr[k].length;
-							// Move the index i to the element in strarr that is closest to from
-							if (from >= p) {
-								++i;
-								pos = p;
-							}
-						}
-
-						// If strarr[i] is a Token, then the match starts inside another Token, which is invalid
-						if (strarr[i] instanceof Token) {
+						if (str instanceof Token) {
 							continue;
 						}
 
-						// Number of tokens to delete and replace with the new match
-						delNum = k - i;
-						str = text.slice(pos, p);
-						match.index -= pos;
-					} else {
-						pattern.lastIndex = 0;
+						if (greedy && i != strarr.length - 1) {
+							pattern.lastIndex = pos;
+							var match = pattern.exec(text);
+							if (!match) {
+								break;
+							}
 
-						var match = pattern.exec(str),
-							delNum = 1;
-					}
+							var from = match.index + (lookbehind ? match[1].length : 0);
+							var to = match.index + match[0].length;
+							let k = i;
+							let p = pos;
 
-					if (!match) {
-						if (oneshot) {
-							break;
+							for (
+								let len = strarr.length;
+								k < len &&
+								(p < to || (!strarr[k].type && !strarr[k - 1].greedy));
+								++k
+							) {
+								p += strarr[k].length;
+								// Move the index i to the element in strarr that is closest to from
+								if (from >= p) {
+									++i;
+									pos = p;
+								}
+							}
+
+							// If strarr[i] is a Token, then the match starts inside another Token, which is invalid
+							if (strarr[i] instanceof Token) {
+								continue;
+							}
+
+							// Number of tokens to delete and replace with the new match
+							delNum = k - i;
+							str = text.slice(pos, p);
+							match.index -= pos;
+						} else {
+							pattern.lastIndex = 0;
+
+							var match = pattern.exec(str);
+							var delNum = 1;
 						}
 
-						continue;
+						if (!match) {
+							if (oneshot) {
+								break;
+							}
+
+							continue;
+						}
+
+						if (lookbehind) {
+							lookbehindLength = match[1] ? match[1].length : 0;
+						}
+
+						var from = match.index + lookbehindLength;
+						var match = match[0].slice(lookbehindLength);
+						var to = from + match.length;
+						const before = str.slice(0, from);
+						const after = str.slice(to);
+
+						const args = [i, delNum];
+
+						if (before) {
+							++i;
+							pos += before.length;
+							args.push(before);
+						}
+
+						const wrapped = new Token(
+							token,
+							inside ? _.tokenize(match, inside) : match,
+							alias,
+							match,
+							greedy
+						);
+
+						args.push(wrapped);
+
+						if (after) {
+							args.push(after);
+						}
+
+						Array.prototype.splice.apply(strarr, args);
+
+						if (delNum != 1)
+							_.matchGrammar(text, strarr, grammar, i, pos, true, token);
+
+						if (oneshot) break;
 					}
+				}
+			}
+		},
 
-					if(lookbehind) {
-						lookbehindLength = match[1] ? match[1].length : 0;
-					}
+		tokenize(text, grammar, language) {
+			const strarr = [text];
 
-					var from = match.index + lookbehindLength,
-					    match = match[0].slice(lookbehindLength),
-					    to = from + match.length,
-					    before = str.slice(0, from),
-					    after = str.slice(to);
+			const {rest} = grammar;
 
-					var args = [i, delNum];
+			if (rest) {
+				for (const token in rest) {
+					grammar[token] = rest[token];
+				}
 
-					if (before) {
-						++i;
-						pos += before.length;
-						args.push(before);
-					}
+				delete grammar.rest;
+			}
 
-					var wrapped = new Token(token, inside? _.tokenize(match, inside) : match, alias, match, greedy);
+			_.matchGrammar(text, strarr, grammar, 0, 0, false);
 
-					args.push(wrapped);
+			return strarr;
+		},
 
-					if (after) {
-						args.push(after);
-					}
+		hooks: {
+			all: {},
 
-					Array.prototype.splice.apply(strarr, args);
+			add(name, callback) {
+				const hooks = _.hooks.all;
 
-					if (delNum != 1)
-						_.matchGrammar(text, strarr, grammar, i, pos, true, token);
+				hooks[name] = hooks[name] || [];
 
-					if (oneshot)
-						break;
+				hooks[name].push(callback);
+			},
+
+			run(name, env) {
+				const callbacks = _.hooks.all[name];
+
+				if (!callbacks || !callbacks.length) {
+					return;
+				}
+
+				for (var i = 0, callback; (callback = callbacks[i++]); ) {
+					callback(env);
 				}
 			}
 		}
-	},
+	});
 
-	tokenize: function(text, grammar, language) {
-		var strarr = [text];
+	var Token = (_.Token = function(type, content, alias, matchedStr, greedy) {
+		this.type = type;
+		this.content = content;
+		this.alias = alias;
+		// Copy of the full string this token was created from
+		this.length = (matchedStr || '').length | 0;
+		this.greedy = Boolean(greedy);
+	});
 
-		var rest = grammar.rest;
-
-		if (rest) {
-			for (var token in rest) {
-				grammar[token] = rest[token];
-			}
-
-			delete grammar.rest;
+	Token.stringify = function(o, language, parent) {
+		if (typeof o === 'string') {
+			return o;
 		}
 
-		_.matchGrammar(text, strarr, grammar, 0, 0, false);
-
-		return strarr;
-	},
-
-	hooks: {
-		all: {},
-
-		add: function (name, callback) {
-			var hooks = _.hooks.all;
-
-			hooks[name] = hooks[name] || [];
-
-			hooks[name].push(callback);
-		},
-
-		run: function (name, env) {
-			var callbacks = _.hooks.all[name];
-
-			if (!callbacks || !callbacks.length) {
-				return;
-			}
-
-			for (var i=0, callback; callback = callbacks[i++];) {
-				callback(env);
-			}
+		if (_.util.type(o) === 'Array') {
+			return o
+				.map(function(element) {
+					return Token.stringify(element, language, o);
+				})
+				.join('');
 		}
-	}
-};
 
-var Token = _.Token = function(type, content, alias, matchedStr, greedy) {
-	this.type = type;
-	this.content = content;
-	this.alias = alias;
-	// Copy of the full string this token was created from
-	this.length = (matchedStr || "").length|0;
-	this.greedy = !!greedy;
-};
+		const env = {
+			type: o.type,
+			content: Token.stringify(o.content, language, parent),
+			tag: 'span',
+			classes: ['token', o.type],
+			attributes: {},
+			language,
+			parent
+		};
 
-Token.stringify = function(o, language, parent) {
-	if (typeof o == 'string') {
-		return o;
-	}
+		if (o.alias) {
+			const aliases = _.util.type(o.alias) === 'Array' ? o.alias : [o.alias];
+			Array.prototype.push.apply(env.classes, aliases);
+		}
 
-	if (_.util.type(o) === 'Array') {
-		return o.map(function(element) {
-			return Token.stringify(element, language, o);
-		}).join('');
-	}
+		_.hooks.run('wrap', env);
 
-	var env = {
-		type: o.type,
-		content: Token.stringify(o.content, language, parent),
-		tag: 'span',
-		classes: ['token', o.type],
-		attributes: {},
-		language: language,
-		parent: parent
+		const attributes = Object.keys(env.attributes)
+			.map(function(name) {
+				return (
+					name +
+					'="' +
+					(env.attributes[name] || '').replace(/"/g, '&quot;') +
+					'"'
+				);
+			})
+			.join(' ');
+
+		return (
+			'<' +
+			env.tag +
+			' class="' +
+			env.classes.join(' ') +
+			'"' +
+			(attributes ? ' ' + attributes : '') +
+			'>' +
+			env.content +
+			'</' +
+			env.tag +
+			'>'
+		);
 	};
 
-	if (o.alias) {
-		var aliases = _.util.type(o.alias) === 'Array' ? o.alias : [o.alias];
-		Array.prototype.push.apply(env.classes, aliases);
-	}
+	if (!_self.document) {
+		if (!_self.addEventListener) {
+			// In Node.js
+			return _self.Prism;
+		}
 
-	_.hooks.run('wrap', env);
+		if (!_.disableWorkerMessageHandler) {
+			// In worker
+			_self.addEventListener(
+				'message',
+				function(evt) {
+					const message = JSON.parse(evt.data);
+					const lang = message.language;
+					const {code} = message;
+					const {immediateClose} = message;
 
-	var attributes = Object.keys(env.attributes).map(function(name) {
-		return name + '="' + (env.attributes[name] || '').replace(/"/g, '&quot;') + '"';
-	}).join(' ');
+					_self.postMessage(_.highlight(code, _.languages[lang], lang));
+					if (immediateClose) {
+						_self.close();
+					}
+				},
+				false
+			);
+		}
 
-	return '<' + env.tag + ' class="' + env.classes.join(' ') + '"' + (attributes ? ' ' + attributes : '') + '>' + env.content + '</' + env.tag + '>';
-
-};
-
-if (!_self.document) {
-	if (!_self.addEventListener) {
-		// in Node.js
 		return _self.Prism;
 	}
 
-	if (!_.disableWorkerMessageHandler) {
-		// In worker
-		_self.addEventListener('message', function (evt) {
-			var message = JSON.parse(evt.data),
-				lang = message.language,
-				code = message.code,
-				immediateClose = message.immediateClose;
+	// Get current script and highlight
+	const script =
+		document.currentScript ||
+		[].slice.call(document.querySelectorAll('script')).pop();
 
-			_self.postMessage(_.highlight(code, _.languages[lang], lang));
-			if (immediateClose) {
-				_self.close();
+	if (script) {
+		_.filename = script.src;
+
+		if (!_.manual && !script.hasAttribute('data-manual')) {
+			if (document.readyState !== 'loading') {
+				if (window.requestAnimationFrame) {
+					window.requestAnimationFrame(_.highlightAll);
+				} else {
+					window.setTimeout(_.highlightAll, 16);
+				}
+			} else {
+				document.addEventListener('DOMContentLoaded', _.highlightAll);
 			}
-		}, false);
+		}
 	}
 
 	return _self.Prism;
-}
-
-//Get current script and highlight
-var script = document.currentScript || [].slice.call(document.getElementsByTagName("script")).pop();
-
-if (script) {
-	_.filename = script.src;
-
-	if (!_.manual && !script.hasAttribute('data-manual')) {
-		if(document.readyState !== "loading") {
-			if (window.requestAnimationFrame) {
-				window.requestAnimationFrame(_.highlightAll);
-			} else {
-				window.setTimeout(_.highlightAll, 16);
-			}
-		}
-		else {
-			document.addEventListener('DOMContentLoaded', _.highlightAll);
-		}
-	}
-}
-
-return _self.Prism;
-
 })();
 
 if (typeof module !== 'undefined' && module.exports) {
 	module.exports = Prism;
 }
 
-// hack for components to work correctly in node.js
+// Hack for components to work correctly in node.js
 if (typeof global !== 'undefined') {
 	global.Prism = Prism;
 }
-;
+
 Prism.languages.markup = {
-	'comment': /<!--[\s\S]*?-->/,
-	'prolog': /<\?[\s\S]+?\?>/,
-	'doctype': /<!DOCTYPE[\s\S]+?>/i,
-	'cdata': /<!\[CDATA\[[\s\S]*?]]>/i,
-	'tag': {
+	comment: /<!--[\s\S]*?-->/,
+	prolog: /<\?[\s\S]+?\?>/,
+	doctype: /<!DOCTYPE[\s\S]+?>/i,
+	cdata: /<!\[CDATA\[[\s\S]*?]]>/i,
+	tag: {
 		pattern: /<\/?(?!\d)[^\s>\/=$<%]+(?:\s+[^\s>\/=]+(?:=(?:("|')(?:\\[\s\S]|(?!\1)[^\\])*\1|[^\s'">=]+))?)*\s*\/?>/i,
 		greedy: true,
 		inside: {
-			'tag': {
+			tag: {
 				pattern: /^<\/?[^\s>\/]+/i,
 				inside: {
-					'punctuation': /^<\/?/,
-					'namespace': /^[^\s>\/:]+:/
+					punctuation: /^<\/?/,
+					namespace: /^[^\s>\/:]+:/
 				}
 			},
 			'attr-value': {
 				pattern: /=(?:("|')(?:\\[\s\S]|(?!\1)[^\\])*\1|[^\s'">=]+)/i,
 				inside: {
-					'punctuation': [
+					punctuation: [
 						/^=/,
 						{
 							pattern: /(^|[^\\])["']/,
@@ -586,27 +646,25 @@ Prism.languages.markup = {
 					]
 				}
 			},
-			'punctuation': /\/?>/,
+			punctuation: /\/?>/,
 			'attr-name': {
 				pattern: /[^\s>\/]+/,
 				inside: {
-					'namespace': /^[^\s>\/:]+:/
+					namespace: /^[^\s>\/:]+:/
 				}
 			}
-
 		}
 	},
-	'entity': /&#?[\da-z]{1,8};/i
+	entity: /&#?[\da-z]{1,8};/i
 };
 
-Prism.languages.markup['tag'].inside['attr-value'].inside['entity'] =
-	Prism.languages.markup['entity'];
+Prism.languages.markup.tag.inside['attr-value'].inside.entity =
+	Prism.languages.markup.entity;
 
 // Plugin to make entity title show the real entity, idea by Roman Komarov
 Prism.hooks.add('wrap', function(env) {
-
 	if (env.type === 'entity') {
-		env.attributes['title'] = env.content.replace(/&amp;/, '&');
+		env.attributes.title = env.content.replace(/&amp;/, '&');
 	}
 });
 
@@ -616,31 +674,31 @@ Prism.languages.mathml = Prism.languages.markup;
 Prism.languages.svg = Prism.languages.markup;
 
 Prism.languages.css = {
-	'comment': /\/\*[\s\S]*?\*\//,
-	'atrule': {
+	comment: /\/\*[\s\S]*?\*\//,
+	atrule: {
 		pattern: /@[\w-]+?.*?(?:;|(?=\s*\{))/i,
 		inside: {
-			'rule': /@[\w-]+/
+			rule: /@[\w-]+/
 			// See rest below
 		}
 	},
-	'url': /url\((?:(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1|.*?)\)/i,
-	'selector': /[^{}\s][^{};]*?(?=\s*\{)/,
-	'string': {
+	url: /url\((?:(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1|.*?)\)/i,
+	selector: /[^{}\s][^{};]*?(?=\s*\{)/,
+	string: {
 		pattern: /("|')(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
 		greedy: true
 	},
-	'property': /[-_a-z\xA0-\uFFFF][-\w\xA0-\uFFFF]*(?=\s*:)/i,
-	'important': /\B!important\b/i,
-	'function': /[-a-z0-9]+(?=\()/i,
-	'punctuation': /[(){};:]/
+	property: /[-_a-z\u00A0-\uFFFF][-\w\u00A0-\uFFFF]*(?=\s*:)/i,
+	important: /\B!important\b/i,
+	function: /[-a-z0-9]+(?=\()/i,
+	punctuation: /[(){};:]/
 };
 
-Prism.languages.css['atrule'].inside.rest = Prism.languages.css;
+Prism.languages.css.atrule.inside.rest = Prism.languages.css;
 
 if (Prism.languages.markup) {
 	Prism.languages.insertBefore('markup', 'tag', {
-		'style': {
+		style: {
 			pattern: /(<style[\s\S]*?>)[\s\S]*?(?=<\/style>)/i,
 			lookbehind: true,
 			inside: Prism.languages.css,
@@ -649,26 +707,32 @@ if (Prism.languages.markup) {
 		}
 	});
 
-	Prism.languages.insertBefore('inside', 'attr-value', {
-		'style-attr': {
-			pattern: /\s*style=("|')(?:\\[\s\S]|(?!\1)[^\\])*\1/i,
-			inside: {
-				'attr-name': {
-					pattern: /^\s*style/i,
-					inside: Prism.languages.markup.tag.inside
+	Prism.languages.insertBefore(
+		'inside',
+		'attr-value',
+		{
+			'style-attr': {
+				pattern: /\s*style=("|')(?:\\[\s\S]|(?!\1)[^\\])*\1/i,
+				inside: {
+					'attr-name': {
+						pattern: /^\s*style/i,
+						inside: Prism.languages.markup.tag.inside
+					},
+					punctuation: /^\s*=\s*['"]|['"]\s*$/,
+					'attr-value': {
+						pattern: /.+/i,
+						inside: Prism.languages.css
+					}
 				},
-				'punctuation': /^\s*=\s*['"]|['"]\s*$/,
-				'attr-value': {
-					pattern: /.+/i,
-					inside: Prism.languages.css
-				}
-			},
-			alias: 'language-css'
-		}
-	}, Prism.languages.markup.tag);
-};
+				alias: 'language-css'
+			}
+		},
+		Prism.languages.markup.tag
+	);
+}
+
 Prism.languages.clike = {
-	'comment': [
+	comment: [
 		{
 			pattern: /(^|[^\\])\/\*[\s\S]*?(?:\*\/|$)/,
 			lookbehind: true
@@ -679,7 +743,7 @@ Prism.languages.clike = {
 			greedy: true
 		}
 	],
-	'string': {
+	string: {
 		pattern: /(["'])(?:\\(?:\r\n|[\s\S])|(?!\1)[^\\\r\n])*\1/,
 		greedy: true
 	},
@@ -690,34 +754,34 @@ Prism.languages.clike = {
 			punctuation: /[.\\]/
 		}
 	},
-	'keyword': /\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
-	'boolean': /\b(?:true|false)\b/,
-	'function': /[a-z0-9_]+(?=\()/i,
-	'number': /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?/i,
-	'operator': /--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,
-	'punctuation': /[{}[\];(),.:]/
+	keyword: /\b(?:if|else|while|do|for|return|in|instanceof|function|new|try|throw|catch|finally|null|break|continue)\b/,
+	boolean: /\b(?:true|false)\b/,
+	function: /\w+(?=\()/i,
+	number: /\b0x[\da-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:e[+-]?\d+)?/i,
+	operator: /--?|\+\+?|!=?=?|<=?|>=?|==?=?|&&?|\|\|?|\?|\*|\/|~|\^|%/,
+	punctuation: /[{}[\];(),.:]/
 };
 
 Prism.languages.javascript = Prism.languages.extend('clike', {
-	'keyword': /\b(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|var|void|while|with|yield)\b/,
-	'number': /\b(?:0[xX][\dA-Fa-f]+|0[bB][01]+|0[oO][0-7]+|NaN|Infinity)\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee][+-]?\d+)?/,
+	keyword: /\b(?:as|async|await|break|case|catch|class|const|continue|debugger|default|delete|do|else|enum|export|extends|finally|for|from|function|get|if|implements|import|in|instanceof|interface|let|new|null|of|package|private|protected|public|return|set|static|super|switch|this|throw|try|typeof|var|void|while|with|yield)\b/,
+	number: /\b(?:0[xX][\dA-Fa-f]+|0[bB][01]+|0[oO][0-7]+|NaN|Infinity)\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee][+-]?\d+)?/,
 	// Allow for all non-ASCII characters (See http://stackoverflow.com/a/2008444)
-	'function': /[_$a-z\xA0-\uFFFF][$\w\xA0-\uFFFF]*(?=\s*\()/i,
-	'operator': /-[-=]?|\+[+=]?|!=?=?|<<?=?|>>?>?=?|=(?:==?|>)?|&[&=]?|\|[|=]?|\*\*?=?|\/=?|~|\^=?|%=?|\?|\.{3}/
+	function: /[_$a-z\u00A0-\uFFFF][$\w\u00A0-\uFFFF]*(?=\s*\()/i,
+	operator: /-[-=]?|\+[+=]?|!=?=?|<<?=?|>>?>?=?|=(?:==?|>)?|&[&=]?|\|[|=]?|\*\*?=?|\/=?|~|\^=?|%=?|\?|\.{3}/
 });
 
 Prism.languages.insertBefore('javascript', 'keyword', {
-	'regex': {
-		pattern: /((?:^|[^$\w\xA0-\uFFFF."'\])\s])\s*)\/(\[[^\]\r\n]+]|\\.|[^/\\\[\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/,
+	regex: {
+		pattern: /((?:^|[^$\w\u00A0-\uFFFF."'\])\s])\s*)\/(\[[^\]\r\n]+]|\\.|[^/\\\[\r\n])+\/[gimyu]{0,5}(?=\s*($|[\r\n,.;})]))/,
 		lookbehind: true,
 		greedy: true
 	},
 	// This must be declared before keyword because we use "function" inside the look-forward
 	'function-variable': {
-		pattern: /[_$a-z\xA0-\uFFFF][$\w\xA0-\uFFFF]*(?=\s*=\s*(?:function\b|(?:\([^()]*\)|[_$a-z\xA0-\uFFFF][$\w\xA0-\uFFFF]*)\s*=>))/i,
+		pattern: /[_$a-z\u00A0-\uFFFF][$\w\u00A0-\uFFFF]*(?=\s*=\s*(?:function\b|(?:\([^()]*\)|[_$a-z\u00A0-\uFFFF][$\w\u00A0-\uFFFF]*)\s*=>))/i,
 		alias: 'function'
 	},
-	'constant': /\b[A-Z][A-Z\d_]*\b/
+	constant: /\b[A-Z][A-Z\d_]*\b/
 });
 
 Prism.languages.insertBefore('javascript', 'string', {
@@ -725,7 +789,7 @@ Prism.languages.insertBefore('javascript', 'string', {
 		pattern: /`(?:\\[\s\S]|[^\\`])*`/,
 		greedy: true,
 		inside: {
-			'interpolation': {
+			interpolation: {
 				pattern: /\$\{[^}]+\}/,
 				inside: {
 					'interpolation-punctuation': {
@@ -735,14 +799,14 @@ Prism.languages.insertBefore('javascript', 'string', {
 					rest: Prism.languages.javascript
 				}
 			},
-			'string': /[\s\S]+/
+			string: /[\s\S]+/
 		}
 	}
 });
 
 if (Prism.languages.markup) {
 	Prism.languages.insertBefore('markup', 'tag', {
-		'script': {
+		script: {
 			pattern: /(<script[\s\S]*?>)[\s\S]*?(?=<\/script>)/i,
 			lookbehind: true,
 			inside: Prism.languages.javascript,
@@ -755,207 +819,224 @@ if (Prism.languages.markup) {
 Prism.languages.js = Prism.languages.javascript;
 
 Prism.languages.json = {
-	'property': /"(?:\\.|[^\\"\r\n])*"(?=\s*:)/i,
-	'string': {
+	property: /"(?:\\.|[^\\"\r\n])*"(?=\s*:)/i,
+	string: {
 		pattern: /"(?:\\.|[^\\"\r\n])*"(?!\s*:)/,
 		greedy: true
 	},
-	'number': /\b0x[\dA-Fa-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee][+-]?\d+)?/,
-	'punctuation': /[{}[\]);,]/,
-	'operator': /:/g,
-	'boolean': /\b(?:true|false)\b/i,
-	'null': /\bnull\b/i
+	number: /\b0x[\dA-Fa-f]+\b|(?:\b\d+\.?\d*|\B\.\d+)(?:[Ee][+-]?\d+)?/,
+	punctuation: /[{}[\]);,]/,
+	operator: /:/g,
+	boolean: /\b(?:true|false)\b/i,
+	null: /\bnull\b/i
 };
 
 Prism.languages.jsonp = Prism.languages.json;
 
-(function(){
-
-if (typeof self === 'undefined' || !self.Prism || !self.document || !document.querySelector) {
-	return;
-}
-
-function $$(expr, con) {
-	return Array.prototype.slice.call((con || document).querySelectorAll(expr));
-}
-
-function hasClass(element, className) {
-  className = " " + className + " ";
-  return (" " + element.className + " ").replace(/[\n\t]/g, " ").indexOf(className) > -1
-}
-
-// Some browsers round the line-height, others don't.
-// We need to test for it to position the elements properly.
-var isLineHeightRounded = (function() {
-	var res;
-	return function() {
-		if(typeof res === 'undefined') {
-			var d = document.createElement('div');
-			d.style.fontSize = '13px';
-			d.style.lineHeight = '1.5';
-			d.style.padding = 0;
-			d.style.border = 0;
-			d.innerHTML = '&nbsp;<br />&nbsp;';
-			document.body.appendChild(d);
-			// Browsers that round the line-height should have offsetHeight === 38
-			// The others should have 39.
-			res = d.offsetHeight === 38;
-			document.body.removeChild(d);
-		}
-		return res;
+(function() {
+	if (
+		typeof self === 'undefined' ||
+		!self.Prism ||
+		!self.document ||
+		!document.querySelector
+	) {
+		return;
 	}
-}());
 
-function highlightLines(pre, lines, classes) {
-	lines = typeof lines === 'string' ? lines : pre.getAttribute('data-line');
+	function $$(expr, con) {
+		return Array.prototype.slice.call((con || document).querySelectorAll(expr));
+	}
 
-	var ranges = lines.replace(/\s+/g, '').split(','),
-	    offset = +pre.getAttribute('data-line-offset') || 0;
+	function hasClass(element, className) {
+		className = ' ' + className + ' ';
+		return (' ' + element.className + ' ')
+			.replace(/[\n\t]/g, ' ')
+			.includes(className);
+	}
 
-	var parseMethod = isLineHeightRounded() ? parseInt : parseFloat;
-	var lineHeight = parseMethod(getComputedStyle(pre).lineHeight);
-	var hasLineNumbers = hasClass(pre, 'line-numbers');
-
-	for (var i=0, currentRange; currentRange = ranges[i++];) {
-		var range = currentRange.split('-');
-
-		var start = +range[0],
-		    end = +range[1] || start;
-
-		var line = pre.querySelector('.line-highlight[data-range="' + currentRange + '"]') || document.createElement('div');
-
-		line.setAttribute('aria-hidden', 'true');
-		line.setAttribute('data-range', currentRange);
-		line.className = (classes || '') + ' line-highlight';
-
-		//if the line-numbers plugin is enabled, then there is no reason for this plugin to display the line numbers
-		if(hasLineNumbers && Prism.plugins.lineNumbers) {
-			var startNode = Prism.plugins.lineNumbers.getLine(pre, start);
-			var endNode = Prism.plugins.lineNumbers.getLine(pre, end);
-
-			if (startNode) {
-				line.style.top = startNode.offsetTop + 'px';
+	// Some browsers round the line-height, others don't.
+	// We need to test for it to position the elements properly.
+	const isLineHeightRounded = (function() {
+		let res;
+		return function() {
+			if (typeof res === 'undefined') {
+				const d = document.createElement('div');
+				d.style.fontSize = '13px';
+				d.style.lineHeight = '1.5';
+				d.style.padding = 0;
+				d.style.border = 0;
+				d.innerHTML = '&nbsp;<br />&nbsp;';
+				document.body.append(d);
+				// Browsers that round the line-height should have offsetHeight === 38
+				// The others should have 39.
+				res = d.offsetHeight === 38;
+				document.body.removeChild(d);
 			}
 
-			if (endNode) {
-				line.style.height = (endNode.offsetTop - startNode.offsetTop) + endNode.offsetHeight + 'px';
+			return res;
+		};
+	})();
+
+	function highlightLines(pre, lines, classes) {
+		lines = typeof lines === 'string' ? lines : pre.getAttribute('data-line');
+
+		const ranges = lines.replace(/\s+/g, '').split(',');
+		const offset = Number(pre.getAttribute('data-line-offset')) || 0;
+
+		const parseMethod = isLineHeightRounded() ? parseInt : parseFloat;
+		const lineHeight = parseMethod(getComputedStyle(pre).lineHeight);
+		const hasLineNumbers = hasClass(pre, 'line-numbers');
+
+		for (var i = 0, currentRange; (currentRange = ranges[i++]); ) {
+			const range = currentRange.split('-');
+
+			const start = Number(range[0]);
+			const end = Number(range[1]) || start;
+
+			const line =
+				pre.querySelector(
+					'.line-highlight[data-range="' + currentRange + '"]'
+				) || document.createElement('div');
+
+			line.setAttribute('aria-hidden', 'true');
+			line.dataset.range = currentRange;
+			line.className = (classes || '') + ' line-highlight';
+
+			// If the line-numbers plugin is enabled, then there is no reason for this plugin to display the line numbers
+			if (hasLineNumbers && Prism.plugins.lineNumbers) {
+				const startNode = Prism.plugins.lineNumbers.getLine(pre, start);
+				const endNode = Prism.plugins.lineNumbers.getLine(pre, end);
+
+				if (startNode) {
+					line.style.top = startNode.offsetTop + 'px';
+				}
+
+				if (endNode) {
+					line.style.height =
+						endNode.offsetTop -
+						startNode.offsetTop +
+						endNode.offsetHeight +
+						'px';
+				}
+			} else {
+				line.dataset.start = start;
+
+				if (end > start) {
+					line.dataset.end = end;
+				}
+
+				line.style.top = (start - offset - 1) * lineHeight + 'px';
+
+				line.textContent = new Array(end - start + 2).join(' \n');
 			}
-		} else {
-			line.setAttribute('data-start', start);
 
-			if(end > start) {
-				line.setAttribute('data-end', end);
+			// Allow this to play nicely with the line-numbers plugin
+			if (hasLineNumbers) {
+				// Need to attack to pre as when line-numbers is enabled, the code tag is relatively which screws up the positioning
+				pre.append(line);
+			} else {
+				(pre.querySelector('code') || pre).append(line);
 			}
-
-			line.style.top = (start - offset - 1) * lineHeight + 'px';
-
-			line.textContent = new Array(end - start + 2).join(' \n');
-		}
-
-		//allow this to play nicely with the line-numbers plugin
-		if(hasLineNumbers) {
-			//need to attack to pre as when line-numbers is enabled, the code tag is relatively which screws up the positioning
-			pre.appendChild(line);
-		} else {
-			(pre.querySelector('code') || pre).appendChild(line);
 		}
 	}
-}
 
-function applyHash() {
-	var hash = location.hash.slice(1);
+	function applyHash() {
+		const hash = location.hash.slice(1);
 
-	// Remove pre-existing temporary lines
-	$$('.temporary.line-highlight').forEach(function (line) {
-		line.parentNode.removeChild(line);
+		// Remove pre-existing temporary lines
+		$$('.temporary.line-highlight').forEach(function(line) {
+			line.remove();
+		});
+
+		const range = (hash.match(/\.([\d,-]+)$/) || [, ''])[1];
+
+		if (!range || document.getElementById(hash)) {
+			return;
+		}
+
+		const id = hash.slice(0, hash.lastIndexOf('.'));
+		const pre = document.getElementById(id);
+
+		if (!pre) {
+			return;
+		}
+
+		if (!pre.hasAttribute('data-line')) {
+			pre.dataset.line = '';
+		}
+
+		highlightLines(pre, range, 'temporary ');
+
+		document.querySelector('.temporary.line-highlight').scrollIntoView();
+
+		// Offset fixed header with buffer
+		window.scrollBy(0, -100);
+	}
+
+	let fakeTimer = 0; // Hack to limit the number of times applyHash() runs
+
+	Prism.hooks.add('before-sanity-check', function(env) {
+		const pre = env.element.parentNode;
+		const lines = pre && pre.getAttribute('data-line');
+
+		if (!pre || !lines || !/pre/i.test(pre.nodeName)) {
+			return;
+		}
+
+		/*
+		 * Cleanup for other plugins (e.g. autoloader).
+		 *
+		 * Sometimes <code> blocks are highlighted multiple times. It is necessary
+		 * to cleanup any left-over tags, because the whitespace inside of the <div>
+		 * tags change the content of the <code> tag.
+		 */
+		let num = 0;
+		$$('.line-highlight', pre).forEach(function(line) {
+			num += line.textContent.length;
+			line.remove();
+		});
+		// Remove extra whitespace
+		if (num && /^( \n)+$/.test(env.code.slice(-num))) {
+			env.code = env.code.slice(0, -num);
+		}
 	});
 
-	var range = (hash.match(/\.([\d,-]+)$/) || [,''])[1];
+	Prism.hooks.add('complete', function completeHook(env) {
+		const pre = env.element.parentNode;
+		const lines = pre && pre.getAttribute('data-line');
 
-	if (!range || document.getElementById(hash)) {
-		return;
-	}
+		if (!pre || !lines || !/pre/i.test(pre.nodeName)) {
+			return;
+		}
 
-	var id = hash.slice(0, hash.lastIndexOf('.')),
-	    pre = document.getElementById(id);
+		clearTimeout(fakeTimer);
 
-	if (!pre) {
-		return;
-	}
+		const hasLineNumbers = Prism.plugins.lineNumbers;
+		const isLineNumbersLoaded = env.plugins && env.plugins.lineNumbers;
 
-	if (!pre.hasAttribute('data-line')) {
-		pre.setAttribute('data-line', '');
-	}
-
-	highlightLines(pre, range, 'temporary ');
-
-	document.querySelector('.temporary.line-highlight').scrollIntoView();
-
-	// offset fixed header with buffer
-	window.scrollBy(0, -100);
-}
-
-var fakeTimer = 0; // Hack to limit the number of times applyHash() runs
-
-Prism.hooks.add('before-sanity-check', function(env) {
-	var pre = env.element.parentNode;
-	var lines = pre && pre.getAttribute('data-line');
-
-	if (!pre || !lines || !/pre/i.test(pre.nodeName)) {
-		return;
-	}
-
-	/*
-	* Cleanup for other plugins (e.g. autoloader).
-	 *
-	 * Sometimes <code> blocks are highlighted multiple times. It is necessary
-	 * to cleanup any left-over tags, because the whitespace inside of the <div>
-	 * tags change the content of the <code> tag.
-	 */
-	var num = 0;
-	$$('.line-highlight', pre).forEach(function (line) {
-		num += line.textContent.length;
-		line.parentNode.removeChild(line);
+		if (
+			hasClass(pre, 'line-numbers') &&
+			hasLineNumbers &&
+			!isLineNumbersLoaded
+		) {
+			Prism.hooks.add('line-numbers', completeHook);
+		} else {
+			highlightLines(pre, lines);
+			fakeTimer = setTimeout(applyHash, 1);
+		}
 	});
-	// Remove extra whitespace
-	if (num && /^( \n)+$/.test(env.code.slice(-num))) {
-		env.code = env.code.slice(0, -num);
-	}
-});
-
-Prism.hooks.add('complete', function completeHook(env) {
-	var pre = env.element.parentNode;
-	var lines = pre && pre.getAttribute('data-line');
-
-	if (!pre || !lines || !/pre/i.test(pre.nodeName)) {
-		return;
-	}
-
-	clearTimeout(fakeTimer);
-
-	var hasLineNumbers = Prism.plugins.lineNumbers;
-	var isLineNumbersLoaded = env.plugins && env.plugins.lineNumbers;
-
-	if (hasClass(pre, 'line-numbers') && hasLineNumbers && !isLineNumbersLoaded) {
-		Prism.hooks.add('line-numbers', completeHook);
-	} else {
-		highlightLines(pre, lines);
-		fakeTimer = setTimeout(applyHash, 1);
-	}
-});
 
 	window.addEventListener('load', applyHash);
 	window.addEventListener('hashchange', applyHash);
-	window.addEventListener('resize', function () {
-		var preElements = document.querySelectorAll('pre[data-line]');
-		Array.prototype.forEach.call(preElements, function (pre) {
+	window.addEventListener('resize', function() {
+		const preElements = document.querySelectorAll('pre[data-line]');
+		Array.prototype.forEach.call(preElements, function(pre) {
 			highlightLines(pre);
 		});
 	});
-
 })();
-(function () {
 
+(function() {
 	if (typeof self === 'undefined' || !self.Prism || !self.document) {
 		return;
 	}
@@ -964,40 +1045,40 @@ Prism.hooks.add('complete', function completeHook(env) {
 	 * Plugin name which is used as a class name for <pre> which is activating the plugin
 	 * @type {String}
 	 */
-	var PLUGIN_NAME = 'line-numbers';
+	const PLUGIN_NAME = 'line-numbers';
 
 	/**
 	 * Regular expression used for determining line breaks
 	 * @type {RegExp}
 	 */
-	var NEW_LINE_EXP = /\n(?!$)/g;
+	const NEW_LINE_EXP = /\n(?!$)/g;
 
 	/**
 	 * Resizes line numbers spans according to height of line of code
 	 * @param {Element} element <pre> element
 	 */
-	var _resizeElement = function (element) {
-		var codeStyles = getStyles(element);
-		var whiteSpace = codeStyles['white-space'];
+	const _resizeElement = function(element) {
+		const codeStyles = getStyles(element);
+		const whiteSpace = codeStyles['white-space'];
 
 		if (whiteSpace === 'pre-wrap' || whiteSpace === 'pre-line') {
-			var codeElement = element.querySelector('code');
-			var lineNumbersWrapper = element.querySelector('.line-numbers-rows');
-			var lineNumberSizer = element.querySelector('.line-numbers-sizer');
-			var codeLines = codeElement.textContent.split(NEW_LINE_EXP);
+			const codeElement = element.querySelector('code');
+			const lineNumbersWrapper = element.querySelector('.line-numbers-rows');
+			let lineNumberSizer = element.querySelector('.line-numbers-sizer');
+			const codeLines = codeElement.textContent.split(NEW_LINE_EXP);
 
 			if (!lineNumberSizer) {
 				lineNumberSizer = document.createElement('span');
 				lineNumberSizer.className = 'line-numbers-sizer';
 
-				codeElement.appendChild(lineNumberSizer);
+				codeElement.append(lineNumberSizer);
 			}
 
 			lineNumberSizer.style.display = 'block';
 
-			codeLines.forEach(function (line, lineNumber) {
+			codeLines.forEach(function(line, lineNumber) {
 				lineNumberSizer.textContent = line || '\n';
-				var lineSize = lineNumberSizer.getBoundingClientRect().height;
+				const lineSize = lineNumberSizer.getBoundingClientRect().height;
 				lineNumbersWrapper.children[lineNumber].style.height = lineSize + 'px';
 			});
 
@@ -1010,28 +1091,34 @@ Prism.hooks.add('complete', function completeHook(env) {
 	 * Returns style declarations for the element
 	 * @param {Element} element
 	 */
-	var getStyles = function (element) {
+	var getStyles = function(element) {
 		if (!element) {
 			return null;
 		}
 
-		return window.getComputedStyle ? getComputedStyle(element) : (element.currentStyle || null);
+		return window.getComputedStyle
+			? getComputedStyle(element)
+			: element.currentStyle || null;
 	};
 
-	window.addEventListener('resize', function () {
-		Array.prototype.forEach.call(document.querySelectorAll('pre.' + PLUGIN_NAME), _resizeElement);
+	window.addEventListener('resize', function() {
+		Array.prototype.forEach.call(
+			document.querySelectorAll('pre.' + PLUGIN_NAME),
+			_resizeElement
+		);
 	});
 
-	Prism.hooks.add('complete', function (env) {
+	Prism.hooks.add('complete', function(env) {
 		if (!env.code) {
 			return;
 		}
 
-		// works only for <code> wrapped inside <pre> (not inline)
-		var pre = env.element.parentNode;
-		var clsReg = /\s*\bline-numbers\b\s*/;
+		// Works only for <code> wrapped inside <pre> (not inline)
+		const pre = env.element.parentNode;
+		const clsReg = /\s*\bline-numbers\b\s*/;
 		if (
-			!pre || !/pre/i.test(pre.nodeName) ||
+			!pre ||
+			!/pre/i.test(pre.nodeName) ||
 			// Abort only if nor the <pre> nor the <code> have the class
 			(!clsReg.test(pre.className) && !clsReg.test(env.element.className))
 		) {
@@ -1047,16 +1134,17 @@ Prism.hooks.add('complete', function completeHook(env) {
 			// Remove the class 'line-numbers' from the <code>
 			env.element.className = env.element.className.replace(clsReg, ' ');
 		}
+
 		if (!clsReg.test(pre.className)) {
 			// Add the class 'line-numbers' to the <pre>
 			pre.className += ' line-numbers';
 		}
 
-		var match = env.code.match(NEW_LINE_EXP);
-		var linesNum = match ? match.length + 1 : 1;
-		var lineNumbersWrapper;
+		const match = env.code.match(NEW_LINE_EXP);
+		const linesNum = match ? match.length + 1 : 1;
+		let lineNumbersWrapper;
 
-		var lines = new Array(linesNum + 1);
+		let lines = new Array(linesNum + 1);
 		lines = lines.join('<span></span>');
 
 		lineNumbersWrapper = document.createElement('span');
@@ -1065,17 +1153,18 @@ Prism.hooks.add('complete', function completeHook(env) {
 		lineNumbersWrapper.innerHTML = lines;
 
 		if (pre.hasAttribute('data-start')) {
-			pre.style.counterReset = 'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
+			pre.style.counterReset =
+				'linenumber ' + (parseInt(pre.getAttribute('data-start'), 10) - 1);
 		}
 
-		env.element.appendChild(lineNumbersWrapper);
+		env.element.append(lineNumbersWrapper);
 
 		_resizeElement(pre);
 
 		Prism.hooks.run('line-numbers', env);
 	});
 
-	Prism.hooks.add('line-numbers', function (env) {
+	Prism.hooks.add('line-numbers', function(env) {
 		env.plugins = env.plugins || {};
 		env.plugins.lineNumbers = true;
 	});
@@ -1090,26 +1179,31 @@ Prism.hooks.add('complete', function completeHook(env) {
 		 * @param {Number} number line number
 		 * @return {Element|undefined}
 		 */
-		getLine: function (element, number) {
-			if (element.tagName !== 'PRE' || !element.classList.contains(PLUGIN_NAME)) {
+		getLine(element, number) {
+			if (
+				element.tagName !== 'PRE' ||
+				!element.classList.contains(PLUGIN_NAME)
+			) {
 				return;
 			}
 
-			var lineNumberRows = element.querySelector('.line-numbers-rows');
-			var lineNumberStart = parseInt(element.getAttribute('data-start'), 10) || 1;
-			var lineNumberEnd = lineNumberStart + (lineNumberRows.children.length - 1);
+			const lineNumberRows = element.querySelector('.line-numbers-rows');
+			const lineNumberStart =
+				parseInt(element.getAttribute('data-start'), 10) || 1;
+			const lineNumberEnd =
+				lineNumberStart + (lineNumberRows.children.length - 1);
 
 			if (number < lineNumberStart) {
 				number = lineNumberStart;
 			}
+
 			if (number > lineNumberEnd) {
 				number = lineNumberEnd;
 			}
 
-			var lineIndex = number - lineNumberStart;
+			const lineIndex = number - lineNumberStart;
 
 			return lineNumberRows.children[lineIndex];
 		}
 	};
-
-}());
+})();

@@ -126,9 +126,9 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Finds or searches for a single item where the given function returns a truthy value.
-   * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.
-   * The database elements is mapped by their `key`. If you want to find an element by key, you should use the `get` method instead.
-   * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
+	 * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.
+	 * The database elements is mapped by their `key`. If you want to find an element by key, you should use the `get` method instead.
+	 * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
 	 * @param {Function} fn The function to execute on each element.
 	 * @param {*} [thisArg] Value to use as `this` inside function.
 	 * @returns {Promise<*|undefined>}
