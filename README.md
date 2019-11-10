@@ -35,7 +35,7 @@ By default, data is stored in memory. Optionally, You can install an adapter.
 ```bash
 $ npm install level # LevelDB
 $ npm install mongojs # MongoDB
-$ npm install redis
+$ npm install ioredis # Redis
 
 # To use SQL database, install an additional 'sql' package and the adapter
 $ npm install sql

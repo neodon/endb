@@ -125,7 +125,7 @@ module.exports = class Util {
 			console.error(
 				`Install ${id} to continue; run "npm install ${id}" to install it.`
 			);
-			return false;
+			return undefined;
 		}
 	}
 

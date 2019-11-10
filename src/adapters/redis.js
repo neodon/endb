@@ -2,7 +2,7 @@
 
 const {EventEmitter} = require('events');
 const util = require('../util');
-const redis = util.safeRequire('redis');
+const Ioredis = util.safeRequire('ioredis');
 
 module.exports = class Redis extends EventEmitter {
 	constructor(uri, options = {}) {
@@ -12,7 +12,7 @@ module.exports = class Redis extends EventEmitter {
 			options.url = options.uri;
 		}
 
-		const client = redis.createClient(options);
+		const client = new Ioredis(options.uri, options);
 		this.db = [
 			'get',
 			'keys',
@@ -40,9 +40,7 @@ module.exports = class Redis extends EventEmitter {
 	clear() {
 		return this.db
 			.smembers(this._prefixNamespace())
-			.then(data =>
-				this.db.del.apply(null, data.concat(this._prefixNamespace()))
-			)
+			.then(data => this.db.del(data.concat(this._prefixNamespace())))
 			.then(() => undefined);
 	}
 
@@ -58,7 +56,7 @@ module.exports = class Redis extends EventEmitter {
 
 	get(key) {
 		return this.db.get(key).then(data => {
-			return data === null ? null : data;
+			return data === null ? undefined : data;
 		});
 	}
 
@@ -71,6 +69,6 @@ module.exports = class Redis extends EventEmitter {
 	}
 
 	_prefixNamespace() {
-		return this.namespace ? `namespace:${this.namespace}` : undefined;
+		return `namespace:${this.namespace}`;
 	}
 };
