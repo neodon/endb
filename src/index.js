@@ -1,7 +1,30 @@
 'use strict';
 
-const {EventEmitter} = require('events');
+const EventEmitter = require('events');
 const util = require('./util');
+const load = options => {
+	const adapters = {
+		level: './adapters/leveldb',
+		leveldb: './adapters/leveldb',
+		mongo: './adapters/mongodb',
+		mongodb: './adapters/mongodb',
+		mysql: './adapters/mysql',
+		mysql2: './adapters/mysql',
+		postgres: './adapters/postgres',
+		postgresql: './adapters/postgres',
+		redis: './adapters/redis',
+		sqlite: './adapters/sqlite',
+		sqlite3: './adapters/sqlite'
+	};
+	if (options.adapter || options.uri) {
+		const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
+		if (adapters[adapter] !== undefined) {
+			return new (require(adapters[adapter]))(options);
+		}
+	}
+
+	return new Map();
+};
 
 /**
  * @class Endb
@@ -55,15 +78,15 @@ class Endb extends EventEmitter {
 		this.options = Object.assign(
 			{
 				namespace: 'endb',
-				serialize: util.stringify,
-				deserialize: util.parse
+				serialize: JSON.stringify,
+				deserialize: JSON.parse
 			},
 			typeof uri === 'string' ? {uri} : uri,
 			options
 		);
 
 		if (!this.options.store) {
-			this.options.store = util.load(Object.assign({}, this.options));
+			this.options.store = load(Object.assign({}, this.options));
 		}
 
 		if (typeof this.options.store.on === 'function') {
@@ -71,6 +94,14 @@ class Endb extends EventEmitter {
 		}
 
 		this.options.store.namespace = this.options.namespace;
+	}
+
+	_addKeyPrefix(key) {
+		return `${this.options.namespace}:${key}`;
+	}
+
+	_removeKeyPrefix(key) {
+		return key.replace(`${this.options.namespace}:`, '');
 	}
 
 	/**
@@ -89,7 +120,7 @@ class Endb extends EventEmitter {
 					const arr = [];
 					for (const [key, value] of this.options.store) {
 						arr.push({
-							key: util.removeKeyPrefix(key, this.options.namespace),
+							key: this._removeKeyPrefix(key, this.options.namespace),
 							value: this.options.deserialize(value).value
 						});
 					}
@@ -120,7 +151,7 @@ class Endb extends EventEmitter {
 	 * Endb.delete('key').then(console.log).catch(console.error);
 	 */
 	delete(key) {
-		key = util.addKeyPrefix(key, this.options.namespace);
+		key = this._addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve().then(() => this.options.store.delete(key));
 	}
 
@@ -165,19 +196,16 @@ class Endb extends EventEmitter {
 	 * const value = await Endb.get('key');
 	 * console.log(value);
 	 */
-	get(key, options = {}) {
-		key = util.addKeyPrefix(key, this.options.namespace);
+	get(key) {
+		key = this._addKeyPrefix(key);
 		return Promise.resolve()
 			.then(() => this.options.store.get(key))
-			.then(data =>
-				typeof data === 'string' ? this.options.deserialize(data) : data
-			)
 			.then(data => {
 				if (data === undefined) {
 					return undefined;
 				}
 
-				return options && options.raw ? data : data.value;
+				return data;
 			});
 	}
 
@@ -196,7 +224,7 @@ class Endb extends EventEmitter {
 	 * }
 	 */
 	async has(key) {
-		key = util.addKeyPrefix(key, this.options.namespace);
+		key = this._addKeyPrefix(key, this.options.namespace);
 		if (this.options.store instanceof Map) {
 			const data = await this.options.store.has(key);
 			return data;
@@ -283,11 +311,10 @@ class Endb extends EventEmitter {
 	 * }).then(console.log).catch(console.error);
 	 */
 	set(key, value) {
-		key = util.addKeyPrefix(key, this.options.namespace);
+		key = this._addKeyPrefix(key);
 		return Promise.resolve()
-			.then(() => {
-				return this.options.store.set(key, this.options.serialize({value}));
-			})
+			.then(() => this.options.serialize(value))
+			.then(() => this.options.store.set(key, value))
 			.then(() => true);
 	}
 }
