@@ -1,9 +1,9 @@
 'use strict';
 
-import test from 'ava';
-import Endb from '../src';
+import {serial} from 'ava';
+import {Endb} from '../src';
 
-test('Namespaces', async t => {
+serial('Namespaces', async t => {
 	const endb1 = new Endb({namespace: 'endb1'});
 	const endb2 = new Endb({namespace: 'endb2'});
 	t.is(await endb1.set('foo', 'bar'), true);

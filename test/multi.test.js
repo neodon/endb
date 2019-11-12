@@ -1,9 +1,9 @@
 'use strict';
 
-import test from 'ava';
-import Endb from '../src';
+import {serial} from 'ava';
+import {Endb} from '../src';
 
-test('Multiple Endb instances', async t => {
+serial('Multiple Endb instances', async t => {
 	const {members, users} = Endb.multi(['members', 'users']);
 	t.is(await members.set('foo', 'bar'), true);
 	t.is(await users.set('bar', 'foo'), true);

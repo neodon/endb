@@ -1,9 +1,9 @@
 'use strict';
 
-import test from 'ava';
-import Endb from '../src';
+import {serial} from 'ava';
+import {Endb} from '../src';
 
-test('Adapters (Cache)', async t => {
+serial('Adapters (Cache)', async t => {
 	const store = new Map();
 	const endb = new Endb({store});
 	t.is(store.size, 0);
