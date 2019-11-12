@@ -24,7 +24,7 @@ module.exports = class MongoDB extends EventEmitter {
 			url,
 			options
 		);
-		this.client = mongojs(this.options.uri);
+		this.client = mongojs(this.options.url);
 		const collection = this.client.collection(this.options.collection);
 		collection.createIndex(
 			{key: 1},
