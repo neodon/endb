@@ -1,12 +1,13 @@
 {
     "name": "endb",
     "version": "0.16.3",
-    "description": "Simple key-value storage for multi adapter.",
+    "description": "Simple key-value storage with support for multiple backends",
     "main": "src/index.js",
     "scripts": {
-        "test": "npm run lint && ava",
+        "test": "npm run lint && ava --serial",
         "test:watch": "ava --watch",
         "lint": "xo src",
+        "lint:fix": "xo src --fix",
         "build:docs": "jsdoc -c .jsdoc.json",
         "prepublishOnly": "npm run test"
     },
@@ -15,7 +16,6 @@
         "url": "git+https://github.com/chroventer/endb.git"
     },
     "keywords": [
-        "database",
         "store",
         "key-value",
         "adapter",
@@ -29,13 +29,14 @@
     "homepage": "https://endb.js.org",
     "devDependencies": {
         "ava": "^2.4.0",
-        "jaguarjs-jsdoc": "^1.1.0",
         "jsdoc": "^3.6.3",
         "minami": "^1.2.3",
         "xo": "^0.25.3"
     },
     "xo": {
         "prettier": true,
+        "semicolon": true,
+        "space": false,
         "rules": {
             "guard-for-in": 0
         }
