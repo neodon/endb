@@ -19,8 +19,7 @@
     "destination": "docs/",
     "readme": "README.md",
     "recurse": true,
-    "verbose": true,
-    "tutorials": "docs/tutorials"
+    "verbose": true
   },
   "templates": {
     "collapse": true,
