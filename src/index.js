@@ -106,7 +106,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Gets all the elements (keys and values) from the database.
-	 * @returns {Promise<any[]>} All the elements (keys and values).
+	 * @returns {Promise<Array<any>>} All the elements (keys and values).
 	 * @example
 	 * Endb.all().then(console.log).catch(console.error);
 	 *
@@ -162,7 +162,7 @@ class Endb extends EventEmitter {
 	 * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
 	 * @param {Function} fn The function to execute on each element.
 	 * @param {*} [thisArg] Value to use as `this` inside function.
-	 * @returns {Promise<*|undefined>}
+	 * @returns {Promise<Object<*>|undefined>}
 	 * @example
 	 * Endb.find(v => v === 'value').then(console.log).catch(console.error);
 	 *
@@ -187,8 +187,6 @@ class Endb extends EventEmitter {
 	/**
 	 * Gets an element (key and value) from the database.
 	 * @param {string} key The key of the element.
-	 * @param {Object} [options={}] The options for the get.
-	 * @param {boolean} [options.raw=false] Get data as raw or not.
 	 * @returns {Promise<*>} The value of the element.
 	 * @example
 	 * Endb.get('key').then(console.log).catch(console.error);
@@ -239,7 +237,7 @@ class Endb extends EventEmitter {
 	 * @param {string} operation The mathematical operationto execute.
 	 * Possible operations: addition, subtraction, multiply, division, exp, and module.
 	 * @param {number} operand The operand of the operation
-	 * @returns {Promise<boolean>}
+	 * @returns {Promise<true>}
 	 * @example
 	 * Endb.math('key', 'add', 100).then(console.log).catch(console.error);
 	 *
@@ -283,10 +281,6 @@ class Endb extends EventEmitter {
 	 * await members.set('bar', 'foo');
 	 */
 	static multi(names, options = {}) {
-		if (!names || names.length <= 0) {
-			throw new TypeError('Names must be an array of strings');
-		}
-
 		const instances = {};
 		for (const name of names) {
 			instances[name] = new Endb(options);
@@ -307,7 +301,9 @@ class Endb extends EventEmitter {
 	 *   id: 1234567890,
 	 *   username: 'user',
 	 *   description: 'A test user',
-	 *   verified: true
+	 *   verified: true,
+	 *   nil: null,
+	 *   hobbies: ['programming']
 	 * }).then(console.log).catch(console.error);
 	 */
 	set(key, value) {
