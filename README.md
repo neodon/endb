@@ -17,11 +17,11 @@
 
 New to Endb? Check out the [Documentation](https://endb.js.org).
 
-- **Easy-to-use**: Endb is simplistic and efficient. It also has a simple promise-based API.
-- [**Adapters**](#Usage): Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite. You can also [integrate your own adapter](https://github.com/chroventer/endb/pulls)
+- **Easy-to-use**: Simplistic and yet efficient; has a simple and easy-to-use promise-based API.
+- [**Adapters**](#Usage): Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
+- [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally use third-party adapters or build your own. Endb will integrate the third-party adapter and handle complex types internally.
 - [**Namespaces**](#Namespaces): Namespaces isolate elements within a database, separate elements (keys & values) by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
-- [**Third-Party Adapters**](#Third-Party-Adapters): Integrate and use third-party adapters or build your own.
-- **Data Types**: Endb handles all the JSON types.
+- **Data Types**: Handles all the JSON types.
 - **Error-Handling**: Connection errors are sent through, from the adapter to the main instance (connection errors won't kill the process).
 
 ## Installation
@@ -95,21 +95,20 @@ await members.get('foo'); // 'members'
 
 ## Third-Party Adapters
 
-You can integrate and use third-party adapters or build your own.
+Optionally, you can use third-party adapters or build your own. Endb will integrate the third-party adapter and handle complex types internally.
 
 ```js
 const myAdapter = require('./my-adapter');
 const endb = new Endb({ store: myAdapter });
 ```
 
-Any module that follows the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API can be integrated.
+Any module that follows the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API will work.
 
 ```js
 new Endb({ store: new Map() });
 ```
 
 For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated module that implements the Map API.
-However, extension methods (all and find) may not work.
 
 ```js
 const Endb = require('endb');
@@ -118,7 +117,7 @@ const lru = new QuickLRU({ maxSize: 1000 });
 const endb = new Endb({ store: lru });
 ```
 
-List of third-party adapters supported by Endb:
+List of third-party adapters supported:
 - [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache
 - [Add Your Own!](https://github.com/chroventer/endb/pulls)
 
