@@ -21,7 +21,7 @@ New to Endb? Check out the [Documentation](https://endb.js.org).
 - [**Adapters**](#Usage): Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
 - [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally use third-party adapters or build your own. Endb will integrate the third-party adapter and handle complex types internally.
 - [**Namespaces**](#Namespaces): Namespaces isolate elements within a database, separate elements (keys & values) by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
-- **Data Types**: Handles all the JSON types.
+- **Data Types**: Handles all the JSON types including `Buffer` using its own serialization methods.
 - **Error-Handling**: Connection errors are sent through, from the adapter to the main instance (connection errors won't kill the process).
 
 ## Installation
