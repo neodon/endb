@@ -1,30 +1,14 @@
 'use strict';
 
-const EventEmitter = require('events');
-const util = require('./util');
-const load = options => {
-	const adapters = {
-		level: './adapters/leveldb',
-		leveldb: './adapters/leveldb',
-		mongo: './adapters/mongodb',
-		mongodb: './adapters/mongodb',
-		mysql: './adapters/mysql',
-		mysql2: './adapters/mysql',
-		postgres: './adapters/postgres',
-		postgresql: './adapters/postgres',
-		redis: './adapters/redis',
-		sqlite: './adapters/sqlite',
-		sqlite3: './adapters/sqlite'
-	};
-	if (options.adapter || options.uri) {
-		const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
-		if (adapters[adapter] !== undefined) {
-			return new (require(adapters[adapter]))(options);
-		}
-	}
-
-	return new Map();
-};
+const {EventEmitter} = require('events');
+const {
+	addKeyPrefix,
+	load,
+	math: _math,
+	parse,
+	removeKeyPrefix,
+	stringify
+} = require('./util');
 
 /**
  * @class Endb
@@ -78,8 +62,8 @@ class Endb extends EventEmitter {
 		this.options = Object.assign(
 			{
 				namespace: 'endb',
-				serialize: JSON.stringify,
-				deserialize: JSON.parse
+				serialize: stringify,
+				deserialize: parse
 			},
 			typeof uri === 'string' ? {uri} : uri,
 			options
@@ -96,22 +80,16 @@ class Endb extends EventEmitter {
 		this.options.store.namespace = this.options.namespace;
 	}
 
-	_addKeyPrefix(key) {
-		return `${this.options.namespace}:${key}`;
-	}
-
-	_removeKeyPrefix(key) {
-		return key.replace(`${this.options.namespace}:`, '');
-	}
-
 	/**
-	 * Gets all the elements (keys and values) from the database.
-	 * @returns {Promise<Array<any>>} All the elements (keys and values).
+	 * Gets all the elements from the database.
+	 * @returns {Promise<Array<any>>} All the elements from the database.
 	 * @example
-	 * Endb.all().then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const elements = await Endb.all();
-	 * console.log(elements);
+	 * await endb.set('foo', 'bar');
+	 * await endb.set('en', 'db');
+	 *
+	 * await endb.all(); // [ { key: 'foo', value: 'bar' }, { key: 'en', value: 'db' } ]
 	 */
 	all() {
 		return Promise.resolve()
@@ -120,7 +98,7 @@ class Endb extends EventEmitter {
 					const arr = [];
 					for (const [key, value] of this.options.store) {
 						arr.push({
-							key: this._removeKeyPrefix(key, this.options.namespace),
+							key: removeKeyPrefix(key, this.options.namespace),
 							value: this.options.deserialize(value).value
 						});
 					}
@@ -130,28 +108,42 @@ class Endb extends EventEmitter {
 
 				return this.options.store.all();
 			})
-			.then(data => (data === undefined ? undefined : data));
+			.then(data => {
+				if (data === undefined) return undefined;
+				return data;
+			});
 	}
 
 	/**
-	 * Deletes all the elements (keys and values) from the database.
-	 * @returns {Promise<void>} Returns undefined
+	 * Removes all elements from the database.
+	 * @returns {Promise<undefined>} Returns undefined
 	 * @example
-	 * Endb.clear().then(console.log).catch(console.error);
+	 * const endb = new Endb();
+	 *
+	 * await endb.set('foo','bar');
+	 * await endb.set('key', 'val');
+	 *
+	 * await endb.clear(); // true
+	 *
+	 * await endb.has('foo');
 	 */
 	clear() {
 		return Promise.resolve().then(() => this.options.store.clear());
 	}
 
 	/**
-	 * Deletes an element (key and value) from the database.
-	 * @param {string} key The key of an element.
-	 * @returns {Promise<true>} Whether or not, the key has been deleted.
+	 * Removes the specified element from the database by key.
+	 * @param {string} key The key of the element to remove from the database.
+	 * @returns {Promise<boolean>} `true` if an element in the database existed and has been removed, or `false` if the element does not exist.
 	 * @example
-	 * Endb.delete('key').then(console.log).catch(console.error);
+	 * const endb = new Endb();
+	 *
+	 * await endb.set('foo', 'bar');
+	 *
+	 * await endb.delete('foo'); // true
 	 */
 	delete(key) {
-		key = this._addKeyPrefix(key, this.options.namespace);
+		key = addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve().then(() => this.options.store.delete(key));
 	}
 
@@ -160,14 +152,24 @@ class Endb extends EventEmitter {
 	 * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.
 	 * The database elements is mapped by their `key`. If you want to find an element by key, you should use the `get` method instead.
 	 * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
-	 * @param {Function} fn The function to execute on each element.
-	 * @param {*} [thisArg] Value to use as `this` inside function.
-	 * @returns {Promise<Object<*>|undefined>}
+	 * @param {Function} fn The function to execute on each value in the element.
+	 * @param {*} [thisArg] Object to use as `this` inside callback.
+	 * @returns {Promise<Object<*>|undefined>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
 	 * @example
-	 * Endb.find(v => v === 'value').then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const element = await Endb.find(v => v === 'value');
-	 * console.log(element);
+	 * await endb.set('foo', 'bar');
+	 * await endb.set('profile', {
+	 *   id: 1234567890,
+	 *   username: 'user',
+	 *   verified: true,
+	 *   nil: null,
+	 *   hobbies: ['programming']
+	 * });
+	 *
+	 * await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
+	 * await endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }
+	 * await endb.find(v => v.desc === 'desc'); // undefined
 	 */
 	async find(fn, thisArg) {
 		if (typeof thisArg !== undefined) {
@@ -176,8 +178,8 @@ class Endb extends EventEmitter {
 
 		const elements = await this.all();
 		for (const element of elements) {
-			if (fn(element.value)) {
-				return element;
+			if (fn(element.value, element.key)) {
+				return element.value;
 			}
 		}
 
@@ -185,54 +187,53 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * Gets an element (key and value) from the database.
-	 * @param {string} key The key of the element.
-	 * @returns {Promise<*>} The value of the element.
+	 * Gets the specified element from the database.
+	 * @param {string} key The key of the element to return from the database.
+	 * @returns {Promise<*>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
-	 * Endb.get('key').then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const value = await Endb.get('key');
-	 * console.log(value);
+	 * await endb.set('foo', 'bar');
+	 * await endb.get('bar'); // undefined
+	 * await endb.get('foo'); // 'bar'
 	 */
 	get(key) {
-		key = this._addKeyPrefix(key);
+		key = addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => this.options.store.get(key))
+			.then(data =>
+				typeof data === 'string' ? this.options.deserialize(data) : data
+			)
 			.then(data => {
-				if (data === undefined) {
-					return undefined;
-				}
-
+				if (data === undefined) return undefined;
 				return data;
 			});
 	}
 
 	/**
-	 * Checks if the database has an element (key and value).
-	 * @param {string} key The key of the element.
-	 * @returns {Promise<boolean>} Whether or not, the element exists in the database.
+	 * Checks whether an element with the specified key exists in the database or not.
+	 * @param {string} key The key of the element to test for presence in the database.
+	 * @returns {Promise<boolean>} `true` if an element with the specified key exists in the database, otherwise false.
 	 * @example
-	 * Endb.has('key').then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const element = await Endb.has('key');
-	 * if (element) {
-	 *     console.log('exists');
-	 * } else {
-	 *     console.log('does not exist');
-	 * }
+	 * await endb.set('foo', 'bar');
+	 *
+	 * await endb.has('bar'); // true
+	 * await endb.has('baz'); // false
 	 */
 	async has(key) {
-		key = this._addKeyPrefix(key, this.options.namespace);
+		key = addKeyPrefix(key, this.options.namespace);
 		if (this.options.store instanceof Map) {
 			const data = await this.options.store.has(key);
 			return data;
 		}
 
-		return typeof (await this.get(key, {raw: true})) === 'object';
+		return typeof (await this.get(key)) === 'object';
 	}
 
 	/**
-	 * Performs a mathematical operation on an element.
+	 * Performs a mathematical operation on the specified element in the database.
 	 * @param {string} key The key of the element.
 	 * @param {string} operation The mathematical operationto execute.
 	 * Possible operations: addition, subtraction, multiply, division, exp, and module.
@@ -260,7 +261,7 @@ class Endb extends EventEmitter {
 
 		const data = await this.set(
 			key,
-			util.math(await this.get(key), operation, operand)
+			_math(await this.get(key), operation, operand)
 		);
 		return data;
 	}
@@ -290,32 +291,31 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * Sets an element (key and a value) to the database.
-	 * @param {string} key The key of the element.
-	 * @param {*} value The value of the element.
-	 * @returns {Promise<boolean>} Whether or not, the element has been assigned.
+	 * Sets an element with a specified key and a value to the database.
+	 * @param {string} key The key of the element to add to the database.
+	 * @param {*} value The value of the element to add to the database.
+	 * @returns {Promise<true>} Returns `true`
 	 * @example
-	 * Endb.set('key', 'value').then(console.log).catch(console.error);
-	 * Endb.set('userExists', true).then(console.log).catch(console.error);
-	 * Endb.set('profile', {
+	 * const endb = new Endb();
+	 *
+	 * await endb.set('foo', 'bar'); // true
+	 * await endb.set('exists', false);
+	 * await endb.set('profile', {
 	 *   id: 1234567890,
 	 *   username: 'user',
-	 *   description: 'A test user',
 	 *   verified: true,
 	 *   nil: null,
 	 *   hobbies: ['programming']
-	 * }).then(console.log).catch(console.error);
+	 * });
 	 */
 	set(key, value) {
-		key = this._addKeyPrefix(key);
+		key = addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => this.options.serialize(value))
-			.then(() => this.options.store.set(key, value))
+			.then(value => this.options.store.set(key, value))
 			.then(() => true);
 	}
 }
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.util = require('./util');
-module.exports.version = require('../package').version;
