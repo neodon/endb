@@ -1,13 +1,12 @@
 declare module 'endb' {
   import { EventEmitter } from 'events';
-  export const version: string;
 
   type EndbOptions = {
     namespace: string | 'endb';
     serialize: Function;
     deserialize: Function;
     adapter: 'level' | 'leveldb' | 'mongo' | 'mongodb' | 'mysql' | 'mysql2' | 'postgres' | 'postgresql' | 'redis' | 'sqlite' | 'sqlite3';
-    store: any;
+    store: any | Map;
     collection: string | 'endb';
     table: string | 'endb';
     keySize: number | 255;
@@ -23,7 +22,7 @@ declare module 'endb' {
     constructor(uri: string, options: EndbOptions);
     public all(): Promise<Element[]>;
     public clear(): Promise<undefined>;
-    public delete(key: string): Promise<true>;
+    public delete(key: string): Promise<boolean>;
     public find(fn: Function, thisArg: any): Promise<Element | undefined>;
     public get(key: string): Promise<any>;
     public has(key: string): Promise<boolean>;
@@ -32,8 +31,15 @@ declare module 'endb' {
     public set(key: string, value: any): Promise<true>;
   }
 
-  export class Util {
+  class Util {
+    public static addKeyPrefix(key: string, namespace: string): string;
+    public static isBufferLike(x: any): boolean;
+    public static isObject(x: any): boolean;
+    public static load(options: EndbOptions): any;
+    public static parse(text: string): any;
     public static math(base: number, op: string, opand: number): number;
+    public static removeKeyPrefix(key: string, namespace: string): string;
     public static safeRequire(id: string): any | undefined;
+    public static stringify(value: any, space?: string | number): string;
   }
 }
