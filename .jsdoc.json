@@ -1,18 +1,9 @@
 {
-  "plugins": [
-    "plugins/markdown",
-    "plugins/summarize",
-    "plugins/overloadHelper",
-    "plugins/sourcetag"
-  ],
+  "plugins": ["plugins/markdown"],
   "source": {
-    "include": ["src", "README.md"]
+    "include": ["src", "README.md", "package.json"]
   },
   "sourceType": "module",
-  "tags": {
-    "allowUnknownTags": true,
-    "dictionaries": ["jsdoc"]
-  },
   "opts": {
     "template": "node_modules/minami",
     "encoding": "utf8",
