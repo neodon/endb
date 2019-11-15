@@ -1,8 +1,8 @@
 'use strict';
 
-const util = require('../util');
-const sqlite3 = util.safeRequire('sqlite3');
+const {safeRequire} = require('../util');
 const Sql = require('./sql');
+const sqlite3 = safeRequire('sqlite3');
 
 module.exports = class SQLite extends Sql {
 	constructor(options = {}) {

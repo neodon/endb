@@ -1,8 +1,8 @@
 'use strict';
 
-const util = require('../util');
+const {safeRequire} = require('../util');
 const Sql = require('./Sql');
-const pg = util.safeRequire('pg');
+const pg = safeRequire('pg');
 
 module.exports = class PostgreSQL extends Sql {
 	constructor(options = {}) {

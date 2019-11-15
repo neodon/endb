@@ -1,8 +1,8 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const util = require('../util');
-const Ioredis = util.safeRequire('ioredis');
+const {safeRequire} = require('../util');
+const Ioredis = safeRequire('ioredis');
 
 module.exports = class Redis extends EventEmitter {
 	constructor(uri, options = {}) {
@@ -32,7 +32,8 @@ module.exports = class Redis extends EventEmitter {
 	all() {
 		return this.db.keys('*').then(data => {
 			for (const element of data) {
-				return element === null ? null : element;
+				if (element === null) return undefined;
+				return element;
 			}
 		});
 	}
@@ -56,7 +57,8 @@ module.exports = class Redis extends EventEmitter {
 
 	get(key) {
 		return this.db.get(key).then(data => {
-			return data === null ? undefined : data;
+			if (data === null) return undefined;
+			return data;
 		});
 	}
 

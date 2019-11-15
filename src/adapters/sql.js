@@ -1,8 +1,8 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const util = require('../util');
-const sql = util.safeRequire('sql');
+const {removeKeyPrefix, safeRequire} = require('../util');
+const sql = safeRequire('sql');
 
 module.exports = class SQL extends EventEmitter {
 	constructor(options = {}) {
@@ -46,7 +46,7 @@ module.exports = class SQL extends EventEmitter {
 			const arr = [];
 			for (const i in rows) {
 				arr.push({
-					key: util.removeKeyPrefix(rows[i].key, this.options.namespace),
+					key: removeKeyPrefix(rows[i].key, this.options.namespace),
 					value: this.options.deserialize(rows[i].value).value
 				});
 			}

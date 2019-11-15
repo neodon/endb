@@ -1,21 +1,15 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const util = require('../util');
-const mongojs = util.safeRequire('mongojs');
+const {removeKeyPrefix, safeRequire} = require('../util');
+const mongojs = safeRequire('mongojs');
 
 module.exports = class MongoDB extends EventEmitter {
 	constructor(url, options = {}) {
 		super();
 		url = url || {};
-		if (typeof url === 'string') {
-			url = {url};
-		}
-
-		if (url.uri) {
-			url = Object.assign({url: url.uri}, url);
-		}
-
+		if (typeof url === 'string') url = {url};
+		if (url.uri) url = Object.assign({url: url.uri}, url);
 		this.options = Object.assign(
 			{
 				url: 'mongodb://127.0.0.1:27017',
@@ -47,7 +41,7 @@ module.exports = class MongoDB extends EventEmitter {
 			const arr = [];
 			for (const i in data) {
 				arr.push({
-					key: util.removeKeyPrefix(data[i].key, this.options.namespace),
+					key: removeKeyPrefix(data[i].key, this.options.namespace),
 					value: this.options.deserialize(data[i].value).value
 				});
 			}
@@ -71,9 +65,10 @@ module.exports = class MongoDB extends EventEmitter {
 	}
 
 	get(key) {
-		return this.db
-			.findOne({key})
-			.then(data => (data === null ? undefined : data.value));
+		return this.db.findOne({key}).then(data => {
+			if (data === null) return undefined;
+			return data.value;
+		});
 	}
 
 	set(key, value) {

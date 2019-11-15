@@ -1,8 +1,8 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const util = require('../util');
-const Level = util.safeRequire('level');
+const {safeRequire} = require('../util');
+const Level = safeRequire('level');
 
 module.exports = class LevelDB extends EventEmitter {
 	constructor(uri, options = {}) {
@@ -14,10 +14,13 @@ module.exports = class LevelDB extends EventEmitter {
 			typeof uri === 'string' ? {uri} : uri,
 			options
 		);
-		options.path = options.uri.replace(/^leveldb:\/\//, '');
-		const client = new Level(options.path, options, err => {
-			this.emit('error', err);
-		});
+		const client = new Level(
+			options.uri.replace(/^leveldb:\/\//, ''),
+			options,
+			err => {
+				this.emit('error', err);
+			}
+		);
 		this.db = [
 			'del',
 			'createKeyStream',
@@ -34,7 +37,7 @@ module.exports = class LevelDB extends EventEmitter {
 	all() {
 		return this.db.createReadStream().then(stream => {
 			stream.on('data', data => {
-				return data === null ? null : data;
+				return data;
 			});
 		});
 	}
@@ -58,7 +61,8 @@ module.exports = class LevelDB extends EventEmitter {
 
 	get(key) {
 		return this.db.get(key).then(data => {
-			return data === null ? null : data;
+			if (data === null) return undefined;
+			return data;
 		});
 	}
 
