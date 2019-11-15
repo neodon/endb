@@ -1,6 +1,6 @@
 <div align="center">
     <p>
-        <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="220" alt="endb" /></a>
+        <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="220" alt="Endb" /></a>
     </p>
     <p>
         <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="Version" /></a>
@@ -18,11 +18,16 @@
 New to Endb? Check out the [Documentation](https://endb.js.org).
 
 - **Easy-to-use**: Simplistic and yet efficient; has a simple and easy-to-use promise-based API.
-- [**Adapters**](#Usage): Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
-- [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally use third-party adapters or build your own. Endb will integrate the third-party adapter and handle complex types internally.
-- [**Namespaces**](#Namespaces): Namespaces isolate elements within a database, separate elements (keys & values) by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
-- **Data Types**: Handles all the JSON types including `Buffer` using its own serialization methods.
-- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance (connection errors won't kill the process).
+- [**Adapters**](#Usage): By default, data is stored in memory. 
+You can also install (check out the [Installation Guide](#Installation)) and use an adapter. 
+Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
+- [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally use third-party adapters or build your own.
+Endb will integrate the third-party adapter and handle complex types internally.
+- [**Namespaces**](#Namespaces): Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
+- [**Custom Serializers**](#Custom-Serializers): Utilizes data serialization methods that encodes Buffer data as a base64-encoded string, decodes JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
+Optionally, pass your own data serialization methods to support extra data types.
+- **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html) using its own data serialization methods.
+- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance (connection errors won't exit or kill the process).
 
 ## Installation
 
@@ -30,7 +35,7 @@ New to Endb? Check out the [Documentation](https://endb.js.org).
 npm install endb
 ```
 
-By default, data is stored in memory. Optionally, You can install an adapter.
+By default, data is stored in memory. You can also install and use an adapter. Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
 
 ```bash
 $ npm install level # LevelDB
@@ -57,7 +62,7 @@ const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
 const endb = new Endb('redis://user:pass@localhost:6379');
 const endb = new Endb('sqlite://path/to/database.sqlite');
 
-// Handles database connection error
+// Handles connection errors.
 endb.on('error', err => console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
@@ -66,7 +71,7 @@ await endb.set('num', 10); // true
 await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
 await endb.get('exists'); // true
-await endb.all(); // { ... }
+await endb.all(); // [ ... ]
 await endb.has('foo'); // true
 await endb.has('bar'); // false
 await endb.find(v => v === 'bar'); // { ... }
@@ -76,13 +81,11 @@ await endb.clear(); // undefined
 
 ## Namespaces
 
-- **Isolation**: Namespaces isolate elements within a database.
-- **Avoid Key-Collisions**: Endb namespaces separate elements (keys & values) by prefixing the key with a certain name.
-- **Clear Certain Namespace**: Namespaces allow you to clear only a certain namespace while using the same database.
+Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
 
 ```javascript
 const users = new Endb({ namespace: 'users' });
-const members = new Endb({ namespace: 'cache' });
+const members = new Endb({ namespace: 'members' });
 
 await users.set('foo', 'users'); // true
 await members.set('foo', 'members'); // true
@@ -95,7 +98,8 @@ await members.get('foo'); // 'members'
 
 ## Third-Party Adapters
 
-Optionally, you can use third-party adapters or build your own. Endb will integrate the third-party adapter and handle complex types internally.
+You can optionally use third-party adapters or build your own. 
+Endb will integrate the third-party adapter and handle complex types internally.
 
 ```js
 const myAdapter = require('./my-adapter');
@@ -120,6 +124,19 @@ const endb = new Endb({ store: lru });
 List of third-party adapters supported:
 - [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache
 - [Add Your Own!](https://github.com/chroventer/endb/pulls)
+
+## Custom Serializers
+
+Endb uses data serialization methods that encodes Buffer data as a base64-encoded string, decdes JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends. 
+
+Optionally, pass your own data serialization methods to support extra data types.
+
+```javascript
+const endb = new Endb({
+    serialize: JSON.stringify,
+    deserialize: JSON.parse
+});
+```
 
 ## Links
 
