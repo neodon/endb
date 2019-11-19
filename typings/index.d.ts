@@ -23,9 +23,11 @@ declare module 'endb' {
     public all(): Promise<Element[]>;
     public clear(): Promise<undefined>;
     public delete(key: string): Promise<boolean>;
+    public export(): Promise<string>;
     public find(fn: Function, thisArg: any): Promise<Element | undefined>;
     public get(key: string): Promise<any>;
     public has(key: string): Promise<boolean>;
+    public import(data: string): Promise<void>;
     public math(key: string, operation: string, operand: number): Promise<true>;
     public static multi(names: string[], options: EndbOptions): any;
     public set(key: string, value: any): Promise<true>;
