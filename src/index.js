@@ -147,6 +147,15 @@ class Endb extends EventEmitter {
 		return Promise.resolve().then(() => this.options.store.delete(key));
 	}
 
+	async export() {
+		return JSON.stringify({
+			namespace: this.options.namespace,
+			options: this.options,
+			date: Date.now(),
+			elements: await this.all()
+		}, null, 2);
+	}
+
 	/**
 	 * Finds or searches for a single item where the given function returns a truthy value.
 	 * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.
@@ -230,6 +239,27 @@ class Endb extends EventEmitter {
 		}
 
 		return typeof (await this.get(key)) === 'object';
+	}
+
+	/**
+	 * @param {string} data the data to import.
+	 * @param {*} [overwrite=true] Whether to overwrite existing elements with new data.
+	 * @param {*} [clear=false] Whether to clear all the elements before writing data.
+	 * @returns {undefined}
+	 */
+	async import(data, overwrite = true, clear = false) {
+		if (clear) await this.clear();
+		if (data === null) throw new Error('No data provided to import.');
+		try {
+			const parsed = JSON.parse(data);
+			for (const element of parsed.elements) {
+				if (!overwrite && this.has(element.key)) continue;
+				await this.set(element.key, element.value);
+			}
+		} catch (err) {
+			throw new Error(`Invalid data provided: ${err}`);
+		}
+		return undefined;
 	}
 
 	/**
