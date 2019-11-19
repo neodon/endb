@@ -99,7 +99,7 @@ class Endb extends EventEmitter {
 					for (const [key, value] of this.options.store) {
 						arr.push({
 							key: removeKeyPrefix(key, this.options.namespace),
-							value: this.options.deserialize(value).value
+							value: this.options.deserialize(value)
 						});
 					}
 
