@@ -148,12 +148,16 @@ class Endb extends EventEmitter {
 	}
 
 	async export() {
-		return JSON.stringify({
-			namespace: this.options.namespace,
-			options: this.options,
-			date: Date.now(),
-			elements: await this.all()
-		}, null, 2);
+		return JSON.stringify(
+			{
+				namespace: this.options.namespace,
+				options: this.options,
+				date: Date.now(),
+				elements: await this.all()
+			},
+			null,
+			2
+		);
 	}
 
 	/**
@@ -254,11 +258,12 @@ class Endb extends EventEmitter {
 			const parsed = JSON.parse(data);
 			for (const element of parsed.elements) {
 				if (!overwrite && this.has(element.key)) continue;
-				await this.set(element.key, element.value);
+				await this.set(element.key, element.value); // eslint-disable-line no-await-in-loop
 			}
-		} catch (err) {
-			throw new Error(`Invalid data provided: ${err}`);
+		} catch (error) {
+			throw new Error(`Invalid data provided: ${error}`);
 		}
+
 		return undefined;
 	}
 
