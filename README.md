@@ -9,7 +9,6 @@
         <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="NPM Downloads" /></a>
         <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="GitHub Stars" /></a>
         <a href="https://github.com/chroventer/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/chroventer/endb" alt="License" /></a>
-        <a href="https://discord.gg/cetqPMv"><img src="https://discordapp.com/api/guilds/632514027427332116/embed.png" alt="Discord" /></a>
     </p>
 </div>
 
@@ -40,6 +39,7 @@ By default, data is stored in memory. You can also install and use an adapter. O
 ```bash
 $ npm install level # LevelDB
 $ npm install mongojs # MongoDB
+$ npm install nedb # NeDB
 $ npm install ioredis # Redis
 
 # To use SQL database, an additional package 'sql' must be installed and an adapter
@@ -143,4 +143,3 @@ const endb = new Endb({
 - [Documentation](https://endb.js.org "Documentation")
 - [NPM](https://npmjs.com/package/endb "NPM")
 - [GitHub](https://github.com/chroventer/endb "GitHub")
-- [Discord](https://discord.gg/cetqPMv "Discord")

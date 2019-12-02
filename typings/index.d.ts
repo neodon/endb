@@ -6,7 +6,7 @@ declare module 'endb' {
     serialize: Function;
     deserialize: Function;
     adapter: 'level' | 'leveldb' | 'mongo' | 'mongodb' | 'mysql' | 'mysql2' | 'postgres' | 'postgresql' | 'redis' | 'sqlite' | 'sqlite3';
-    store: any | Map;
+    store: any;
     collection: string | 'endb';
     table: string | 'endb';
     keySize: number | 255;
