@@ -12,21 +12,18 @@
     </p>
 </div>
 
-🗃 Simple key-value storage with support for multiple backends
+🗃 Simple key-value storage with support for multiple backends.
 
 New to Endb? Check out the [Documentation](https://endb.js.org).
 
-- **Easy-to-use**: Simplistic and yet efficient; has a simple and easy-to-use promise-based API.
-- [**Adapters**](#Usage): By default, data is stored in memory. 
-You can also install (check out the [Installation Guide](#Installation)) and use an adapter. 
-Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
-- [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally use third-party adapters or build your own.
-Endb will integrate the third-party adapter and handle complex types internally.
-- [**Namespaces**](#Namespaces): Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
-- [**Custom Serializers**](#Custom-Serializers): Utilizes data serialization methods that encodes Buffer data as a base64-encoded string, decodes JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
+- **Easy-to-use**: Simplistic and yet efficient. It also has a simple and easy-to-use promise-based API.
+- [**Adapters**](#Usage): By default, data is stored in memory. You can optionally install (check out the Installation Guide) and utilize an adapter. Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
+- [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally utilize third-party adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
+- [**Namespaces**](#Namespaces): Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.
+- [**Custom Serializers**](#Custom-Serializers): Utilizes data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
 Optionally, pass your own data serialization methods to support extra data types.
-- **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html) using its own data serialization methods.
-- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance (connection errors won't exit or kill the process).
+- **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html) using its data serialization methods.
+- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance; connection errors won't exit or kill the process.
 
 ## Installation
 
@@ -34,7 +31,7 @@ Optionally, pass your own data serialization methods to support extra data types
 npm install endb
 ```
 
-By default, data is stored in memory. You can also install and use an adapter. Officially supported adapters are LevelDB, MongoDB, MySQL, PostgreSQL, Redis, and SQLite.
+By default, data is stored in memory. You can optionally install and utilize an adapter. Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
 
 ```bash
 $ npm install level # LevelDB
@@ -81,7 +78,7 @@ await endb.clear(); // undefined
 
 ## Namespaces
 
-Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow you to clear only a certain namespace while using the same database.
+Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.
 
 ```javascript
 const users = new Endb({ namespace: 'users' });
@@ -98,8 +95,7 @@ await members.get('foo'); // 'members'
 
 ## Third-Party Adapters
 
-You can optionally use third-party adapters or build your own. 
-Endb will integrate the third-party adapter and handle complex types internally.
+You can optionally utilize third-party adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
 
 ```js
 const myAdapter = require('./my-adapter');
@@ -127,8 +123,7 @@ List of third-party adapters supported:
 
 ## Custom Serializers
 
-Endb uses data serialization methods that encodes Buffer data as a base64-encoded string, decdes JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends. 
-
+Utilizes data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
 Optionally, pass your own data serialization methods to support extra data types.
 
 ```javascript
