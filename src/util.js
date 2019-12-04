@@ -23,6 +23,7 @@ module.exports = class Util {
 			leveldb: './adapters/leveldb',
 			mongo: './adapters/mongodb',
 			mongodb: './adapters/mongodb',
+			nedb: './adapters/nedb',
 			mysql: './adapters/mysql',
 			mysql2: './adapters/mysql',
 			postgres: './adapters/postgres',

@@ -14,15 +14,13 @@ module.exports = class NeDB extends EventEmitter {
 			typeof uri === 'string' ? {uri} : uri,
 			options
 		);
-		const client = new Nedb({
-			filename: options.uri.replace(/^nedb:\/\//, ''),
-			...options
-		});
+		options.filename = options.uri.replace(/^nedb:\/\//, '');
+		const client = new Nedb(options);
 		this.db = ['update', 'find', 'findOne', 'remove'].reduce((obj, method) => {
 			obj[method] = require('util').promisify(client[method].bind(client));
 			return obj;
 		}, {});
-		this.client.on('error', err => this.emit('error', err));
+		client.on('error', err => this.emit('error', err));
 	}
 
 	all() {
