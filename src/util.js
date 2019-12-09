@@ -101,10 +101,9 @@ module.exports = class Util {
 		try {
 			return require(id);
 		} catch {
-			console.error(
+			throw new Error(
 				`Install ${id} to continue; run "npm install ${id}" to install it.`
 			);
-			return undefined;
 		}
 	}
 
