@@ -33,7 +33,7 @@ declare module 'endb' {
     public set(key: string, value: any): Promise<true>;
   }
 
-  class Util {
+  export class Util {
     public static addKeyPrefix(key: string, namespace: string): string;
     public static isBufferLike(x: any): boolean;
     public static isObject(x: any): boolean;
