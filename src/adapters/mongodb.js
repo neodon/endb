@@ -42,7 +42,7 @@ module.exports = class MongoDB extends EventEmitter {
 			for (const i in data) {
 				arr.push({
 					key: removeKeyPrefix(data[i].key, this.options.namespace),
-					value: this.options.deserialize(data[i].value).value
+					value: this.options.deserialize(data[i].value)
 				});
 			}
 

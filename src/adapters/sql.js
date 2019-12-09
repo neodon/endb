@@ -47,7 +47,7 @@ module.exports = class SQL extends EventEmitter {
 			for (const i in rows) {
 				arr.push({
 					key: removeKeyPrefix(rows[i].key, this.options.namespace),
-					value: this.options.deserialize(rows[i].value).value
+					value: this.options.deserialize(rows[i].value)
 				});
 			}
 
