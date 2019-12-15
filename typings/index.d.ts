@@ -1,7 +1,7 @@
 declare module 'endb' {
   import { EventEmitter } from 'events';
 
-  type EndbOptions = {
+  interface EndbOptions {
     namespace: string | 'endb';
     serialize: Function;
     deserialize: Function;
