@@ -5,6 +5,7 @@ module.exports = class Util {
 		if (Array.isArray(key)) {
 			return key.map(k => `${namespace}:${k}`);
 		}
+
 		return `${namespace}:${key}`;
 	}
 

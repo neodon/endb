@@ -139,7 +139,7 @@ class Endb extends EventEmitter {
 	 * const endb = new Endb();
 	 *
 	 * await endb.set('foo', 'bar'); // true
-	 * 
+	 *
 	 * await endb.delete('foo'); // true
 	 * await endb.delete(['foo', 'fizz']); // [ true, false ]
 	 */
@@ -149,6 +149,7 @@ class Endb extends EventEmitter {
 			if (Array.isArray(key)) {
 				return Promise.all(key.map(k => this.options.store.delete(k)));
 			}
+
 			return this.options.store.delete(key);
 		});
 	}
