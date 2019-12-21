@@ -2,6 +2,10 @@
 
 module.exports = class Util {
 	static addKeyPrefix(key, namespace) {
+		if (Array.isArray(key)) {
+			return key.map(k => `${namespace}:${k}`);
+		}
+
 		return `${namespace}:${key}`;
 	}
 

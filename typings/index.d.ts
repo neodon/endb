@@ -22,7 +22,7 @@ declare module 'endb' {
     constructor(uri: string, options: EndbOptions);
     public all(): Promise<Element[]>;
     public clear(): Promise<undefined>;
-    public delete(key: string): Promise<boolean>;
+    public delete(key: string | string[]): Promise<boolean|boolean[]>;
     public export(): Promise<string>;
     public find(fn: Function, thisArg: any): Promise<Element | undefined>;
     public get(key: string): Promise<any>;
@@ -34,7 +34,7 @@ declare module 'endb' {
   }
 
   export class Util {
-    public static addKeyPrefix(key: string, namespace: string): string;
+    public static addKeyPrefix(key: string | string[], namespace: string): string;
     public static isBufferLike(x: any): boolean;
     public static isObject(x: any): boolean;
     public static load(options: EndbOptions): any;

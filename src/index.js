@@ -133,18 +133,25 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Removes the specified element from the database by key.
-	 * @param {string} key The key of the element to remove from the database.
-	 * @returns {Promise<boolean>} `true` if an element in the database existed and has been removed, or `false` if the element does not exist.
+	 * @param {string|string[]} key The key(s) of the element to remove from the database.
+	 * @returns {Promise<boolean|boolean[]>} `true` if an element in the database existed and has been removed, or `false` if the element does not exist.
 	 * @example
 	 * const endb = new Endb();
 	 *
-	 * await endb.set('foo', 'bar');
+	 * await endb.set('foo', 'bar'); // true
 	 *
 	 * await endb.delete('foo'); // true
+	 * await endb.delete(['foo', 'fizz']); // [ true, false ]
 	 */
 	delete(key) {
 		key = addKeyPrefix(key, this.options.namespace);
-		return Promise.resolve().then(() => this.options.store.delete(key));
+		return Promise.resolve().then(() => {
+			if (Array.isArray(key)) {
+				return Promise.all(key.map(k => this.options.store.delete(k)));
+			}
+
+			return this.options.store.delete(key);
+		});
 	}
 
 	async export() {
