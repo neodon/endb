@@ -1,38 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Endb - Documentation</title>
+    <title>JSDoc: Endb</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
+
 <body>
-
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger" class="navicon-button x">
-  <div class="navicon"></div>
-</label>
-
-<label for="nav-trigger" class="overlay"></label>
-
-<nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Endb.html">Endb</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#.multi">multi</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#all">all</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#clear">clear</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#delete">delete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#find">find</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#has">has</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#math">math</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#set">set</a></span></li>
-</nav>
-
-<div id="main">
-    
-    <h1 class="page-title">Endb</h1>
-    
-
-    
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                     
+                        <img src="media/logo.png" alt="logo">
+                    
+                     
+                        <h1 class="navbar-item">Endb</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/chroventer/endb" target="_blank">
+                                GitHub
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://npmjs.com/package/endb" target="_blank">
+                                NPM
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Endb.html">Endb</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Class</p>
+                        <h1>Endb</h1>
+                    </header>
+                    
+                    
 
 
 
@@ -41,9 +84,7 @@
 
 <header>
     
-        <h2>
-        Endb
-        </h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Endb<span class="signature">(uri<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h2>
         
             <div class="class-description"><p>Simple key-value database with cache and multi adapter support.</p></div>
         
@@ -54,1020 +95,26 @@
     <div class="container-overview">
     
         
-<div class="section-method">
+            <div class='vertical-section'>
+                <h3 class="title"><span>Constructor</span></h3>
+                <div class="members">
+                    <div class="member">
+
 
     
-    <h2>Constructor</h2>
-    
-
-    <h4 class="name" id="Endb"><span class="type-signature"></span>new Endb<span class="signature">()</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line29">line 29</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
-    
-    </div>
-
-    
-        <h3 class="subsection-title">Extends</h3>
-
+    <h4 class="name" id="Endb">
+        <a class="href-link" href="#Endb">#</a>
         
-
-
-    <ul>
-        <li>EventEmitter</li>
-    </ul>
-
-
-    
-
-    
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
-
-        
+        <span class="code-name">
             
-<div class="section-method">
-
-    
-
-    <h4 class="name" id=".multi"><span class="type-signature">(static) </span>multi<span class="signature">(names, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object.&lt;<a href="Endb.html">Endb</a>>}</span></h4>
-
-    
-    <p class="summary">Creates multiple instances of Endb.</p>
-    
-
-
-
-<div class="description">
-    <p>Creates multiple instances of Endb.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line285">line 285</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
+                new Endb<span class="signature">(uri<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span>
             
-                <td class="name"><code>names</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;string></code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <p>An array of strings. Each element will create new instance.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <p>The options for the instances.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Object.&lt;<a href="Endb.html">Endb</a>></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>An object containing created instances.</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>const { users, members } = Endb.multi(['users', 'members']);
-// With options
-const { users, members } = Endb.multi(['users', 'members'], {
-    adapter: 'sqlite'
-});
-
-await users.set('foo', 'bar');
-await members.set('bar', 'foo');</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="all"><span class="type-signature"></span>all<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;any>>}</span></h4>
-
-    
-    <p class="summary">Gets all the elements (keys and values) from the database.</p>
-    
-
-
-
-<div class="description">
-    <p>Gets all the elements (keys and values) from the database.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line116">line 116</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;Array.&lt;any>></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>All the elements (keys and values).</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);
-
-const elements = await Endb.all();
-console.log(elements);</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="clear"><span class="type-signature"></span>clear<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
-
-    
-    <p class="summary">Deletes all the elements (keys and values) from the database.</p>
-    
-
-
-
-<div class="description">
-    <p>Deletes all the elements (keys and values) from the database.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line142">line 142</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;void></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Returns undefined</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.clear().then(console.log).catch(console.error);</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="delete"><span class="type-signature"></span>delete<span class="signature">(key)</span><span class="type-signature"> &rarr; {Promise.&lt;true>}</span></h4>
-
-    
-    <p class="summary">Deletes an element (key and value) from the database.</p>
-    
-
-
-
-<div class="description">
-    <p>Deletes an element (key and value) from the database.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
+        </span>
+    </h4>
     
 
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line153">line 153</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The key of an element.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;true></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Whether or not, the key has been deleted.</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="find"><span class="type-signature">(async) </span>find<span class="signature">(fn, thisArg<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(*|undefined)>}</span></h4>
-
-    
-    <p class="summary">Finds or searches for a single item where the given function returns a truthy value.</p>
-    
-
-
-
-<div class="description">
-    <p>Finds or searches for a single item where the given function returns a truthy value.
-Behaves like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">Array.prototype.find</a>.
-The database elements is mapped by their <code>key</code>. If you want to find an element by key, you should use the <code>get</code> method instead.
-See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get">MDN</a> for more details.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line172">line 172</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>fn</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <p>The function to execute on each element.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>thisArg</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>*</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-
-            <td class="description last">
-                <p>Value to use as <code>this</code> inside function.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;(*|undefined)></code></span>
-
-
-    </dd>
-</dl>
-
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.find(v => v === 'value').then(console.log).catch(console.error);
-
-const element = await Endb.find(v => v === 'value');
-console.log(element);</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(key, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;*>}</span></h4>
-
-    
-    <p class="summary">Gets an element (key and value) from the database.</p>
-    
-
-
-
-<div class="description">
-    <p>Gets an element (key and value) from the database.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line199">line 199</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
     
-</dl>
 
 
 
@@ -1104,227 +151,357 @@ console.log(element);</code></pre>
     <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>uri</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
-                <td class="attributes">
-                
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
 
-                
+      
 
-                
-                </td>
-            
+      
+      </td>
+  
 
-            
-                <td class="default">
-                
-                </td>
-            
+  
+      <td class="default">
+      
+      </td>
+  
 
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The connection string URI.</p></td>
+</tr>
+
 
     
 
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    {}
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The options for the get.</p>
-                
-                    
-
-<table class="params">
-    <thead>
-    <tr>
         
-        <th>Name</th>
-        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
 
-        <th>Type</th>
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
 
-        
-        <th>Attributes</th>
-        
 
-        
-        <th>Default</th>
-        
+  
+  </td>
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
 
-    <tbody>
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          {}
+      
+      </td>
+  
+
+  <td class="description last"><p>The options for the database.</p></td>
+</tr>
+
+  
+  
     
+<tr class="deep-level-1">
+  
+      <td class="name"><code>namespace</code></td>
+  
 
-        <tr>
-            
-                <td class="name"><code>raw</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>boolean</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
 
-                
+      
 
-                
-                </td>
-            
+      
+      </td>
+  
 
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
+  
+      <td class="default">
+      
+          'endb'
+      
+      </td>
+  
 
-            <td class="description last">
-                <p>Get data as raw or not.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The name of the database.</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>serialize</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>A custom serialization function.</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>deserialize</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>A custom deserialization function.</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>adapter</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"><p>The adapter to be used.</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>collection</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          'endb'
+      
+      </td>
+  
+
+  <td class="description last"><p>The name of the collection. (only for MongoDB)</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>table</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          'endb'
+      
+      </td>
+  
+
+  <td class="description last"><p>The name of the table. (only for SQL adapters)</p></td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>keySize</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          255
+      
+      </td>
+  
+
+  <td class="description last"><p>The size of the key. (only for SQL adapters)</p></td>
+</tr>
+
+  
+
 
     
     </tbody>
 </table>
-
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;*></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The value of the element.</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);
-
-const value = await Endb.get('key');
-console.log(value);</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="has"><span class="type-signature">(async) </span>has<span class="signature">(key)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
-
-    
-    <p class="summary">Checks if the database has an element (key and value).</p>
-    
-
-
-
-<div class="description">
-    <p>Checks if the database has an element (key and value).</p>
-</div>
 
 
 
@@ -1355,12 +532,6 @@ console.log(value);</code></pre>
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line226">line 226</a>
-    </li></ul></dd>
     
 
     
@@ -1368,181 +539,12 @@ console.log(value);</code></pre>
     
 
     
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;boolean></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Whether or not, the element exists in the database.</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);
-
-const element = await Endb.has('key');
-if (element) {
-    console.log('exists');
-} else {
-    console.log('does not exist');
-}</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="math"><span class="type-signature">(async) </span>math<span class="signature">(key, operation, operand)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
-
-    
-    <p class="summary">Performs a mathematical operation on an element.</p>
-    
-
-
-
-<div class="description">
-    <p>Performs a mathematical operation on an element.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line257">line 257</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line59">line 59</a>
+            </span>
+        </p>
     
 </dl>
 
@@ -1554,907 +556,22 @@ if (element) {
 
 
 
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>operation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The mathematical operationto execute.
-Possible operations: addition, subtraction, multiply, division, exp, and module.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>operand</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>number</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The operand of the operation</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;boolean></code></span>
-
-
-    </dd>
-</dl>
-
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.math('key', 'add', 100).then(console.log).catch(console.error);
-
-await Endb.math('key', 'add', 100);
-await Endb.math('key', 'div', 5);
-await Endb.math('key', 'subtract', 15);
-const element = await Endb.get('key');
-console.log(element); // 5
-
-const operations = ['add', 'sub', 'div', 'mult', 'exp', 'mod'];
-operations.forEach(operation => {
-  await Endb.math('key', operation, 100);
-});</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="set"><span class="type-signature"></span>set<span class="signature">(key, value)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
-
-    
-    <p class="summary">Sets an element (key and a value) to the database.</p>
-    
-
-
-
-<div class="description">
-    <p>Sets an element (key and a value) to the database.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line313">line 313</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>*</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The value of the element.</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;boolean></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Whether or not, the element has been assigned.</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
-Endb.set('userExists', true).then(console.log).catch(console.error);
-Endb.set('profile', {
-  id: 1234567890,
-  username: 'user',
-  description: 'A test user',
-  verified: true
-}).then(console.log).catch(console.error);</code></pre>
-
-</div>
-
-</div>
-        
-    
-
-    
-
-    
-</article>
-
-</section>
-
-
 
 
 
 
 
-<section>
 
-<header>
-    
-        <h2>
-        Endb
-        </h2>
-        
-    
-</header>
-
-<article>
-    <div class="container-overview">
-    
-        
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="Endb"><span class="type-signature"></span>new Endb<span class="signature">(uri<span class="signature-attributes">opt</span>, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"></span></h4>
-
-    
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line76">line 76</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>uri</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The connection string URI.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    {}
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The options for the database.</p>
-                
-                    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-        <th>Attributes</th>
-        
-
-        
-        <th>Default</th>
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
 
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>namespace</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'endb'
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The name of the database.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>serialize</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>A custom serialization function.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>deserialize</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>function</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>A custom deserialization function.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>adapter</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The adapter to be used.</p>
-                
-            </td>
-        </tr>
-
-    
 
-        <tr>
-            
-                <td class="name"><code>collection</code></td>
-            
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
 
 
-            
-            </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'endb'
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The name of the collection. (only for MongoDB)</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>table</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    'endb'
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The name of the table. (only for SQL adapters)</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>keySize</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>number</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    255
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The size of the key. (only for SQL adapters)</p>
-                
-            </td>
-        </tr>
-
+    <h5>Example</h5>
     
-    </tbody>
-</table>
-
-                
-            </td>
-        </tr>
-
     
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>const endb = new Endb();
+        <pre class="prettyprint"><code>const endb = new Endb();
 const endb = new Endb({
     namespace: 'endb',
     serialize: JSON.stringify,
@@ -2482,89 +599,71 @@ await endb.has('bar'); // false
 await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined</code></pre>
+    
+
 
 </div>
-
-</div>
+                </div>
+            </div>
+        
     
     </div>
-
     
-
     
-
-    
-
-     
-
-    
-
-    
-
-    
-        <h3 class="subsection-title">Methods</h3>
+        <h3 class="subsection-title">Extends</h3>
 
         
+
+
+    <ul>
+        <li>EventEmitter</li>
+    </ul>
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <div class='vertical-section'>
+            <h3 class="title"><span>Methods</span></h3>
+            <div class="members">
             
-<div class="section-method">
+                <div class="member">
+
 
     
-
-    <h4 class="name" id=".multi"><span class="type-signature">(static) </span>multi<span class="signature">(names, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object.&lt;<a href="Endb.html">Endb</a>>}</span></h4>
-
-    
-    <p class="summary">Creates multiple instances of Endb.</p>
-    
-
-
-
-<div class="description">
-    <p>Creates multiple instances of Endb.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
+    <h4 class="name" id=".multi">
+        <a class="href-link" href="#.multi">#</a>
+        
+            
+                <span class='tag'>static</span>
+            
+        
+        <span class="code-name">
+            
+                multi<span class="signature">(names, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object.&lt;<a href="Endb.html">Endb</a>>}</span>
+            
+        </span>
+    </h4>
     
 
     
-
     
-
+    <div class="description">
+        <p>Creates multiple instances of Endb.</p>
+    </div>
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line285">line 285</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
 
 
 
@@ -2599,73 +698,71 @@ await endb.clear(); // undefined</code></pre>
     <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>names</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>names</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>Array.&lt;string></code></span>
+  <td class="type">
+  
+      
+<span class="param-type">Array.&lt;string></span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
-                <td class="attributes">
-                
+  
+      <td class="attributes">
+      
 
-                
+      
 
-                
-                </td>
-            
+      
+      </td>
+  
 
-            
+  
 
-            <td class="description last">
-                <p>An array of strings. Each element will create new instance.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>An array of strings. Each element will create new instance.</p></td>
+</tr>
+
 
     
 
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>options</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">Object</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
 
-                
+      
 
-                
-                </td>
-            
+      
+      </td>
+  
 
-            
+  
 
-            <td class="description last">
-                <p>The options for the instances.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The options for the instances.</p></td>
+</tr>
+
 
     
     </tbody>
@@ -2675,46 +772,96 @@ await endb.clear(); // undefined</code></pre>
 
 
 
+<dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-<div class="section-returns">
-<h5>Returns:</h5>
+    
 
-        
+    
 
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Object.&lt;<a href="Endb.html">Endb</a>></code></span>
+    
 
+    
+    
 
-    </dd>
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line325">line 325</a>
+            </span>
+        </p>
+    
 </dl>
 
 
-<div class="param-desc">
-    <p>An object containing created instances.</p>
-</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>An object containing created instances.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Object.&lt;<a href="Endb.html">Endb</a>></span>
+
+
+    </div>
     
 </div>
 
+                
+        </div>
+    </div>
 
 
-<div class="section-examples">
-<h5>Example</h5>
 
-    <pre class="prettyprint"><code>const { users, members } = Endb.multi(['users', 'members']);
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const { users, members } = Endb.multi(['users', 'members']);
 // With options
 const { users, members } = Endb.multi(['users', 'members'], {
     adapter: 'sqlite'
@@ -2722,27 +869,40 @@ const { users, members } = Endb.multi(['users', 'members'], {
 
 await users.set('foo', 'bar');
 await members.set('bar', 'foo');</code></pre>
+    
+
 
 </div>
-
-</div>
-        
             
-<div class="section-method">
+                <div class="member">
+
 
     
-
-    <h4 class="name" id="all"><span class="type-signature"></span>all<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;any>>}</span></h4>
+    <h4 class="name" id="all">
+        <a class="href-link" href="#all">#</a>
+        
+        <span class="code-name">
+            
+                all<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;Array.&lt;any>>}</span>
+            
+        </span>
+    </h4>
+    
 
     
-    <p class="summary">Gets all the elements (keys and values) from the database.</p>
+    
+    <div class="description">
+        <p>Gets all the elements from the database.</p>
+    </div>
     
 
 
 
-<div class="description">
-    <p>Gets all the elements (keys and values) from the database.</p>
-</div>
+
+
+
+
+
 
 
 
@@ -2773,18 +933,19 @@ await members.set('bar', 'foo');</code></pre>
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line116">line 116</a>
-    </li></ul></dd>
     
 
     
 
     
 
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line93">line 93</a>
+            </span>
+        </p>
     
 </dl>
 
@@ -2805,64 +966,77 @@ await members.set('bar', 'foo');</code></pre>
 
 
 
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;Array.&lt;any>></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>All the elements (keys and values).</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.all().then(console.log).catch(console.error);
-
-const elements = await Endb.all();
-console.log(elements);</code></pre>
-
-</div>
-
-</div>
-        
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
             
-<div class="section-method">
+                    
 
+<div class="columns">
     
-
-    <h4 class="name" id="clear"><span class="type-signature"></span>clear<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;void>}</span></h4>
-
+    <div class='param-desc column is-7'><p>All the elements from the database.</p></div>
     
-    <p class="summary">Deletes all the elements (keys and values) from the database.</p>
     
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;Array.&lt;any>></span>
 
 
-
-<div class="description">
-    <p>Deletes all the elements (keys and values) from the database.</p>
+    </div>
+    
 </div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const endb = new Endb();
+
+await endb.set('foo', 'bar');
+await endb.set('en', 'db');
+
+await endb.all(); // [ { key: 'foo', value: 'bar' }, { key: 'en', value: 'db' } ]</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="clear">
+        <a class="href-link" href="#clear">#</a>
+        
+        <span class="code-name">
+            
+                clear<span class="signature">()</span><span class="type-signature"> &rarr; {Promise.&lt;undefined>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Clears all elements from the database.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
 
 
 
@@ -2893,18 +1067,19 @@ console.log(elements);</code></pre>
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line142">line 142</a>
-    </li></ul></dd>
     
 
     
 
     
 
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line129">line 129</a>
+            </span>
+        </p>
     
 </dl>
 
@@ -2925,105 +1100,71 @@ console.log(elements);</code></pre>
 
 
 
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;void></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Returns undefined</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.clear().then(console.log).catch(console.error);</code></pre>
-
-</div>
-
-</div>
-        
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
             
-<div class="section-method">
+                    
 
+<div class="columns">
     
-
-    <h4 class="name" id="delete"><span class="type-signature"></span>delete<span class="signature">(key)</span><span class="type-signature"> &rarr; {Promise.&lt;true>}</span></h4>
-
+    <div class='param-desc column is-7'><p>Returns undefined</p></div>
     
-    <p class="summary">Deletes an element (key and value) from the database.</p>
     
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;undefined></span>
 
 
-
-<div class="description">
-    <p>Deletes an element (key and value) from the database.</p>
+    </div>
+    
 </div>
 
+                
+        </div>
+    </div>
 
 
 
 
-<dl class="details">
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const endb = new Endb();
 
+await endb.set('foo','bar');
+await endb.set('key', 'val');
+
+await endb.clear(); // true
+
+await endb.has('foo');</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="delete">
+        <a class="href-link" href="#delete">#</a>
+        
+        <span class="code-name">
+            
+                delete<span class="signature">(key)</span><span class="type-signature"> &rarr; {Promise.&lt;(boolean|Array.&lt;boolean>)>}</span>
+            
+        </span>
+    </h4>
     
 
     
-
     
-
+    <div class="description">
+        <p>Removes the element from the database by key.</p>
+    </div>
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line153">line 153</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
 
 
 
@@ -3056,29 +1197,31 @@ console.log(elements);</code></pre>
     <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+|
+
+<span class="param-type">Array.&lt;string></span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">
-                <p>The key of an element.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The key(s) of the element to remove from the database.</p></td>
+</tr>
+
 
     
     </tbody>
@@ -3088,114 +1231,134 @@ console.log(elements);</code></pre>
 
 
 
+<dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-<div class="section-returns">
-<h5>Returns:</h5>
+    
 
-        
+    
 
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;true></code></span>
+    
 
+    
+    
 
-    </dd>
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line145">line 145</a>
+            </span>
+        </p>
+    
 </dl>
 
 
-<div class="param-desc">
-    <p>Whether or not, the key has been deleted.</p>
-</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p><code>true</code> if the element(s) in the database existed and has been deleted, or <code>false</code> if the element(s) does not exist or has not been deleted.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;(boolean|Array.&lt;boolean>)></span>
+
+
+    </div>
     
 </div>
 
+                
+        </div>
+    </div>
 
 
-<div class="section-examples">
-<h5>Example</h5>
 
-    <pre class="prettyprint"><code>Endb.delete('key').then(console.log).catch(console.error);</code></pre>
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const endb = new Endb();
+
+await endb.set('foo', 'bar'); // true
+
+await endb.delete('foo'); // true
+await endb.delete(['foo', 'fizz']); // [ true, false ]</code></pre>
+    
+
 
 </div>
+            
+                <div class="member">
 
-</div>
+
+    
+    <h4 class="name" id="find">
+        <a class="href-link" href="#find">#</a>
         
             
-<div class="section-method">
-
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                find<span class="signature">(fn, thisArg<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(Object.&lt;*>|undefined)>}</span>
+            
+        </span>
+    </h4>
     
 
-    <h4 class="name" id="find"><span class="type-signature">(async) </span>find<span class="signature">(fn, thisArg<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;(*|undefined)>}</span></h4>
-
     
-    <p class="summary">Finds or searches for a single item where the given function returns a truthy value.</p>
     
-
-
-
-<div class="description">
-    <p>Finds or searches for a single item where the given function returns a truthy value.
+    <div class="description">
+        <p>Finds a single item where the given function returns a truthy value.
 Behaves like <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find">Array.prototype.find</a>.
 The database elements is mapped by their <code>key</code>. If you want to find an element by key, you should use the <code>get</code> method instead.
 See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get">MDN</a> for more details.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
+    </div>
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line172">line 172</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
 
 
 
@@ -3230,73 +1393,71 @@ See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/G
     <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>fn</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>fn</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>function</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">function</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
-                <td class="attributes">
-                
+  
+      <td class="attributes">
+      
 
-                
+      
 
-                
-                </td>
-            
+      
+      </td>
+  
 
-            
+  
 
-            <td class="description last">
-                <p>The function to execute on each element.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The function to execute on each value in the element.</p></td>
+</tr>
+
 
     
 
-        <tr>
-            
-                <td class="name"><code>thisArg</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>thisArg</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>*</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
 
-                
+      
 
-                
-                </td>
-            
+      
+      </td>
+  
 
-            
+  
 
-            <td class="description last">
-                <p>Value to use as <code>this</code> inside function.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>Object to use as <code>this</code> inside callback.</p></td>
+</tr>
+
 
     
     </tbody>
@@ -3306,71 +1467,6 @@ See <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/G
 
 
 
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;(*|undefined)></code></span>
-
-
-    </dd>
-</dl>
-
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.find(v => v === 'value').then(console.log).catch(console.error);
-
-const element = await Endb.find(v => v === 'value');
-console.log(element);</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="get"><span class="type-signature"></span>get<span class="signature">(key, options<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Promise.&lt;*>}</span></h4>
-
-    
-    <p class="summary">Gets an element (key and value) from the database.</p>
-    
-
-
-
-<div class="description">
-    <p>Gets an element (key and value) from the database.</p>
-</div>
-
-
-
-
-
 <dl class="details">
 
     
@@ -3396,18 +1492,19 @@ console.log(element);</code></pre>
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line199">line 199</a>
-    </li></ul></dd>
     
 
     
 
     
 
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line193">line 193</a>
+            </span>
+        </p>
     
 </dl>
 
@@ -3419,110 +1516,469 @@ console.log(element);</code></pre>
 
 
 
-    <h5>Parameters:</h5>
-    
 
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
 
-        <th>Type</th>
 
-        
-        <th>Attributes</th>
-        
 
-        
-        <th>Default</th>
-        
 
-        <th class="last">Description</th>
-    </tr>
-    </thead>
 
-    <tbody>
-    
 
-        <tr>
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
             
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>options</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>Object</code></span>
-
-
-            
-            </td>
-
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
-
-                
-
-                
-                </td>
-            
-
-            
-                <td class="default">
-                
-                    {}
-                
-                </td>
-            
-
-            <td class="description last">
-                <p>The options for the get.</p>
-                
                     
 
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>The first element in the database that satisfies the provided testing function. Otherwise <code>undefined</code> is returned</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;(Object.&lt;*>|undefined)></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const endb = new Endb();
+
+await endb.set('foo', 'bar');
+await endb.set('profile', {
+  id: 1234567890,
+  username: 'user',
+  verified: true,
+  nil: null,
+  hobbies: ['programming']
+});
+
+await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
+await endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }
+await endb.find(v => v.desc === 'desc'); // undefined</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="get">
+        <a class="href-link" href="#get">#</a>
+        
+        <span class="code-name">
+            
+                get<span class="signature">(key)</span><span class="type-signature"> &rarr; {Promise.&lt;*>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Gets the value of an element from the database.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The key of the element to return from the database.</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line219">line 219</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>The value of the element, or <code>undefined</code> if the element cannot be found in the database.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;*></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const endb = new Endb();
+
+await endb.set('foo', 'bar');
+await endb.get('bar'); // undefined
+await endb.get('foo'); // 'bar'</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="has">
+        <a class="href-link" href="#has">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                has<span class="signature">(key)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Checks whether an element, by key, exists in the database or not.</p>
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The key of the element to test for presence in the database.</p></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line244">line 244</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p><code>true</code> if an element, by key, exists in the database, otherwise <code>false</code>.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;boolean></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const endb = new Endb();
+
+await endb.set('foo', 'bar');
+
+await endb.has('bar'); // true
+await endb.has('baz'); // false</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="import">
+        <a class="href-link" href="#import">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                import<span class="signature">(data, overwrite<span class="signature-attributes">opt</span>, clear<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {undefined}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
 <table class="params">
     <thead>
     <tr>
@@ -3547,126 +2003,126 @@ console.log(element);</code></pre>
     <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>raw</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>data</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>boolean</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
-                <td class="attributes">
-                
-                    &lt;optional><br>
-                
+  
+      <td class="attributes">
+      
 
-                
+      
 
-                
-                </td>
-            
+      
+      </td>
+  
 
-            
-                <td class="default">
-                
-                    false
-                
-                </td>
-            
+  
+      <td class="default">
+      
+      </td>
+  
 
-            <td class="description last">
-                <p>Get data as raw or not.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The data to import.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>overwrite</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          true
+      
+      </td>
+  
+
+  <td class="description last"><p>Whether to overwrite existing elements with new data.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>clear</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last"><p>Whether to clear all the elements before writing data.</p></td>
+</tr>
+
 
     
     </tbody>
 </table>
-
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;*></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>The value of the element.</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.get('key').then(console.log).catch(console.error);
-
-const value = await Endb.get('key');
-console.log(value);</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="has"><span class="type-signature">(async) </span>has<span class="signature">(key)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
-
-    
-    <p class="summary">Checks if the database has an element (key and value).</p>
-    
-
-
-
-<div class="description">
-    <p>Checks if the database has an element (key and value).</p>
-</div>
 
 
 
@@ -3697,20 +2153,94 @@ console.log(value);</code></pre>
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line226">line 226</a>
-    </li></ul></dd>
     
 
     
 
     
 
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line260">line 260</a>
+            </span>
+        </p>
     
 </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>Returns undefined.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">undefined</span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="math">
+        <a class="href-link" href="#math">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                math<span class="signature">(key, operation, operand)</span><span class="type-signature"> &rarr; {Promise.&lt;true>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        <p>Performs a mathematical operation on the element in the database.</p>
+    </div>
+    
 
 
 
@@ -3743,106 +2273,83 @@ console.log(value);</code></pre>
     <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The key of the element.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>operation</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The mathematical operationto execute.
+Possible operations: addition, subtraction, multiply, division, exp, and module.</p></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>operand</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">number</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"><p>The operand of the operation</p></td>
+</tr>
+
 
     
     </tbody>
 </table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
-        
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;boolean></code></span>
-
-
-    </dd>
-</dl>
-
-
-<div class="param-desc">
-    <p>Whether or not, the element exists in the database.</p>
-</div>
-
-    
-</div>
-
-
-
-<div class="section-examples">
-<h5>Example</h5>
-
-    <pre class="prettyprint"><code>Endb.has('key').then(console.log).catch(console.error);
-
-const element = await Endb.has('key');
-if (element) {
-    console.log('exists');
-} else {
-    console.log('does not exist');
-}</code></pre>
-
-</div>
-
-</div>
-        
-            
-<div class="section-method">
-
-    
-
-    <h4 class="name" id="math"><span class="type-signature">(async) </span>math<span class="signature">(key, operation, operand)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
-
-    
-    <p class="summary">Performs a mathematical operation on an element.</p>
-    
-
-
-
-<div class="description">
-    <p>Performs a mathematical operation on an element.</p>
-</div>
 
 
 
@@ -3873,18 +2380,19 @@ if (element) {
     
 
     
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line257">line 257</a>
-    </li></ul></dd>
     
 
     
 
     
 
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line297">line 297</a>
+            </span>
+        </p>
     
 </dl>
 
@@ -3896,150 +2404,47 @@ if (element) {
 
 
 
-    <h5>Parameters:</h5>
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
     
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
+    <div class='param-desc column is-7'><p>Returns true.</p></div>
     
-
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
-
     
-
-        <tr>
-            
-                <td class="name"><code>operation</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The mathematical operationto execute.
-Possible operations: addition, subtraction, multiply, division, exp, and module.</p>
-                
-            </td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>operand</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type"><code>number</code></span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">
-                <p>The operand of the operation</p>
-                
-            </td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="section-returns">
-<h5>Returns:</h5>
-
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;boolean></code></span>
+<span class="param-type">Promise.&lt;true></span>
 
 
-    </dd>
-</dl>
-
-
+    </div>
     
 </div>
 
+                
+        </div>
+    </div>
 
 
-<div class="section-examples">
-<h5>Example</h5>
 
-    <pre class="prettyprint"><code>Endb.math('key', 'add', 100).then(console.log).catch(console.error);
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>Endb.math('key', 'add', 100).then(console.log).catch(console.error);
 
 await Endb.math('key', 'add', 100);
 await Endb.math('key', 'div', 5);
@@ -4051,71 +2456,32 @@ const operations = ['add', 'sub', 'div', 'mult', 'exp', 'mod'];
 operations.forEach(operation => {
   await Endb.math('key', operation, 100);
 });</code></pre>
+    
+
 
 </div>
-
-</div>
-        
             
-<div class="section-method">
+                <div class="member">
+
 
     
-
-    <h4 class="name" id="set"><span class="type-signature"></span>set<span class="signature">(key, value)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span></h4>
-
-    
-    <p class="summary">Sets an element (key and a value) to the database.</p>
-    
-
-
-
-<div class="description">
-    <p>Sets an element (key and a value) to the database.</p>
-</div>
-
-
-
-
-
-<dl class="details">
-
+    <h4 class="name" id="set">
+        <a class="href-link" href="#set">#</a>
+        
+        <span class="code-name">
+            
+                set<span class="signature">(key, value)</span><span class="type-signature"> &rarr; {Promise.&lt;true>}</span>
+            
+        </span>
+    </h4>
     
 
     
-
     
-
+    <div class="description">
+        <p>Sets an element, key and value, to the database.</p>
+    </div>
     
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line313">line 313</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
 
 
 
@@ -4148,55 +2514,53 @@ operations.forEach(operation => {
     <tbody>
     
 
-        <tr>
-            
-                <td class="name"><code>key</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>string</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">
-                <p>The key of the element.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The key of the element to set to the database.</p></td>
+</tr>
+
 
     
 
-        <tr>
-            
-                <td class="name"><code>value</code></td>
-            
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
 
-            <td class="type">
-            
-                
-<span class="param-type"><code>*</code></span>
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
 
 
-            
-            </td>
+  
+  </td>
 
-            
+  
 
-            
+  
 
-            <td class="description last">
-                <p>The value of the element.</p>
-                
-            </td>
-        </tr>
+  <td class="description last"><p>The value of the element to set to the database.</p></td>
+</tr>
+
 
     
     </tbody>
@@ -4206,58 +2570,113 @@ operations.forEach(operation => {
 
 
 
+<dl class="details">
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
+    
 
-<div class="section-returns">
-<h5>Returns:</h5>
+    
 
-        
+    
 
-<dl class="param-type">
-    <dt>
-        Type:
-    </dt>
-    <dd>
-        
-<span class="param-type"><code>Promise.&lt;boolean></code></span>
+    
 
+    
+    
 
-    </dd>
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line352">line 352</a>
+            </span>
+        </p>
+    
 </dl>
 
 
-<div class="param-desc">
-    <p>Whether or not, the element has been assigned.</p>
-</div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'><p>Returns <code>true</code>.</p></div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;true></span>
+
+
+    </div>
     
 </div>
 
+                
+        </div>
+    </div>
 
 
-<div class="section-examples">
-<h5>Example</h5>
 
-    <pre class="prettyprint"><code>Endb.set('key', 'value').then(console.log).catch(console.error);
-Endb.set('userExists', true).then(console.log).catch(console.error);
-Endb.set('profile', {
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const endb = new Endb();
+
+await endb.set('foo', 'bar'); // true
+await endb.set('exists', false);
+await endb.set('profile', {
   id: 1234567890,
   username: 'user',
-  description: 'A test user',
-  verified: true
-}).then(console.log).catch(console.error);</code></pre>
+  verified: true,
+  nil: null,
+  hobbies: ['programming']
+});</code></pre>
+    
+
 
 </div>
-
-</div>
-        
+            
+            </div>
+        </div>
     
 
     
@@ -4270,15 +2689,24 @@ Endb.set('profile', {
 
 
 
-</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<br class="clear">
 
-<footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 12 2019 19:16:06 GMT+0400 (Gulf Standard Time) using the Minami theme.
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 09:02:01 GMT-0700 (Mountain Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
 </footer>
 
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>

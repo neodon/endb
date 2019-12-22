@@ -30,8 +30,8 @@
     "homepage": "https://endb.js.org",
     "devDependencies": {
         "ava": "^2.4.0",
+        "better-docs": "^1.4.7",
         "jsdoc": "^3.6.3",
-        "minami": "^1.2.3",
         "xo": "^0.25.3"
     },
     "xo": {
