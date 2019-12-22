@@ -17,10 +17,10 @@
         "url": "git+https://github.com/chroventer/endb.git"
     },
     "keywords": [
-        "store",
+        "endb",
         "key-value",
-        "adapter",
-        "cache"
+        "cache",
+        "javascript"
     ],
     "author": "chroventer <chroventer@gmail.com> (https://github.com/chroventer)",
     "license": "MIT",

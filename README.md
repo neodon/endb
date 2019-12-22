@@ -1,28 +1,27 @@
 <div align="center">
-    <p>
-        <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="220" alt="Endb" /></a>
-    </p>
-    <p>
-        <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/v/endb" alt="Version" /></a>
-        <a href="https://travis-ci.org/chroventer/endb"><img src="https://travis-ci.org/chroventer/endb.svg?branch=master" alt="Build Status" /></a>
-        <a href="https://david-dm.org/chroventer/endb"><img src="https://img.shields.io/david/chroventer/endb.svg?maxAge=3600" alt="NPM Dependencies" /></a>
-        <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="NPM Downloads" /></a>
-        <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="GitHub Stars" /></a>
-        <a href="https://github.com/chroventer/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/chroventer/endb" alt="License" /></a>
-    </p>
+    <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="220" alt="Endb" /></a>
 </div>
 
-🗃 Simple key-value storage with support for multiple backends.
+> 🗃 Simple key-value storage with support for multiple backends.
 
-New to Endb? Check out the [Documentation](https://endb.js.org).
+[![Discord](https://discordapp.com/api/guilds/658014948118495243/embed.png)](https://discord.gg/bRCvFy9)
+[![Build Status](https://travis-ci.org/chroventer/endb.svg?branch=master)](https://travis-ci.org/chroventer/endb)
+[![Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
+[![Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
+[![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
+[![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
-- **Easy-to-use**: Simplistic and yet efficient. It also has a simple and easy-to-use promise-based API.
-- [**Adapters**](#Usage): By default, data is stored in memory. You can optionally install (check out the Installation Guide) and utilize an adapter. Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
+If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [official Discord server](https://discord.gg/bRCvFy9).
+
+## Features
+
+- **Easy-to-use**: *Endb* has a simplistic and easy-to-use promise-based API.
+- [**Adapters**](#Usage): By default, data is stored in memory. You can optionally install and utilize a "storage adapter".
 - [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally utilize third-party adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
-- [**Namespaces**](#Namespaces): Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.
-- [**Custom Serializers**](#Custom-Serializers): Utilizes data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
-Optionally, pass your own data serialization methods to support extra data types.
-- **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html) using its data serialization methods.
+- [**Namespaces**](#Namespaces): Namespaces isolate elements within a database.
+- [**Custom Serializers**](#Custom-Serializers): Utilizes data serialization to ensure consistency across different backends.
+- [**Embeddable**](#Embeddable): *Endb* is designed to be easily embeddable inside modules.
+- **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html).
 - **Error-Handling**: Connection errors are sent through, from the adapter to the main instance; connection errors won't exit or kill the process.
 
 ## Installation
@@ -31,28 +30,30 @@ Optionally, pass your own data serialization methods to support extra data types
 npm install endb
 ```
 
-By default, data is stored in memory. You can optionally install and utilize an adapter. Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
+By default, data is stored in memory. You can optionally install and utilize an "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
 
 ```bash
-$ npm install level # LevelDB
-$ npm install mongojs # MongoDB
-$ npm install nedb # NeDB
-$ npm install ioredis # Redis
+npm install level # LevelDB
+npm install mongojs # MongoDB
+npm install nedb # NeDB
+npm install ioredis # Redis
 
 # To use SQL database, an additional package 'sql' must be installed and an adapter
-$ npm install sql
+npm install sql
 
-$ npm install mysql2 # MySQL
-$ npm install pg # PostgreSQL
-$ npm install sqlite3 # SQLite
+npm install mysql2 # MySQL
+npm install pg # PostgreSQL
+npm install sqlite3 # SQLite
 ```
 
 ## Usage
 
 ```javascript
 const Endb = require('endb');
+
 const endb = new Endb();
 const endb = new Endb('leveldb://path/to/database');
+const endb = new Endb('nedb://path/to/database');
 const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
 const endb = new Endb('mysql://user:pass@localhost:3306/dbname');
 const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
@@ -63,15 +64,9 @@ const endb = new Endb('sqlite://path/to/database.sqlite');
 endb.on('error', err => console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
-await endb.set('exists', true); // true
-await endb.set('num', 10); // true
-await endb.math('num', 'add', 40); // true
 await endb.get('foo'); // 'bar'
-await endb.get('exists'); // true
 await endb.all(); // [ ... ]
 await endb.has('foo'); // true
-await endb.has('bar'); // false
-await endb.find(v => v === 'bar'); // { ... }
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
 ```
@@ -118,12 +113,15 @@ const endb = new Endb({ store: lru });
 ```
 
 List of third-party adapters supported:
+
 - [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache
 - [Add Your Own!](https://github.com/chroventer/endb/pulls)
 
 ## Custom Serializers
 
 Utilizes data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
+
+*Endb* handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html) using its data serialization methods.
 Optionally, pass your own data serialization methods to support extra data types.
 
 ```javascript
@@ -133,8 +131,42 @@ const endb = new Endb({
 });
 ```
 
+**Warning**: Using custom serializers means you lose any guarantee of data consistency.
+
+## Embeddable
+
+*Endb* is designed to be easily embeddable inside modules. It is recommended to set a namespace for the module. Read more about [Namespaces](#Namespaces). Let us look at an example:
+
+```javascript
+class MyModule {
+    constructor(options) {
+        this.db = new Endb({
+            uri: typeof options.store === 'string' && options.store,
+            store: typeof options.store !== && options.store,
+            namespace: 'my-module'
+        });
+    }
+}
+```
+
+Now the module can be utilized like this:
+
+```javascript
+const MyModule = require('my-module');
+
+// Caches data in the memory by default.
+const myModule = new MyModule();
+
+// After installing ioredis.
+const myModule = new MyModule({ store: 'redis://localhost' });
+
+// Third-party module that implements the Map API.
+const myModule = new AwesomeModule({ store: thirdPartyModule });
+```
+
 ## Links
 
 - [Documentation](https://endb.js.org "Documentation")
-- [NPM](https://npmjs.com/package/endb "NPM")
+- [Discord](https://discord.gg/nSZZ2XZ "Discord")
 - [GitHub](https://github.com/chroventer/endb "GitHub")
+- [NPM](https://npmjs.com/package/endb "NPM")
