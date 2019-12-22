@@ -1,4 +1,45 @@
-'use strict';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>index.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav>
+    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Endb.html">Endb</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#.multi">multi</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#all">all</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#clear">clear</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#delete">delete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#find">find</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#has">has</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#import">import</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#math">math</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#set">set</a></span></li>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">index.js</h1>
+    
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>'use strict';
 
 const {EventEmitter} = require('events');
 const {
@@ -81,7 +122,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Gets all the elements from the database.
-	 * @returns {Promise<any[]>} All the elements from the database.
+	 * @returns {Promise&lt;any[]>} All the elements from the database.
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -115,7 +156,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Clears all elements from the database.
-	 * @returns {Promise<undefined>} Returns undefined
+	 * @returns {Promise&lt;undefined>} Returns undefined
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -133,7 +174,7 @@ class Endb extends EventEmitter {
 	/**
 	 * Removes the element from the database by key.
 	 * @param {string|string[]} key The key(s) of the element to remove from the database.
-	 * @returns {Promise<boolean|boolean[]>} `true` if the element(s) in the database existed and has been deleted, or `false` if the element(s) does not exist or has not been deleted.
+	 * @returns {Promise&lt;boolean|boolean[]>} `true` if the element(s) in the database existed and has been deleted, or `false` if the element(s) does not exist or has not been deleted.
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -173,7 +214,7 @@ class Endb extends EventEmitter {
 	 * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
 	 * @param {Function} fn The function to execute on each value in the element.
 	 * @param {*} [thisArg] Object to use as `this` inside callback.
-	 * @returns {Promise<Object<*>|undefined>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
+	 * @returns {Promise&lt;Object&lt;*>|undefined>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -208,7 +249,7 @@ class Endb extends EventEmitter {
 	/**
 	 * Gets the value of an element from the database.
 	 * @param {string} key The key of the element to return from the database.
-	 * @returns {Promise<*>} The value of the element, or `undefined` if the element cannot be found in the database.
+	 * @returns {Promise&lt;*>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -232,7 +273,7 @@ class Endb extends EventEmitter {
 	/**
 	 * Checks whether an element, by key, exists in the database or not.
 	 * @param {string} key The key of the element to test for presence in the database.
-	 * @returns {Promise<boolean>} `true` if an element, by key, exists in the database, otherwise `false`.
+	 * @returns {Promise&lt;boolean>} `true` if an element, by key, exists in the database, otherwise `false`.
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -263,7 +304,7 @@ class Endb extends EventEmitter {
 		try {
 			const parsed = JSON.parse(data);
 			for (const element of parsed.elements) {
-				if (!overwrite && this.has(element.key)) continue;
+				if (!overwrite &amp;&amp; this.has(element.key)) continue;
 				await this.set(element.key, element.value); // eslint-disable-line no-await-in-loop
 			}
 		} catch (error) {
@@ -279,7 +320,7 @@ class Endb extends EventEmitter {
 	 * @param {string} operation The mathematical operationto execute.
 	 * Possible operations: addition, subtraction, multiply, division, exp, and module.
 	 * @param {number} operand The operand of the operation
-	 * @returns {Promise<true>} Returns true.
+	 * @returns {Promise&lt;true>} Returns true.
 	 * @example
 	 * Endb.math('key', 'add', 100).then(console.log).catch(console.error);
 	 *
@@ -311,7 +352,7 @@ class Endb extends EventEmitter {
 	 * Creates multiple instances of Endb.
 	 * @param {string[]} names An array of strings. Each element will create new instance.
 	 * @param {Object} [options] The options for the instances.
-	 * @returns {Object<Endb>} An object containing created instances.
+	 * @returns {Object&lt;Endb>} An object containing created instances.
 	 * @example
 	 * const { users, members } = Endb.multi(['users', 'members']);
 	 * // With options
@@ -335,7 +376,7 @@ class Endb extends EventEmitter {
 	 * Sets an element, key and value, to the database.
 	 * @param {string} key The key of the element to set to the database.
 	 * @param {*} value The value of the element to set to the database.
-	 * @returns {Promise<true>} Returns `true`.
+	 * @returns {Promise&lt;true>} Returns `true`.
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -360,3 +401,22 @@ class Endb extends EventEmitter {
 
 module.exports = Endb;
 module.exports.Endb = Endb;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 02:42:12 GMT-0700 (Mountain Standard Time) using the Minami theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>
