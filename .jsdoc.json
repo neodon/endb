@@ -1,13 +1,13 @@
 {
   "plugins": ["plugins/markdown"],
   "source": {
-    "include": ["src", "README.md", "package.json"]
+    "include": ["src", "README.md"]
   },
   "sourceType": "module",
   "opts": {
-    "template": "node_modules/minami",
+    "template": "node_modules/better-docs",
     "encoding": "utf8",
-    "destination": "docs/",
+    "destination": "docs",
     "readme": "README.md",
     "recurse": true,
     "verbose": true
@@ -16,6 +16,21 @@
     "collapse": true,
     "cleverLinks": false,
     "monospaceLinks": false,
-    "linenums": true
+    "linenums": true,
+    "better-docs": {
+      "name": "Endb",
+      "logo": "media/logo.png",
+      "hideGenerator": true,
+      "navigation": [
+        {
+          "label": "GitHub",
+          "href": "https://github.com/chroventer/endb"
+        },
+        {
+          "label": "NPM",
+          "href": "https://npmjs.com/package/endb"
+        }
+      ]
+    }
   }
 }

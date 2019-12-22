@@ -1,38 +1,83 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>index.js - Documentation</title>
+    <title>JSDoc: index.js</title>
 
-    <script src="scripts/prettify/prettify.js"></script>
-    <script src="scripts/prettify/lang-css.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="./build/entry.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
-    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+    <link href="https://fonts.googleapis.com/css?family=Muli:100,400,700|Oswald:300|Inconsolata,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/iframe.css">
 </head>
+
 <body>
-
-<input type="checkbox" id="nav-trigger" class="nav-trigger" />
-<label for="nav-trigger" class="navicon-button x">
-  <div class="navicon"></div>
-</label>
-
-<label for="nav-trigger" class="overlay"></label>
-
-<nav>
-    <li class="nav-link nav-home-link"><a href="index.html">Home</a></li><li class="nav-heading">Classes</li><li class="nav-heading"><span class="nav-item-type type-class">C</span><span class="nav-item-name"><a href="Endb.html">Endb</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#.multi">multi</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#all">all</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#clear">clear</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#delete">delete</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#find">find</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#get">get</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#has">has</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#math">math</a></span></li><li class="nav-item"><span class="nav-item-type type-function">F</span><span class="nav-item-name"><a href="Endb.html#set">set</a></span></li>
-</nav>
-
-<div id="main">
-    
-    <h1 class="page-title">index.js</h1>
-    
-
-    
+    <div id="stickyNavbarOverlay"></div>
+    <div class="top-navbar">
+        <div class="container">
+            <nav class="navbar" role="navigation" aria-label="main navigation">
+                <div class="navbar-brand">
+                     
+                        <img src="media/logo.png" alt="logo">
+                    
+                     
+                        <h1 class="navbar-item">Endb</h1>
+                    
+                    <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                        <span aria-hidden="true"></span>
+                    </a>
+                </div>
+                 
+                <div class="navbar-menu">
+                    <div class="navbar-end">
+                    
+                        <div class="navbar-item">
+                            <a href="https://github.com/chroventer/endb" target="_blank">
+                                GitHub
+                            </a>
+                        </div>
+                    
+                        <div class="navbar-item">
+                            <a href="https://npmjs.com/package/endb" target="_blank">
+                                NPM
+                            </a>
+                        </div>
+                    
+                    </div>
+                </div>
+                
+            </nav>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns">
+            <div class="column is-3" id="sidebarNav">
+                <div class="sidebar">
+                    <nav>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Endb.html">Endb</a></li></ul></div>
+                    </nav>
+                </div>
+            </div>
+            <div class="column is-9-desktop">
+                <div class="content" id="main-content-wrapper">
+                    <header class="page-title">
+                        <p>Source</p>
+                        <h1>index.js</h1>
+                    </header>
+                    
+                    
 
 
 
@@ -41,35 +86,18 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-const EventEmitter = require('events');
-const util = require('./util');
-const load = options => {
-	const adapters = {
-		level: './adapters/leveldb',
-		leveldb: './adapters/leveldb',
-		mongo: './adapters/mongodb',
-		mongodb: './adapters/mongodb',
-		mysql: './adapters/mysql',
-		mysql2: './adapters/mysql',
-		postgres: './adapters/postgres',
-		postgresql: './adapters/postgres',
-		redis: './adapters/redis',
-		sqlite: './adapters/sqlite',
-		sqlite3: './adapters/sqlite'
-	};
-	if (options.adapter || options.uri) {
-		const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
-		if (adapters[adapter] !== undefined) {
-			return new (require(adapters[adapter]))(options);
-		}
-	}
-
-	return new Map();
-};
+const {EventEmitter} = require('events');
+const {
+	addKeyPrefix,
+	load,
+	math: _math,
+	parse,
+	removeKeyPrefix,
+	stringify
+} = require('./util');
 
 /**
- * @class Endb
- * @classdesc Simple key-value database with cache and multi adapter support.
+ * Simple key-value database with cache and multi adapter support.
  * @extends EventEmitter
  */
 class Endb extends EventEmitter {
@@ -119,8 +147,8 @@ class Endb extends EventEmitter {
 		this.options = Object.assign(
 			{
 				namespace: 'endb',
-				serialize: JSON.stringify,
-				deserialize: JSON.parse
+				serialize: stringify,
+				deserialize: parse
 			},
 			typeof uri === 'string' ? {uri} : uri,
 			options
@@ -137,22 +165,16 @@ class Endb extends EventEmitter {
 		this.options.store.namespace = this.options.namespace;
 	}
 
-	_addKeyPrefix(key) {
-		return `${this.options.namespace}:${key}`;
-	}
-
-	_removeKeyPrefix(key) {
-		return key.replace(`${this.options.namespace}:`, '');
-	}
-
 	/**
-	 * Gets all the elements (keys and values) from the database.
-	 * @returns {Promise&lt;any[]>} All the elements (keys and values).
+	 * Gets all the elements from the database.
+	 * @returns {Promise&lt;any[]>} All the elements from the database.
 	 * @example
-	 * Endb.all().then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const elements = await Endb.all();
-	 * console.log(elements);
+	 * await endb.set('foo', 'bar');
+	 * await endb.set('en', 'db');
+	 *
+	 * await endb.all(); // [ { key: 'foo', value: 'bar' }, { key: 'en', value: 'db' } ]
 	 */
 	all() {
 		return Promise.resolve()
@@ -161,8 +183,8 @@ class Endb extends EventEmitter {
 					const arr = [];
 					for (const [key, value] of this.options.store) {
 						arr.push({
-							key: this._removeKeyPrefix(key, this.options.namespace),
-							value: this.options.deserialize(value).value
+							key: removeKeyPrefix(key, this.options.namespace),
+							value: this.options.deserialize(value)
 						});
 					}
 
@@ -171,44 +193,88 @@ class Endb extends EventEmitter {
 
 				return this.options.store.all();
 			})
-			.then(data => (data === undefined ? undefined : data));
+			.then(data => {
+				if (data === undefined) return undefined;
+				return data;
+			});
 	}
 
 	/**
-	 * Deletes all the elements (keys and values) from the database.
-	 * @returns {Promise&lt;void>} Returns undefined
+	 * Clears all elements from the database.
+	 * @returns {Promise&lt;undefined>} Returns undefined
 	 * @example
-	 * Endb.clear().then(console.log).catch(console.error);
+	 * const endb = new Endb();
+	 *
+	 * await endb.set('foo','bar');
+	 * await endb.set('key', 'val');
+	 *
+	 * await endb.clear(); // true
+	 *
+	 * await endb.has('foo');
 	 */
 	clear() {
 		return Promise.resolve().then(() => this.options.store.clear());
 	}
 
 	/**
-	 * Deletes an element (key and value) from the database.
-	 * @param {string} key The key of an element.
-	 * @returns {Promise&lt;true>} Whether or not, the key has been deleted.
+	 * Removes the element from the database by key.
+	 * @param {string|string[]} key The key(s) of the element to remove from the database.
+	 * @returns {Promise&lt;boolean|boolean[]>} `true` if the element(s) in the database existed and has been deleted, or `false` if the element(s) does not exist or has not been deleted.
 	 * @example
-	 * Endb.delete('key').then(console.log).catch(console.error);
+	 * const endb = new Endb();
+	 *
+	 * await endb.set('foo', 'bar'); // true
+	 *
+	 * await endb.delete('foo'); // true
+	 * await endb.delete(['foo', 'fizz']); // [ true, false ]
 	 */
 	delete(key) {
-		key = this._addKeyPrefix(key, this.options.namespace);
-		return Promise.resolve().then(() => this.options.store.delete(key));
+		key = addKeyPrefix(key, this.options.namespace);
+		return Promise.resolve().then(() => {
+			if (Array.isArray(key)) {
+				return Promise.all(key.map(k => this.options.store.delete(k)));
+			}
+
+			return this.options.store.delete(key);
+		});
+	}
+
+	async export() {
+		return JSON.stringify(
+			{
+				namespace: this.options.namespace,
+				options: this.options,
+				date: Date.now(),
+				elements: await this.all()
+			},
+			null,
+			2
+		);
 	}
 
 	/**
-	 * Finds or searches for a single item where the given function returns a truthy value.
+	 * Finds a single item where the given function returns a truthy value.
 	 * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.
 	 * The database elements is mapped by their `key`. If you want to find an element by key, you should use the `get` method instead.
 	 * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
-	 * @param {Function} fn The function to execute on each element.
-	 * @param {*} [thisArg] Value to use as `this` inside function.
-	 * @returns {Promise&lt;*|undefined>}
+	 * @param {Function} fn The function to execute on each value in the element.
+	 * @param {*} [thisArg] Object to use as `this` inside callback.
+	 * @returns {Promise&lt;Object&lt;*>|undefined>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
 	 * @example
-	 * Endb.find(v => v === 'value').then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const element = await Endb.find(v => v === 'value');
-	 * console.log(element);
+	 * await endb.set('foo', 'bar');
+	 * await endb.set('profile', {
+	 *   id: 1234567890,
+	 *   username: 'user',
+	 *   verified: true,
+	 *   nil: null,
+	 *   hobbies: ['programming']
+	 * });
+	 *
+	 * await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
+	 * await endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }
+	 * await endb.find(v => v.desc === 'desc'); // undefined
 	 */
 	async find(fn, thisArg) {
 		if (typeof thisArg !== undefined) {
@@ -217,8 +283,8 @@ class Endb extends EventEmitter {
 
 		const elements = await this.all();
 		for (const element of elements) {
-			if (fn(element.value)) {
-				return element;
+			if (fn(element.value, element.key)) {
+				return element.value;
 			}
 		}
 
@@ -226,61 +292,80 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * Gets an element (key and value) from the database.
-	 * @param {string} key The key of the element.
-	 * @param {Object} [options={}] The options for the get.
-	 * @param {boolean} [options.raw=false] Get data as raw or not.
-	 * @returns {Promise&lt;*>} The value of the element.
+	 * Gets the value of an element from the database.
+	 * @param {string} key The key of the element to return from the database.
+	 * @returns {Promise&lt;*>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
-	 * Endb.get('key').then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const value = await Endb.get('key');
-	 * console.log(value);
+	 * await endb.set('foo', 'bar');
+	 * await endb.get('bar'); // undefined
+	 * await endb.get('foo'); // 'bar'
 	 */
 	get(key) {
-		key = this._addKeyPrefix(key);
+		key = addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => this.options.store.get(key))
+			.then(data =>
+				typeof data === 'string' ? this.options.deserialize(data) : data
+			)
 			.then(data => {
-				if (data === undefined) {
-					return undefined;
-				}
-
+				if (data === undefined) return undefined;
 				return data;
 			});
 	}
 
 	/**
-	 * Checks if the database has an element (key and value).
-	 * @param {string} key The key of the element.
-	 * @returns {Promise&lt;boolean>} Whether or not, the element exists in the database.
+	 * Checks whether an element, by key, exists in the database or not.
+	 * @param {string} key The key of the element to test for presence in the database.
+	 * @returns {Promise&lt;boolean>} `true` if an element, by key, exists in the database, otherwise `false`.
 	 * @example
-	 * Endb.has('key').then(console.log).catch(console.error);
+	 * const endb = new Endb();
 	 *
-	 * const element = await Endb.has('key');
-	 * if (element) {
-	 *     console.log('exists');
-	 * } else {
-	 *     console.log('does not exist');
-	 * }
+	 * await endb.set('foo', 'bar');
+	 *
+	 * await endb.has('bar'); // true
+	 * await endb.has('baz'); // false
 	 */
 	async has(key) {
-		key = this._addKeyPrefix(key, this.options.namespace);
+		key = addKeyPrefix(key, this.options.namespace);
 		if (this.options.store instanceof Map) {
 			const data = await this.options.store.has(key);
 			return data;
 		}
 
-		return typeof (await this.get(key, {raw: true})) === 'object';
+		return typeof (await this.get(key)) === 'object';
 	}
 
 	/**
-	 * Performs a mathematical operation on an element.
+	 * @param {string} data The data to import.
+	 * @param {*} [overwrite=true] Whether to overwrite existing elements with new data.
+	 * @param {*} [clear=false] Whether to clear all the elements before writing data.
+	 * @returns {undefined} Returns undefined.
+	 */
+	async import(data, overwrite = true, clear = false) {
+		if (clear) await this.clear();
+		if (data === null) throw new Error('No data provided to import.');
+		try {
+			const parsed = JSON.parse(data);
+			for (const element of parsed.elements) {
+				if (!overwrite &amp;&amp; this.has(element.key)) continue;
+				await this.set(element.key, element.value); // eslint-disable-line no-await-in-loop
+			}
+		} catch (error) {
+			throw new Error(`Invalid data provided: ${error}`);
+		}
+
+		return undefined;
+	}
+
+	/**
+	 * Performs a mathematical operation on the element in the database.
 	 * @param {string} key The key of the element.
 	 * @param {string} operation The mathematical operationto execute.
 	 * Possible operations: addition, subtraction, multiply, division, exp, and module.
 	 * @param {number} operand The operand of the operation
-	 * @returns {Promise&lt;boolean>}
+	 * @returns {Promise&lt;true>} Returns true.
 	 * @example
 	 * Endb.math('key', 'add', 100).then(console.log).catch(console.error);
 	 *
@@ -303,7 +388,7 @@ class Endb extends EventEmitter {
 
 		const data = await this.set(
 			key,
-			util.math(await this.get(key), operation, operand)
+			_math(await this.get(key), operation, operand)
 		);
 		return data;
 	}
@@ -324,10 +409,6 @@ class Endb extends EventEmitter {
 	 * await members.set('bar', 'foo');
 	 */
 	static multi(names, options = {}) {
-		if (!names || names.length &lt;= 0) {
-			throw new TypeError('Names must be an array of strings');
-		}
-
 		const instances = {};
 		for (const name of names) {
 			instances[name] = new Endb(options);
@@ -337,33 +418,34 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * Sets an element (key and a value) to the database.
-	 * @param {string} key The key of the element.
-	 * @param {*} value The value of the element.
-	 * @returns {Promise&lt;boolean>} Whether or not, the element has been assigned.
+	 * Sets an element, key and value, to the database.
+	 * @param {string} key The key of the element to set to the database.
+	 * @param {*} value The value of the element to set to the database.
+	 * @returns {Promise&lt;true>} Returns `true`.
 	 * @example
-	 * Endb.set('key', 'value').then(console.log).catch(console.error);
-	 * Endb.set('userExists', true).then(console.log).catch(console.error);
-	 * Endb.set('profile', {
+	 * const endb = new Endb();
+	 *
+	 * await endb.set('foo', 'bar'); // true
+	 * await endb.set('exists', false);
+	 * await endb.set('profile', {
 	 *   id: 1234567890,
 	 *   username: 'user',
-	 *   description: 'A test user',
-	 *   verified: true
-	 * }).then(console.log).catch(console.error);
+	 *   verified: true,
+	 *   nil: null,
+	 *   hobbies: ['programming']
+	 * });
 	 */
 	set(key, value) {
-		key = this._addKeyPrefix(key);
+		key = addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => this.options.serialize(value))
-			.then(() => this.options.store.set(key, value))
+			.then(value => this.options.store.set(key, value))
 			.then(() => true);
 	}
 }
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.util = require('./util');
-module.exports.version = require('../package').version;
 </code></pre>
         </article>
     </section>
@@ -371,15 +453,24 @@ module.exports.version = require('../package').version;
 
 
 
-</div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<br class="clear">
 
-<footer>
-    Generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Tue Nov 12 2019 19:16:06 GMT+0400 (Gulf Standard Time) using the Minami theme.
+<footer class="footer">
+    <div class="content has-text-centered">
+        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 08:38:11 GMT-0700 (Mountain Standard Time)</p>
+        <p class="sidebar-created-by">
+            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
+            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+        </p>
+    </div>
 </footer>
 
-<script>prettyPrint();</script>
-<script src="scripts/linenumber.js"></script>
+
+<script src="scripts/app.min.js"></script>
+<script src="scripts/linenumber.js"> </script>
 </body>
 </html>

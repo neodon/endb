@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="220" alt="Endb" /></a>
+    <a href="https://endb.js.org"><img src="media/logo.png" width="300" height="220" alt="Endb" /></a>
 </div>
 
 > 🗃 Simple key-value storage with support for multiple backends.
