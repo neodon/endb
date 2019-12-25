@@ -38,7 +38,8 @@
         "prettier": true,
         "semicolon": true,
         "rules": {
-            "guard-for-in": 0
+            "guard-for-in": 0,
+            "no-unused-vars": 0
         }
     }
 }

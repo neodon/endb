@@ -104,7 +104,7 @@ module.exports = class Util {
 	static safeRequire(id) {
 		try {
 			return require(id);
-		} catch {
+		} catch (error) {
 			throw new Error(
 				`Install ${id} to continue; run "npm install ${id}" to install it.`
 			);
