@@ -4,14 +4,14 @@
 
 > 🗃 Simple key-value storage with support for multiple backends.
 
-[![Discord](https://discordapp.com/api/guilds/658014948118495243/embed.png)](https://discord.gg/bRCvFy9)
+[![Discord](https://discordapp.com/api/guilds/658014948118495243/embed.png)](https://discord.gg/nSZZ2XZ)
 [![Build Status](https://travis-ci.org/chroventer/endb.svg?branch=master)](https://travis-ci.org/chroventer/endb)
 [![Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
 [![Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
 [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
 [![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
-If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [official Discord server](https://discord.gg/bRCvFy9).
+If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [official Discord server](https://discord.gg/nSZZ2XZ).
 
 ## Features
 
