@@ -242,13 +242,12 @@ class Endb extends EventEmitter {
 	 * await endb.has('baz'); // false
 	 */
 	async has(key) {
-		key = addKeyPrefix(key, this.options.namespace);
 		if (this.options.store instanceof Map) {
+			key = addKeyPrefix(key, this.options.namespace);
 			const data = await this.options.store.has(key);
 			return data;
 		}
-
-		return typeof (await this.get(key)) === 'object';
+		return !!(await this.get(key));
 	}
 
 	/**
