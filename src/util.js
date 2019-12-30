@@ -105,7 +105,7 @@ module.exports = class Util {
 		try {
 			return require(id);
 		} catch (error) {
-			throw new Error(
+			console.error(
 				`Install ${id} to continue; run "npm install ${id}" to install it.`
 			);
 		}
