@@ -19,12 +19,12 @@ class Endb extends EventEmitter {
 	 * @constructor
 	 * @param {string} [uri=undefined] The connection string URI.
 	 * @param {Object} [options={}] The options for the database.
-	 * @param {string} [options.namespace='endb'] The name of the database.
+	 * @param {string} [options.namespace=endb] The name of the database.
 	 * @param {Function} [options.serialize] A custom serialization function.
 	 * @param {Function} [options.deserialize] A custom deserialization function.
 	 * @param {string} [options.adapter] The adapter to be used.
-	 * @param {string} [options.collection='endb'] The name of the collection. (only for MongoDB)
-	 * @param {string} [options.table='endb'] The name of the table. (only for SQL adapters)
+	 * @param {string} [options.collection=endb] The name of the collection. (only for MongoDB)
+	 * @param {string} [options.table=endb] The name of the table. (only for SQL adapters)
 	 * @param {number} [options.keySize=255] The size of the key. (only for SQL adapters)
 	 * @example
 	 * const endb = new Endb();
@@ -247,7 +247,8 @@ class Endb extends EventEmitter {
 			const data = await this.options.store.has(key);
 			return data;
 		}
-		return !!(await this.get(key));
+
+		return Boolean(await this.get(key));
 	}
 
 	/**
@@ -270,6 +271,11 @@ class Endb extends EventEmitter {
 		}
 
 		return undefined;
+	}
+
+	async keys() {
+		const data = await this.all();
+		return data.map(element => element.key);
 	}
 
 	/**
@@ -355,7 +361,13 @@ class Endb extends EventEmitter {
 			.then(value => this.options.store.set(key, value))
 			.then(() => true);
 	}
+
+	async values() {
+		const data = await this.all();
+		return data.map(element => element.value);
+	}
 }
 
 module.exports = Endb;
 module.exports.Endb = Endb;
+module.exports.Util = require('./util');
