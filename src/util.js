@@ -1,6 +1,14 @@
 'use strict';
 
-module.exports = class Util {
+/**
+ * Utilities for Endb.
+ */
+class Util {
+	/**
+	 * Adds the namespace as a prefix to the key.
+	 * @param {string} key The key of an element.
+	 * @param {string} namespace The namespace of the database.
+	 */
 	static addKeyPrefix(key, namespace) {
 		if (Array.isArray(key)) {
 			return key.map(k => `${namespace}:${k}`);
@@ -9,6 +17,11 @@ module.exports = class Util {
 		return `${namespace}:${key}`;
 	}
 
+	/**
+	 * Checks whether a value is buffer-like or not.
+	 * @param {*} x The value to check.
+	 * @return {boolean}
+	 */
 	static isBufferLike(x) {
 		return (
 			Util.isObject(x) &&
@@ -17,6 +30,11 @@ module.exports = class Util {
 		);
 	}
 
+	/**
+	 * Checks whether a value is an object or not.
+	 * @param {*} x The value to check.
+	 * @return {boolean}
+	 */
 	static isObject(x) {
 		return typeof x === 'object' && x !== null;
 	}
@@ -46,6 +64,11 @@ module.exports = class Util {
 		return new Map();
 	}
 
+	/**
+	 * Parses a JSON string, constructing the JavaScript value or object described by the string.
+	 * @param {string} text The string to parse as JSON.
+	 * @return {object} The `Object` corresponding to the given JSON text.
+	 */
 	static parse(text) {
 		return JSON.parse(text, (_key, value) => {
 			if (Util.isBufferLike(value)) {
@@ -66,6 +89,13 @@ module.exports = class Util {
 		});
 	}
 
+	/**
+	 * 
+	 * @param {number} base 
+	 * @param {string} op 
+	 * @param {number} opand
+	 * @return {number} 
+	 */
 	static math(base, op, opand) {
 		switch (op) {
 			case 'add':
@@ -97,10 +127,20 @@ module.exports = class Util {
 		}
 	}
 
+	/**
+	 * Removes the namespace as a prefix from a key.
+	 * @param {string} key The key of an element.
+	 * @param {*} namespace The namespace of the database.
+	 */
 	static removeKeyPrefix(key, namespace) {
 		return key.replace(`${namespace}:`, '');
 	}
 
+	/**
+	 * Safely import modules from `node_modules`; local module and JSOn can be imported using a relative path.
+	 * @param {string} id The name or path of the module.
+	 * @return {*} Exported module content.
+	 */
 	static safeRequire(id) {
 		try {
 			return require(id);
@@ -111,6 +151,12 @@ module.exports = class Util {
 		}
 	}
 
+	/**
+	 * Converts a JavaScript object or value to a JSON string
+	 * @param {*} value The value to convert to a JSON string.
+	 * @param {string|number} [space] A `String` or `Number` object that's used to insert white space into the output JSON string for readability purposes.
+	 * @return A JSON string representing the given value.
+	 */
 	static stringify(value, space) {
 		return JSON.stringify(
 			value,
@@ -132,4 +178,6 @@ module.exports = class Util {
 			space
 		);
 	}
-};
+}
+
+module.exports = Util;
