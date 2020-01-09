@@ -1,11 +1,14 @@
 language: node_js
 node_js: 10
-script: npm run test
+install: npm install
+script: 
+  - npm test
+  - npm run docs:build
 deploy:
-  provider: npm
-  email: ayyanlewis@gmail.com
-  api_key:
-    secure: VoCS40tm0ArHKv4/4nk3W9AXhVkVlUftCvsn+Saxmlqf6865YdVmmvLFJppq+1Ra3TrHUXB4TPkODh5jLRGWNb6Iun0dOIsQBoKf3erwYvXy0CERH5e7C/FvwFuXIpPZSflXmELgIF8ChSXax6WWB0H8KxvYG5InUBTyJwpsJQZE9z1pEigrRfemde8689wQjQ17zMFIJ1lq340uzHzATgAYIYgChEjStUiKgIhv7bGNqKh6Q0rKhK6atV5tpaUBvEvueDHnJnWUlCPPKvB+na3rlgUjmdPGt4hV19uXWOR+aPJWIUzYi91+jv94kcNa95Mf82tDMHqkkMdRU3iveDQxBtsEtM7wAD8aVbmoFV7dbrfYvZmBqFbwkuqZ1JL7bmAyfC9rB5ZG3aLHdETFwlWpRe71VFHVh6HRXBrLhR2FMm3fWAmrnhTQg9T9HLl74DF90L/G7V9g/+YcLuLdQa9Gdo9UdccC+6NKR/3yeuwxtaShV2wP17ML9C9Rqrq7xHqZJs12Cc6LnBAoLptpiKJ0WRb1dVpkSvn+JMaBO+NQrRJg+uQ2BLtW8JfNKaE7/6Ue+uqCKxM4jxyeS1d3la39t/aOnG8N8/hkow3EiuG9cqrscU12gHEawpOiGuwbv/uNrXhjAzh9s0+/YZRNSh4yeAEA3CH2jR3RA2QdTRg=
+  provider: pages
+  skip_cleanup: true
+  local_dir: docs/
+  github_token: $GITHUB_TOKEN
+  keep_history: true
   on:
-    tags: true
-    repo: chroventer/endb
+    branch: master
