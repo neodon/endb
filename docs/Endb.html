@@ -26,7 +26,7 @@
             <nav class="navbar" role="navigation" aria-label="main navigation">
                 <div class="navbar-brand">
                      
-                        <img src="media/logo.png" alt="logo">
+                        <img src="media/icon.png" alt="logo">
                     
                      
                         <h1 class="navbar-item">Endb</h1>
@@ -64,7 +64,7 @@
             <div class="column is-3" id="sidebarNav">
                 <div class="sidebar">
                     <nav>
-                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Endb.html">Endb</a></li></ul></div>
+                        <h2><a href="index.html">Home</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Endb.html">Endb</a></li><li><a href="Util.html">Util</a></li></ul></div>
                     </nav>
                 </div>
             </div>
@@ -260,7 +260,7 @@
   
       <td class="default">
       
-          'endb'
+          endb
       
       </td>
   
@@ -299,6 +299,8 @@
   
       <td class="default">
       
+          Util#stringify
+      
       </td>
   
 
@@ -335,6 +337,8 @@
 
   
       <td class="default">
+      
+          Util#parse
       
       </td>
   
@@ -410,7 +414,7 @@
   
       <td class="default">
       
-          'endb'
+          endb
       
       </td>
   
@@ -449,7 +453,7 @@
   
       <td class="default">
       
-          'endb'
+          endb
       
       </td>
   
@@ -807,7 +811,7 @@ await endb.clear(); // undefined</code></pre>
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line325">line 325</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line330">line 330</a>
             </span>
         </p>
     
@@ -2390,7 +2394,7 @@ Possible operations: addition, subtraction, multiply, division, exp, and module.
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line297">line 297</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line302">line 302</a>
             </span>
         </p>
     
@@ -2457,6 +2461,437 @@ operations.forEach(operation => {
   await Endb.math('key', operation, 100);
 });</code></pre>
     
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="push">
+        <a class="href-link" href="#push">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                push<span class="signature">(key, value, allowDupes)</span><span class="type-signature"> &rarr; {Promise.&lt;true>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>allowDupes</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">boolean</span>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line345">line 345</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;true></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="remove">
+        <a class="href-link" href="#remove">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                remove<span class="signature">(key, value)</span><span class="type-signature"> &rarr; {Promise.&lt;true>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>key</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">string</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+
+        
+<tr class="deep-level-0">
+  
+      <td class="name"><code>value</code></td>
+  
+
+  <td class="type">
+  
+      
+<span class="param-type">*</span>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last"></td>
+</tr>
+
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="index.js.html" class="button">View Source</a>
+            <span>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line360">line 360</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<span class="param-type">Promise.&lt;true></span>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
 
 
 </div>
@@ -2605,7 +3040,7 @@ operations.forEach(operation => {
         <p class="tag-source">
             <a href="index.js.html" class="button">View Source</a>
             <span>
-                <a href="index.js.html">index.js</a>, <a href="index.js.html#line352">line 352</a>
+                <a href="index.js.html">index.js</a>, <a href="index.js.html#line394">line 394</a>
             </span>
         </p>
     
@@ -2694,16 +3129,6 @@ await endb.set('profile', {
         </div>
     </div>
 
-
-<footer class="footer">
-    <div class="content has-text-centered">
-        <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.3</a> on Thu Dec 26 2019 10:24:08 GMT-0700 (Mountain Standard Time)</p>
-        <p class="sidebar-created-by">
-            <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by 
-            <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
-        </p>
-    </div>
-</footer>
 
 
 <script src="scripts/app.min.js"></script>

@@ -9,7 +9,7 @@
         "test:watch": "ava --watch",
         "lint": "xo src",
         "lint:fix": "xo src --fix",
-        "build:docs": "jsdoc -c .jsdoc.json",
+        "docs:build": "jsdoc -c .jsdoc.json",
         "prepublishOnly": "npm run test"
     },
     "repository": {
