@@ -18,8 +18,8 @@ declare module 'endb' {
   }
 
   export class Endb extends EventEmitter {
-    public options: EndbOptions;
-    constructor(uri: string, options: EndbOptions);
+    public options?: EndbOptions;
+    constructor(uri?: string, options?: EndbOptions);
     public all(): Promise<Element[]>;
     public clear(): Promise<undefined>;
     public delete(key: string | string[]): Promise<boolean|boolean[]>;
@@ -27,10 +27,14 @@ declare module 'endb' {
     public find(fn: Function, thisArg: any): Promise<Element | undefined>;
     public get(key: string): Promise<any>;
     public has(key: string): Promise<boolean>;
-    public import(data: string): Promise<void>;
+    public import(data: string, overwrite?: boolean, clear?: boolean): Promise<undefined>;
+    public keys(): Promise<string[]>;
     public math(key: string, operation: string, operand: number): Promise<true>;
     public static multi(names: string[], options: EndbOptions): any;
+    public push(key: string, value: any, allowDupes?: false): Promise<true>;
+    public remove(key: string, value: any): Promise<true>;
     public set(key: string, value: any): Promise<true>;
+    public values(): Promise<any[]>
   }
 
   export class Util {
