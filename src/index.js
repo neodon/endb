@@ -20,8 +20,8 @@ class Endb extends EventEmitter {
 	 * @param {string} [uri=undefined] The connection string URI.
 	 * @param {Object} [options={}] The options for the database.
 	 * @param {string} [options.namespace=endb] The name of the database.
-	 * @param {Function} [options.serialize] A custom serialization function.
-	 * @param {Function} [options.deserialize] A custom deserialization function.
+	 * @param {Function} [options.serialize=Util#stringify] A custom serialization function.
+	 * @param {Function} [options.deserialize=Util#parse] A custom deserialization function.
 	 * @param {string} [options.adapter] The adapter to be used.
 	 * @param {string} [options.collection=endb] The name of the collection. (only for MongoDB)
 	 * @param {string} [options.table=endb] The name of the table. (only for SQL adapters)
@@ -253,8 +253,8 @@ class Endb extends EventEmitter {
 
 	/**
 	 * @param {string} data The data to import.
-	 * @param {*} [overwrite=true] Whether to overwrite existing elements with new data.
-	 * @param {*} [clear=false] Whether to clear all the elements before writing data.
+	 * @param {boolean} [overwrite=true] Whether to overwrite existing elements with new data.
+	 * @param {boolean} [clear=false] Whether to clear all the elements before writing data.
 	 * @returns {undefined} Returns undefined.
 	 */
 	async import(data, overwrite = true, clear = false) {
@@ -334,6 +334,43 @@ class Endb extends EventEmitter {
 		}
 
 		return instances;
+	}
+
+	/**
+	 * @param {string} key
+	 * @param {*} value
+	 * @param {boolean} allowDupes
+	 * @return {Promise<true>}
+	 */
+	async push(key, value, allowDupes = false) {
+		const data = await this.get(key);
+		if (!Array.isArray(data))
+			throw new TypeError('Target must be an object or an array.');
+		if (!allowDupes && data.includes(value)) return;
+		data.push(value);
+		const res = await this.set(key, data);
+		return res;
+	}
+
+	/**
+	 * @param {string} key
+	 * @param {*} value
+	 * @return {Promise<true>}
+	 */
+	async remove(key, value) {
+		const data = await this.get(key);
+		if (['Array', 'Object'].includes(data.constructor.name))
+			throw new TypeError('Target must be an object or an array.');
+		if (Array.isArray(data)) {
+			if (data.includes(value)) {
+				data.splice(data.indexOf(value), 1);
+			}
+		} else if (data.constructor.name === 'Array') {
+			delete data[value];
+		}
+
+		const res = await this.set(key, data);
+		return res;
 	}
 
 	/**
