@@ -22,7 +22,7 @@ class Endb extends EventEmitter {
 	 * @param {string} [options.namespace=endb] The name of the database.
 	 * @param {Function} [options.serialize=Util#stringify] A custom serialization function.
 	 * @param {Function} [options.deserialize=Util#parse] A custom deserialization function.
-	 * @param {string} [options.adapter=Map] The adapter to be used.
+	 * @param {string} [options.adapter] The adapter to be used.
 	 * @param {string} [options.collection=endb] The name of the collection. (only for MongoDB)
 	 * @param {string} [options.table=endb] The name of the table. (only for SQL adapters)
 	 * @param {number} [options.keySize=255] The size of the key. (only for SQL adapters)
