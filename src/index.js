@@ -1,6 +1,7 @@
 'use strict';
 
 const {EventEmitter} = require('events');
+const {set: _set} = require('lodash');
 const {
 	addKeyPrefix,
 	load,
@@ -391,12 +392,17 @@ class Endb extends EventEmitter {
 	 *   hobbies: ['programming']
 	 * });
 	 */
-	set(key, value) {
+	async set(key, value, path) {
+		const data = await this.get(key);
 		key = addKeyPrefix(key, this.options.namespace);
-		return Promise.resolve()
-			.then(() => this.options.serialize(value))
-			.then(value => this.options.store.set(key, value))
-			.then(() => true);
+		if (typeof data === 'object' && path) {
+			value = _set(data, path, value);
+		} else if (typeof data !== 'object' && path) {
+			throw new TypeError('Cannot target a non-object.');
+		}
+
+		this.options.store.set(key, this.options.serialize(value));
+		return true;
 	}
 
 	async values() {
