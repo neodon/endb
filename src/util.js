@@ -90,11 +90,10 @@ class Util {
 	}
 
 	/**
-	 * 
-	 * @param {number} base 
-	 * @param {string} op 
+	 * @param {number} base
+	 * @param {string} op
 	 * @param {number} opand
-	 * @return {number} 
+	 * @return {number}
 	 */
 	static math(base, op, opand) {
 		switch (op) {
