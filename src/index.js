@@ -300,7 +300,7 @@ class Endb extends EventEmitter {
 	 *   await Endb.math('key', operation, 100);
 	 * });
 	 */
-	async math(key, operation, operand) {
+	async math(key, operation, operand, path) {
 		if (operation === 'random' || operation === 'rand') {
 			const data = await this.set(key, Math.round(Math.random() * operand));
 			return data;
@@ -308,7 +308,8 @@ class Endb extends EventEmitter {
 
 		const data = await this.set(
 			key,
-			_math(await this.get(key), operation, operand)
+			_math(await this.get(key), operation, operand),
+			path
 		);
 		return data;
 	}
