@@ -10,7 +10,7 @@ Docma
             title: Package.name,
             routing: 'query',
             entrance: 'content:readme',
-            base: '/docs',
+            base: '/',
             server: Docma.ServerType.GITHUB
         },
         markdown: {
