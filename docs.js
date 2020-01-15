@@ -37,7 +37,7 @@ Docma
                     },
                     {
                         label: 'GitHub',
-                        href: Package.repository.url,
+                        href: Package.repository.url.split('+')[1],
                         target: '_blank',
                         iconClass: 'ico-md ico-github',
                     },
