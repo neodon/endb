@@ -1,14 +1,17 @@
 language: node_js
 node_js: 10
 install: npm install
-script: 
-  - npm test
-  - npm run docs:build
+script:
+- npm test
+- npm run docs:build
 deploy:
   provider: pages
   skip_cleanup: true
   local_dir: docs/
-  github_token: $GITHUB_TOKEN
+  github_token: "$GITHUB_TOKEN"
   keep_history: true
   on:
     branch: master
+env:
+  global:
+    secure: efeJ9L3JRNo1+aWmfT8WdFTppdTqR7CjO0tXxhlus5DIWE2b3vcyQbE+2wgryGaKRTMP3SEcdUzKYUYokqPfynhNQItHDf6+WUnYSQsSXVGQM98N3X7ma4PwnN1IVG/Km7RbGW1k81GuwY4HEzUfFrqV5o3gdjnGACNaESgXfzlNVAaR/WWdg6kYYxJlI0qKn+ftXYKg0FTicDcvCK9Ps81lWp0jTLnyErgy44+JqOO4/dYhXixmxMzNh8Ny/G4IpmUeUmmXi0ZtIMj8gg9qN/K+cTaU4d59wBTBl0Gl3YrimroR+vh6xAH/vzNVah3z4NElhqhUPw2ncgfbxD3/q7Lt6WnwsGPpPX7cojc25tqY5jkINU849Raw3h9MWg1h4l1RktDIBRAr+wsVYAaKxJ2lRHqNnAIBmGUXNYfT5XhZ4lwQlt/qsn4SnOH8l7ZJHw97Z53/ZtbANHnYcVgBaAYPa2zbRB/juSsKee1MKq7nSO8ZxrqlWkHzpNZRd+qIAvY9zfsxRTIf53JW4ZN23PbGHIUNNoJp7/z8zksC73H8MTgfOeTTV/WpcXr9w8WEiqxcsx7Yy7TOtgQNZyeaXc/C/BwQbZz82/louiXgDlUyUPLINBa6ADxhsW7B4c4JCZMTLKbyEBABQt2Nh2Gk+sX80r/ZAZpc+CWXqwbkmW0=

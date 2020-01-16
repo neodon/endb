@@ -41,6 +41,12 @@ Docma
                         target: '_blank',
                         iconClass: 'ico-md ico-github',
                     },
+                    {
+                        label: 'NPM',
+                        href: `https://npmjs.com/package/${Package.name}`,
+                        target: '_blank',
+                        iconClass: 'ico-npm'
+                    }
                 ],
             },
         }
