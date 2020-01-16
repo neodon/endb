@@ -5,13 +5,12 @@ script:
 - npm test
 - npm run docs:build
 deploy:
-  provider: pages
-  skip_cleanup: true
-  local_dir: docs/
-  github_token: "$GITHUB_TOKEN"
-  keep_history: true
+  provider: releases
+  api_key:
+    secure: cRVnEFT2uKp06Wc/5eUbSINcuItSoAEFHb1fxLvV1FVqbX0n73oD65oPVvHxrWwte8lfVEq0z8YHCql75MSqyzEibVyNEmouUtD/3F9bGmALLyr05SUicsjdYVzo3Rx7HxHFPqqRtvGtpa4OKp3/pYaVgjlxd0fGMEv8j6AzE8gce0YxGPY2IkUREiB4C8S8LZ310gK61mq/ohyjmlnjtmNPPjOWR+zD23TmDc3FsgYNEoxTU8bRL+xvgdve5RBXq0TdLpJQde0eqsDoX04UJxFneHqnF+SxklC6R8kptcNfEVy5CqRKgkRecFuMWbFcLDBjts26DN7ib/G5XaH3yqfRHL6tNedIWTJvskpzoC9aLLbrSVj2onhi2TCZVqmOGqMkVoGRgYYAKRMPNvJIQXJ3m6Z9UnnZipDQvKMOnkC2kusmPn+bGpV61PwmV9aj0b4vKTUgTr/XGMWrjpWJvJwFIDAj3z8HOIAp4lKCjiIuugAKtJb/FR24fc9l1nKT1e57ysfXW9r9qO1njUv/X8ATP6smgeclYh2e4uLYaYIzjnkXaCrvvQh2XyiJK5X1LwBxaCoBPQVqjSU8e3qL5aJ0aQBqDvqS6r+xc4yB+50+6iUD48i9JkiYoped/2a6wdNEWItdjSBjA7QRCMQ6SRDrXvtMQ5etSQ7GdoI5JIg=
+  file: ".travis.yml"
   on:
-    branch: master
+    repo: chroventer/endb
 env:
   global:
     secure: efeJ9L3JRNo1+aWmfT8WdFTppdTqR7CjO0tXxhlus5DIWE2b3vcyQbE+2wgryGaKRTMP3SEcdUzKYUYokqPfynhNQItHDf6+WUnYSQsSXVGQM98N3X7ma4PwnN1IVG/Km7RbGW1k81GuwY4HEzUfFrqV5o3gdjnGACNaESgXfzlNVAaR/WWdg6kYYxJlI0qKn+ftXYKg0FTicDcvCK9Ps81lWp0jTLnyErgy44+JqOO4/dYhXixmxMzNh8Ny/G4IpmUeUmmXi0ZtIMj8gg9qN/K+cTaU4d59wBTBl0Gl3YrimroR+vh6xAH/vzNVah3z4NElhqhUPw2ncgfbxD3/q7Lt6WnwsGPpPX7cojc25tqY5jkINU849Raw3h9MWg1h4l1RktDIBRAr+wsVYAaKxJ2lRHqNnAIBmGUXNYfT5XhZ4lwQlt/qsn4SnOH8l7ZJHw97Z53/ZtbANHnYcVgBaAYPa2zbRB/juSsKee1MKq7nSO8ZxrqlWkHzpNZRd+qIAvY9zfsxRTIf53JW4ZN23PbGHIUNNoJp7/z8zksC73H8MTgfOeTTV/WpcXr9w8WEiqxcsx7Yy7TOtgQNZyeaXc/C/BwQbZz82/louiXgDlUyUPLINBa6ADxhsW7B4c4JCZMTLKbyEBABQt2Nh2Gk+sX80r/ZAZpc+CWXqwbkmW0=
