@@ -6,6 +6,8 @@ const Package = require('./package');
 Docma
     .create()
     .build({
+        dest: './docs',
+        clean: false,
         app: {
             title: Package.name,
             routing: 'query',
@@ -13,22 +15,27 @@ Docma
             base: '/',
             server: Docma.ServerType.GITHUB
         },
-        markdown: {
-            sanitize: false
-        },
         src: [
-            { endb: './src/index.js' },
+            { endb: './src/index.js', util: './src/util.js' },
             { readme: './README.md' },
         ],
-        dest: './docs',
+        jsdoc: {
+            package: './package.json'
+        },
         template: {
+            path: 'default',
             options: {
                 title: Package.name,
+                outline: 'flat',
+                badges: true,
                 navbar: true,
                 sidebar: true,
+                search: true,
                 navItems: [{
+
                         label: 'README',
                         href: '?content=readme',
+                        iconClass: 'ico-md ico-info'
                     },
                     {
                         label: 'Documentation',
@@ -40,14 +47,10 @@ Docma
                         href: Package.repository.url.split('+')[1],
                         target: '_blank',
                         iconClass: 'ico-md ico-github',
-                    },
-                    {
-                        label: 'NPM',
-                        href: `https://npmjs.com/package/${Package.name}`,
-                        target: '_blank',
-                        iconClass: 'ico-npm'
                     }
                 ],
             },
         }
-    }).catch(console.error);
+    })
+    .then(() => console.log('Sucessfully built the documentation.'))
+    .catch(console.error);
