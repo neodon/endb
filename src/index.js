@@ -154,6 +154,33 @@ class Endb extends EventEmitter {
 		});
 	}
 
+	/**
+	 * Ensures if an element exists in the database. If the element does not exist, sets the element to the database.
+	 * @param {string} key The key of the element to ensure.
+	 * @param {*} value The value of the element to ensure. 
+	 * @return {Promise<*>} The (default) value of the element.
+	 * @example
+	 * const endb = new Endb();
+	 * 
+	 * await endb.set('en', 'db');
+	 * 
+	 * const data = await endb.ensure('foo', 'bar');
+	 * console.log(data); // 'bar'
+	 * 
+	 * const el = await endb.ensure('en', 'db');
+	 * console.log(el); // 'db'
+	 */
+	async ensure(key, value) {
+		const element = await this.has(key);
+		if (!element) {
+			await this.set(key, value);
+			return value;
+		} else {
+			const data = await this.get(key);
+			return data;
+		}
+	}
+
 	async export() {
 		return JSON.stringify(
 			{
