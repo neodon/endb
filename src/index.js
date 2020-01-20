@@ -1,7 +1,7 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {set: _set} = require('lodash');
+const _set = require('lodash/set');
 const {
 	addKeyPrefix,
 	load,
@@ -143,7 +143,7 @@ class Endb extends EventEmitter {
 	 * await endb.delete('foo'); // true
 	 * await endb.delete(['foo', 'fizz']); // [ true, false ]
 	 */
-	delete(key) {
+	async delete(key, path = null) {
 		key = addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve().then(() => {
 			if (Array.isArray(key)) {
@@ -157,16 +157,16 @@ class Endb extends EventEmitter {
 	/**
 	 * Ensures if an element exists in the database. If the element does not exist, sets the element to the database.
 	 * @param {string} key The key of the element to ensure.
-	 * @param {*} value The value of the element to ensure. 
+	 * @param {*} value The value of the element to ensure.
 	 * @return {Promise<*>} The (default) value of the element.
 	 * @example
 	 * const endb = new Endb();
-	 * 
+	 *
 	 * await endb.set('en', 'db');
-	 * 
+	 *
 	 * const data = await endb.ensure('foo', 'bar');
 	 * console.log(data); // 'bar'
-	 * 
+	 *
 	 * const el = await endb.ensure('en', 'db');
 	 * console.log(el); // 'db'
 	 */
@@ -175,10 +175,10 @@ class Endb extends EventEmitter {
 		if (!element) {
 			await this.set(key, value);
 			return value;
-		} else {
-			const data = await this.get(key);
-			return data;
 		}
+
+		const data = await this.get(key);
+		return data;
 	}
 
 	async export() {
@@ -327,9 +327,9 @@ class Endb extends EventEmitter {
 	 *   await Endb.math('key', operation, 100);
 	 * });
 	 */
-	async math(key, operation, operand, path) {
+	async math(key, operation, operand, path = null) {
 		if (operation === 'random' || operation === 'rand') {
-			const data = await this.set(key, Math.round(Math.random() * operand));
+			const data = await this.set(key, Math.round(Math.random() * operand), path);
 			return data;
 		}
 
@@ -420,13 +420,12 @@ class Endb extends EventEmitter {
 	 *   hobbies: ['programming']
 	 * });
 	 */
-	async set(key, value, path) {
-		const data = await this.get(key);
+	async set(key, value, path = null) {
+		let data = await this.get(key);
 		key = addKeyPrefix(key, this.options.namespace);
-		if (typeof data === 'object' && path) {
+		if (path !== null) {
+			if (!data) data = {};
 			value = _set(data, path, value);
-		} else if (typeof data !== 'object' && path) {
-			throw new TypeError('Cannot target a non-object.');
 		}
 
 		this.options.store.set(key, this.options.serialize(value));
