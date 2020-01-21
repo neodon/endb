@@ -11,16 +11,13 @@ yarn-debug.log*
 yarn-error.log*
 
 # Miscellaneous
-.tmp/
 docs/
-.jsdoc.json
-.eslintrc.json
 .travis.yml
+test/
+docs.js
 
 # Git
 .github/
 .gitattributes
 .gitignore
 .nojekyll
-media/
-docs.js
