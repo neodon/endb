@@ -30,6 +30,19 @@ class Util {
 		);
 	}
 
+	static get(object, path, defaultValue) {
+		const travel = regexp =>
+			String.prototype.split
+				.call(path, regexp)
+				.filter(Boolean)
+				.reduce(
+					(res, key) => (res !== null && res !== undefined ? res[key] : res),
+					object
+				);
+		const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
+		return result === undefined || result === object ? defaultValue : result;
+	}
+
 	/**
 	 * Checks whether a value is an object or not.
 	 * @param {*} x The value to check.
@@ -143,11 +156,27 @@ class Util {
 	static safeRequire(id) {
 		try {
 			return require(id);
-		} catch (error) {
+		} catch {
 			console.error(
 				`Install ${id} to continue; run "npm install ${id}" to install it.`
 			);
 		}
+	}
+
+	static set(object, path, value) {
+		if (new Object(object) !== object) return object;
+		if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
+		path
+			.slice(0, -1)
+			.reduce(
+				(a, c, i) =>
+					new Object(a[c]) === a[c]
+						? a[c]
+						: (a[c] =
+								Math.abs(path[i + 1]) >> 0 === Number(path[i + 1]) ? [] : {}),
+				object
+			)[path[path.length - 1]] = value;
+		return object;
 	}
 
 	/**
