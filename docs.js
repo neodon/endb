@@ -10,18 +10,24 @@ Docma
         clean: false,
         app: {
             title: Package.name,
-            routing: 'query',
-            entrance: 'content:readme',
+            meta: [
+                { charset: 'utf-8' },
+                { name: 'viewport', content: 'width=device-width,initial-scale=1.0' },
+                { property: 'og:url', content: 'endb.js.org' },
+                { property: 'og:title', content: 'Endb' },
+                { property: 'og:description', content: Package.description },
+                { property: 'og:image', content: '/docs/media/logo.png' }
+            ],
             base: '/',
+            entrance: 'content:readme',
+            routing: Docma.RoutingMethod.QUERY,
             server: Docma.ServerType.GITHUB
         },
         src: [
+            './src/**/*.js',
             { endb: './src/index.js', util: './src/util.js' },
             { readme: './README.md' },
         ],
-        jsdoc: {
-            package: './package.json'
-        },
         template: {
             path: 'default',
             options: {
