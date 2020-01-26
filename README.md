@@ -27,7 +27,7 @@ If you don't understand something in the documentation, you are experiencing pro
 ## Installation
 
 ```bash
-npm install chroventer/endb#path
+npm install endb
 ```
 
 By default, data is stored in memory. You can optionally install and utilize an "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
