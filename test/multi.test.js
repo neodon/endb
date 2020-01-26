@@ -1,7 +1,7 @@
 'use strict';
 
-import {serial} from 'ava';
-import {Endb} from '../src';
+const {serial} = require('ava');
+const Endb = require('../src');
 
 serial('Multiple Endb instances', async t => {
 	const {members, users} = Endb.multi(['members', 'users']);

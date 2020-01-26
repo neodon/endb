@@ -7,6 +7,7 @@ const {
 	math: _math,
 	parse,
 	removeKeyPrefix,
+	set: _set,
 	stringify
 } = require('./util');
 
@@ -81,7 +82,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Gets all the elements from the database.
-	 * @returns {Promise<any[]>} All the elements from the database.
+	 * @returns {Promise<*[]>} All the elements from the database.
 	 * @example
 	 * const endb = new Endb();
 	 *
@@ -156,41 +157,28 @@ class Endb extends EventEmitter {
 	/**
 	 * Ensures if an element exists in the database. If the element does not exist, sets the element to the database.
 	 * @param {string} key The key of the element to ensure.
-	 * @param {*} value The value of the element to ensure. 
+	 * @param {*} value The value of the element to ensure.
 	 * @return {Promise<*>} The (default) value of the element.
 	 * @example
 	 * const endb = new Endb();
-	 * 
+	 *
 	 * await endb.set('en', 'db');
-	 * 
+	 *
 	 * const data = await endb.ensure('foo', 'bar');
 	 * console.log(data); // 'bar'
-	 * 
-	 * const el = await endb.ensure('en', 'db');
-	 * console.log(el); // 'db'
+	 *
+	 * const data = await endb.ensure('en', 'db');
+	 * console.log(data); // 'db'
 	 */
 	async ensure(key, value) {
 		const element = await this.has(key);
 		if (!element) {
 			await this.set(key, value);
 			return value;
-		} else {
-			const data = await this.get(key);
-			return data;
 		}
-	}
 
-	async export() {
-		return JSON.stringify(
-			{
-				namespace: this.options.namespace,
-				options: this.options,
-				date: Date.now(),
-				elements: await this.all()
-			},
-			null,
-			2
-		);
+		const data = await this.get(key);
+		return data;
 	}
 
 	/**
@@ -278,28 +266,6 @@ class Endb extends EventEmitter {
 		return Boolean(await this.get(key));
 	}
 
-	/**
-	 * @param {string} data The data to import.
-	 * @param {boolean} [overwrite=true] Whether to overwrite existing elements with new data.
-	 * @param {boolean} [clear=false] Whether to clear all the elements before writing data.
-	 * @returns {undefined} Returns undefined.
-	 */
-	async import(data, overwrite = true, clear = false) {
-		if (clear) await this.clear();
-		if (data === null) throw new Error('No data provided to import.');
-		try {
-			const parsed = JSON.parse(data);
-			for (const element of parsed.elements) {
-				if (!overwrite && this.has(element.key)) continue;
-				await this.set(element.key, element.value); // eslint-disable-line no-await-in-loop
-			}
-		} catch (error) {
-			throw new Error(`Invalid data provided: ${error}`);
-		}
-
-		return undefined;
-	}
-
 	async keys() {
 		const data = await this.all();
 		return data.map(element => element.key);
@@ -326,15 +292,20 @@ class Endb extends EventEmitter {
 	 *   await Endb.math('key', operation, 100);
 	 * });
 	 */
-	async math(key, operation, operand) {
+	async math(key, operation, operand, path = null) {
 		if (operation === 'random' || operation === 'rand') {
-			const data = await this.set(key, Math.round(Math.random() * operand));
+			const data = await this.set(
+				key,
+				Math.round(Math.random() * operand),
+				path
+			);
 			return data;
 		}
 
 		const data = await this.set(
 			key,
-			_math(await this.get(key), operation, operand)
+			_math(await this.get(key), operation, operand),
+			path
 		);
 		return data;
 	}
@@ -371,8 +342,10 @@ class Endb extends EventEmitter {
 	 */
 	async push(key, value, allowDupes = false) {
 		const data = await this.get(key);
-		if (!Array.isArray(data))
+		if (!Array.isArray(data)) {
 			throw new TypeError('Target must be an object or an array.');
+		}
+
 		if (!allowDupes && data.includes(value)) return;
 		data.push(value);
 		const res = await this.set(key, data);
@@ -386,8 +359,10 @@ class Endb extends EventEmitter {
 	 */
 	async remove(key, value) {
 		const data = await this.get(key);
-		if (['Array', 'Object'].includes(data.constructor.name))
+		if (['Array', 'Object'].includes(data.constructor.name)) {
 			throw new TypeError('Target must be an object or an array.');
+		}
+
 		if (Array.isArray(data)) {
 			if (data.includes(value)) {
 				data.splice(data.indexOf(value), 1);
@@ -418,8 +393,14 @@ class Endb extends EventEmitter {
 	 *   hobbies: ['programming']
 	 * });
 	 */
-	set(key, value) {
+	async set(key, value, path = null) {
 		key = addKeyPrefix(key, this.options.namespace);
+		if (path !== null) {
+			let data = this.options.store.get(key);
+			data = typeof data === 'string' ? this.options.deserialize(data) : data;
+			value = _set(data || {}, path, value);
+		}
+
 		return Promise.resolve()
 			.then(() => this.options.serialize(value))
 			.then(value => this.options.store.set(key, value))

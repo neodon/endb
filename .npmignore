@@ -12,6 +12,7 @@ yarn-error.log*
 
 # Miscellaneous
 docs/
+docs.js
 .travis.yml
 test/
 docs.js

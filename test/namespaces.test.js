@@ -1,7 +1,7 @@
 'use strict';
 
-import {serial} from 'ava';
-import {Endb} from '../src';
+const {serial} = require('ava');
+const Endb = require('../src');
 
 serial('Namespaces', async t => {
 	const endb1 = new Endb({namespace: 'endb1'});
