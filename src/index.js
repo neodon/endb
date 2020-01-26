@@ -82,7 +82,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Gets all the elements from the database.
-	 * @returns {Promise<*[]>} All the elements from the database.
+	 * @returns {Promise<any[]>} All the elements from the database.
 	 * @example
 	 * const endb = new Endb();
 	 *
