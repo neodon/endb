@@ -3,6 +3,7 @@
 const {EventEmitter} = require('events');
 const {
 	addKeyPrefix,
+	get: _get,
 	load,
 	math: _math,
 	parse,
@@ -108,10 +109,7 @@ class Endb extends EventEmitter {
 
 				return this.options.store.all();
 			})
-			.then(data => {
-				if (data === undefined) return undefined;
-				return data;
-			});
+			.then(data => (data === undefined ? undefined : data));
 	}
 
 	/**
@@ -171,8 +169,8 @@ class Endb extends EventEmitter {
 	 * console.log(data); // 'db'
 	 */
 	async ensure(key, value) {
-		const element = await this.has(key);
-		if (!element) {
+		const dataExists = await this.has(key);
+		if (!dataExists) {
 			await this.set(key, value);
 			return value;
 		}
@@ -222,26 +220,26 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Gets the value of an element from the database.
-	 * @param {string} key The key of the element to return from the database.
+	 * @param {string} key The key of the element to get from the database.
+	 * @param {string} [path=null] The path of the property to get from the value.
 	 * @returns {Promise<*>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
-	 * const endb = new Endb();
+	 * await Endb.set('foo', 'bar');
 	 *
-	 * await endb.set('foo', 'bar');
-	 * await endb.get('bar'); // undefined
-	 * await endb.get('foo'); // 'bar'
+	 * const data = await Endb.get('foo');
+	 * console.log(data); // 'bar'
+	 *
+	 * await Endb.get('profile', 'verified'); // false
 	 */
-	get(key) {
+	get(key, path = null) {
 		key = addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => this.options.store.get(key))
 			.then(data =>
 				typeof data === 'string' ? this.options.deserialize(data) : data
 			)
-			.then(data => {
-				if (data === undefined) return undefined;
-				return data;
-			});
+			.then(data => (path === null ? data : _get(data, path)))
+			.then(data => (data === undefined ? undefined : data));
 	}
 
 	/**
@@ -277,6 +275,7 @@ class Endb extends EventEmitter {
 	 * @param {string} operation The mathematical operationto execute.
 	 * Possible operations: addition, subtraction, multiply, division, exp, and module.
 	 * @param {number} operand The operand of the operation
+	 * @param {string} [path=null]
 	 * @returns {Promise<true>} Returns true.
 	 * @example
 	 * Endb.math('key', 'add', 100).then(console.log).catch(console.error);
@@ -293,6 +292,17 @@ class Endb extends EventEmitter {
 	 * });
 	 */
 	async math(key, operation, operand, path = null) {
+		if (path === null) {
+			if (operation === 'random' || operation === 'rand') {
+				const data = await this.set(key, Math.round(Math.random() * operand));
+				return data;
+			}
+
+			return this.set(key, _math(this.get(key), operation, operand));
+		}
+
+		const data = await this.get(key);
+		const propValue = _get(data, path);
 		if (operation === 'random' || operation === 'rand') {
 			const data = await this.set(
 				key,
@@ -302,12 +312,8 @@ class Endb extends EventEmitter {
 			return data;
 		}
 
-		const data = await this.set(
-			key,
-			_math(await this.get(key), operation, operand),
-			path
-		);
-		return data;
+		const res = await this.set(key, _math(propValue, operation, operand), path);
+		return res;
 	}
 
 	/**
@@ -335,15 +341,16 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * @param {string} key
-	 * @param {*} value
-	 * @param {boolean} allowDupes
+	 * Pushes an element to the array value in the database.
+	 * @param {string} key The key of the element to push to the database.
+	 * @param {*} value The value of the element to push.
+	 * @param {boolean} [allowDupes=false] Whether to allow duplicate elements in the array or not.
 	 * @return {Promise<true>}
 	 */
 	async push(key, value, allowDupes = false) {
 		const data = await this.get(key);
 		if (!Array.isArray(data)) {
-			throw new TypeError('Target must be an object or an array.');
+			throw new TypeError('Target must be an array.');
 		}
 
 		if (!allowDupes && data.includes(value)) return;
@@ -379,21 +386,24 @@ class Endb extends EventEmitter {
 	 * Sets an element, key and value, to the database.
 	 * @param {string} key The key of the element to set to the database.
 	 * @param {*} value The value of the element to set to the database.
+	 * @param {string} [path=null] The path of the property to set in the value.
 	 * @returns {Promise<true>} Returns `true`.
 	 * @example
-	 * const endb = new Endb();
-	 *
-	 * await endb.set('foo', 'bar'); // true
-	 * await endb.set('exists', false);
-	 * await endb.set('profile', {
+	 * await Endb.set('foo', 'bar');
+	 * await Endb.set('total', 400);
+	 * await Endb.set('exists', false);
+	 * await Endb.set('profile', {
 	 *   id: 1234567890,
 	 *   username: 'user',
 	 *   verified: true,
-	 *   nil: null,
-	 *   hobbies: ['programming']
+	 *   nil: null
 	 * });
+	 * await Endb.set('todo', [ 'Add a authentication system.', 'Refactor the generator' ]);
+	 *
+	 * await endb.set('profile', false, 'verified');
+	 * await endb.set('profile', 100, 'balance');
 	 */
-	async set(key, value, path = null) {
+	set(key, value, path = null) {
 		key = addKeyPrefix(key, this.options.namespace);
 		if (path !== null) {
 			let data = this.options.store.get(key);

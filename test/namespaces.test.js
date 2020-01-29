@@ -1,9 +1,9 @@
 'use strict';
 
-const {serial} = require('ava');
+const test = require('ava');
 const Endb = require('../src');
 
-serial('Namespaces', async t => {
+test.serial('Namespaces', async t => {
 	const endb1 = new Endb({namespace: 'endb1'});
 	const endb2 = new Endb({namespace: 'endb2'});
 	t.is(await endb1.set('foo', 'bar'), true);

@@ -6,8 +6,9 @@
 class Util {
 	/**
 	 * Adds the namespace as a prefix to the key.
-	 * @param {string} key The key of an element.
+	 * @param {string|string[]} key The key of an element.
 	 * @param {string} namespace The namespace of the database.
+	 * @return {string}
 	 */
 	static addKeyPrefix(key, namespace) {
 		if (Array.isArray(key)) {
@@ -142,7 +143,8 @@ class Util {
 	/**
 	 * Removes the namespace as a prefix from a key.
 	 * @param {string} key The key of an element.
-	 * @param {*} namespace The namespace of the database.
+	 * @param {string} namespace The namespace of the database.
+	 * @return {string}
 	 */
 	static removeKeyPrefix(key, namespace) {
 		return key.replace(`${namespace}:`, '');
@@ -156,7 +158,7 @@ class Util {
 	static safeRequire(id) {
 		try {
 			return require(id);
-		} catch {
+		} catch (_err) {
 			console.error(
 				`Install ${id} to continue; run "npm install ${id}" to install it.`
 			);

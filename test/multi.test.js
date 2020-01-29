@@ -1,9 +1,9 @@
 'use strict';
 
-const {serial} = require('ava');
+const test = require('ava');
 const Endb = require('../src');
 
-serial('Multiple Endb instances', async t => {
+test.serial('Multiple Endb instances', async t => {
 	const {members, users} = Endb.multi(['members', 'users']);
 	t.is(await members.set('foo', 'bar'), true);
 	t.is(await users.set('bar', 'foo'), true);

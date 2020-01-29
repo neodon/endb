@@ -1,9 +1,9 @@
 'use strict';
 
-const {serial} = require('ava');
+const test = require('ava');
 const Endb = require('../src');
 
-serial('Custom Serializers', async t => {
+test.serial('Custom Serializers', async t => {
 	t.plan(2);
 	const endb = new Endb({
 		serialize: JSON.stringify,
@@ -13,7 +13,7 @@ serial('Custom Serializers', async t => {
 	t.is(await endb.get('foo'), 'bar');
 });
 
-serial('Async Serializers', async t => {
+test.serial('Async Serializers', async t => {
 	t.pass(4);
 	const serialize = async data => {
 		t.pass();
