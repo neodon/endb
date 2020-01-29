@@ -158,7 +158,7 @@ class Util {
 	static safeRequire(id) {
 		try {
 			return require(id);
-		} catch (_err) {
+		} catch (error) {
 			console.error(
 				`Install ${id} to continue; run "npm install ${id}" to install it.`
 			);

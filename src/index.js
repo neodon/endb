@@ -344,17 +344,28 @@ class Endb extends EventEmitter {
 	 * Pushes an element to the array value in the database.
 	 * @param {string} key The key of the element to push to the database.
 	 * @param {*} value The value of the element to push.
+	 * @param {string} [path=null]
 	 * @param {boolean} [allowDupes=false] Whether to allow duplicate elements in the array or not.
 	 * @return {Promise<true>}
 	 */
-	async push(key, value, allowDupes = false) {
+	async push(key, value, path = null, allowDupes = false) {
 		const data = await this.get(key);
-		if (!Array.isArray(data)) {
-			throw new TypeError('Target must be an array.');
+		if (path !== null) {
+			const propValue = _get(data, path);
+			console.log(propValue);
+			if (!allowDupes && propValue.includes(value)) {
+				throw new Error(
+					'Endb#push: Duplicates elements cannot be pushed. Use "allowDupes" option to disable this.'
+				);
+			}
+
+			propValue.push(value);
+			_set(data, path, propValue);
+		} else {
+			if (!allowDupes && data.includes(value)) return;
+			data.push(value);
 		}
 
-		if (!allowDupes && data.includes(value)) return;
-		data.push(value);
 		const res = await this.set(key, data);
 		return res;
 	}
@@ -362,20 +373,19 @@ class Endb extends EventEmitter {
 	/**
 	 * @param {string} key
 	 * @param {*} value
+	 * @param {string} [path=null]
 	 * @return {Promise<true>}
 	 */
-	async remove(key, value) {
+	async remove(key, value, path = null) {
 		const data = await this.get(key);
-		if (['Array', 'Object'].includes(data.constructor.name)) {
-			throw new TypeError('Target must be an object or an array.');
-		}
-
-		if (Array.isArray(data)) {
-			if (data.includes(value)) {
-				data.splice(data.indexOf(value), 1);
+		if (path !== null) {
+			const propValue = _get(data, path);
+				propValue.splice(propValue.indexOf(value), 1);
+				_set(data, path, propValue);
+		} else if (Array.isArray(data)) {
+			if (data.indexOf(value) > -1) {
+				dapa.splice(data.indexOf(value), 1);
 			}
-		} else if (data.constructor.name === 'Array') {
-			delete data[value];
 		}
 
 		const res = await this.set(key, data);
