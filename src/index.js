@@ -1,16 +1,7 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {
-	addKeyPrefix,
-	get: _get,
-	load,
-	math: _math,
-	parse,
-	removeKeyPrefix,
-	set: _set,
-	stringify
-} = require('./util');
+const {Util, EndbOptions} = require('./util');
 
 /**
  * Simple key-value database with cache and multi adapter support.
@@ -18,16 +9,7 @@ const {
  */
 class Endb extends EventEmitter {
 	/**
-	 * @constructor
-	 * @param {string} [uri=undefined] The connection string URI.
-	 * @param {Object} [options={}] The options for the database.
-	 * @param {string} [options.namespace=endb] The name of the database.
-	 * @param {Function} [options.serialize=Util#stringify] A custom serialization function.
-	 * @param {Function} [options.deserialize=Util#parse] A custom deserialization function.
-	 * @param {string} [options.adapter] The adapter to be used.
-	 * @param {string} [options.collection=endb] The name of the collection. (only for MongoDB)
-	 * @param {string} [options.table=endb] The name of the table. (only for SQL adapters)
-	 * @param {number} [options.keySize=255] The size of the key. (only for SQL adapters)
+	 * @param {EndbOptions} [options={}] The options for the database.
 	 * @example
 	 * const endb = new Endb();
 	 * const endb = new Endb({
@@ -42,55 +24,50 @@ class Endb extends EventEmitter {
 	 * const endb = new Endb('redis://user:pass@localhost:6379');
 	 * const endb = new Endb('sqlite://path/to/database.sqlite');
 	 *
-	 * // Handles database connection error
+	 * // Handles connection errors
 	 * endb.on('error', err => console.log('Connection Error: ', err));
 	 *
 	 * await endb.set('foo', 'bar'); // true
-	 * await endb.set('exists', true); // true
-	 * await endb.set('num', 10); // true
-	 * await endb.math('num', 'add', 40); // true
 	 * await endb.get('foo'); // 'bar'
-	 * await endb.get('exists'); // true
-	 * await endb.all(); // { ... }
+	 * await endb.all(); // [ ... ]
 	 * await endb.has('foo'); // true
-	 * await endb.has('bar'); // false
-	 * await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
 	 * await endb.delete('foo'); // true
 	 * await endb.clear(); // undefined
 	 */
-	constructor(uri, options = {}) {
+	constructor(options = {}) {
 		super();
-		this.options = Object.assign(
-			{
-				namespace: 'endb',
-				serialize: stringify,
-				deserialize: parse
-			},
-			typeof uri === 'string' ? {uri} : uri,
-			options
+
+		if (typeof options === 'string') {
+			options = {uri: options};
+		}
+
+		/**
+		 * The options for an Endb instance.
+		 * @type {EndbOptions}
+		 */
+		this.options = Util.mergeDefault(
+			EndbOptions,
+			typeof options === 'string' ? {uri: options} : options
 		);
+		Util.validateOptions(this.options);
 
 		if (!this.options.store) {
-			this.options.store = load(Object.assign({}, this.options));
+			this.options.store = Util.load(this.options);
 		}
 
 		if (typeof this.options.store.on === 'function') {
 			this.options.store.on('error', err => this.emit('error', err));
 		}
-
-		this.options.store.namespace = this.options.namespace;
 	}
 
 	/**
 	 * Gets all the elements from the database.
-	 * @returns {Promise<any[]>} All the elements from the database.
+	 * @returns {Promise<Array<*>>} All the elements from the database.
 	 * @example
-	 * const endb = new Endb();
+	 * await Endb.set('foo', 'bar');
+	 * await Endb.set('en', 'db');
 	 *
-	 * await endb.set('foo', 'bar');
-	 * await endb.set('en', 'db');
-	 *
-	 * await endb.all(); // [ { key: 'foo', value: 'bar' }, { key: 'en', value: 'db' } ]
+	 * await Endb.all(); // [ { key: 'foo', value: 'bar' }, { key: 'en', value: 'db' } ]
 	 */
 	all() {
 		return Promise.resolve()
@@ -99,7 +76,7 @@ class Endb extends EventEmitter {
 					const arr = [];
 					for (const [key, value] of this.options.store) {
 						arr.push({
-							key: removeKeyPrefix(key, this.options.namespace),
+							key: Util.removeKeyPrefix(key, this.options.namespace),
 							value: this.options.deserialize(value)
 						});
 					}
@@ -116,33 +93,29 @@ class Endb extends EventEmitter {
 	 * Clears all elements from the database.
 	 * @returns {Promise<undefined>} Returns undefined
 	 * @example
-	 * const endb = new Endb();
+	 * await Endb.set('foo','bar');
+	 * await Endb.set('key', 'val');
 	 *
-	 * await endb.set('foo','bar');
-	 * await endb.set('key', 'val');
+	 * await Endb.clear(); // true
 	 *
-	 * await endb.clear(); // true
-	 *
-	 * await endb.has('foo');
+	 * await Endb.has('foo');
 	 */
 	clear() {
 		return Promise.resolve().then(() => this.options.store.clear());
 	}
 
 	/**
-	 * Removes the element from the database by key.
+	 * Removes/deletes the element from the database by key.
 	 * @param {string|string[]} key The key(s) of the element to remove from the database.
 	 * @returns {Promise<boolean|boolean[]>} `true` if the element(s) in the database existed and has been deleted, or `false` if the element(s) does not exist or has not been deleted.
 	 * @example
-	 * const endb = new Endb();
+	 * await Endb.set('foo', 'bar'); // true
 	 *
-	 * await endb.set('foo', 'bar'); // true
-	 *
-	 * await endb.delete('foo'); // true
-	 * await endb.delete(['foo', 'fizz']); // [ true, false ]
+	 * await Endb.delete('foo'); // true
+	 * await Endb.delete(['foo', 'fizz']); // [ true, false ]
 	 */
 	delete(key) {
-		key = addKeyPrefix(key, this.options.namespace);
+		key = Util.addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve().then(() => {
 			if (Array.isArray(key)) {
 				return Promise.all(key.map(k => this.options.store.delete(k)));
@@ -158,14 +131,12 @@ class Endb extends EventEmitter {
 	 * @param {*} value The value of the element to ensure.
 	 * @return {Promise<*>} The (default) value of the element.
 	 * @example
-	 * const endb = new Endb();
+	 * await Endb.set('en', 'db');
 	 *
-	 * await endb.set('en', 'db');
-	 *
-	 * const data = await endb.ensure('foo', 'bar');
+	 * const data = await Endb.ensure('foo', 'bar');
 	 * console.log(data); // 'bar'
 	 *
-	 * const data = await endb.ensure('en', 'db');
+	 * const data = await Endb.ensure('en', 'db');
 	 * console.log(data); // 'db'
 	 */
 	async ensure(key, value) {
@@ -188,10 +159,8 @@ class Endb extends EventEmitter {
 	 * @param {*} [thisArg] Object to use as `this` inside callback.
 	 * @returns {Promise<Object<*>|undefined>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
 	 * @example
-	 * const endb = new Endb();
-	 *
-	 * await endb.set('foo', 'bar');
-	 * await endb.set('profile', {
+	 * await Endb.set('foo', 'bar');
+	 * await Endb.set('profile', {
 	 *   id: 1234567890,
 	 *   username: 'user',
 	 *   verified: true,
@@ -199,9 +168,9 @@ class Endb extends EventEmitter {
 	 *   hobbies: ['programming']
 	 * });
 	 *
-	 * await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
-	 * await endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }
-	 * await endb.find(v => v.desc === 'desc'); // undefined
+	 * await Endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
+	 * await Endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }
+	 * await Endb.find(v => v.desc === 'desc'); // undefined
 	 */
 	async find(fn, thisArg) {
 		if (typeof thisArg !== undefined) {
@@ -219,7 +188,7 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * Gets the value of an element from the database.
+	 * Gets the value of an element from the database by key.
 	 * @param {string} key The key of the element to get from the database.
 	 * @param {string} [path=null] The path of the property to get from the value.
 	 * @returns {Promise<*>} The value of the element, or `undefined` if the element cannot be found in the database.
@@ -232,13 +201,13 @@ class Endb extends EventEmitter {
 	 * await Endb.get('profile', 'verified'); // false
 	 */
 	get(key, path = null) {
-		key = addKeyPrefix(key, this.options.namespace);
+		key = Util.addKeyPrefix(key, this.options.namespace);
 		return Promise.resolve()
 			.then(() => this.options.store.get(key))
 			.then(data =>
 				typeof data === 'string' ? this.options.deserialize(data) : data
 			)
-			.then(data => (path === null ? data : _get(data, path)))
+			.then(data => (path === null ? data : Util.get(data, path)))
 			.then(data => (data === undefined ? undefined : data));
 	}
 
@@ -247,16 +216,14 @@ class Endb extends EventEmitter {
 	 * @param {string} key The key of the element to test for presence in the database.
 	 * @returns {Promise<boolean>} `true` if an element, by key, exists in the database, otherwise `false`.
 	 * @example
-	 * const endb = new Endb();
+	 * await Endb.set('foo', 'bar');
 	 *
-	 * await endb.set('foo', 'bar');
-	 *
-	 * await endb.has('bar'); // true
-	 * await endb.has('baz'); // false
+	 * await Endb.has('bar'); // true
+	 * await Endb.has('baz'); // false
 	 */
 	async has(key) {
 		if (this.options.store instanceof Map) {
-			key = addKeyPrefix(key, this.options.namespace);
+			key = Util.addKeyPrefix(key, this.options.namespace);
 			const data = await this.options.store.has(key);
 			return data;
 		}
@@ -264,6 +231,9 @@ class Endb extends EventEmitter {
 		return Boolean(await this.get(key));
 	}
 
+	/**
+	 * @return {Promise<string[]>}
+	 */
 	async keys() {
 		const data = await this.all();
 		return data.map(element => element.key);
@@ -278,15 +248,14 @@ class Endb extends EventEmitter {
 	 * @param {string} [path=null]
 	 * @returns {Promise<true>} Returns true.
 	 * @example
-	 * Endb.math('key', 'add', 100).then(console.log).catch(console.error);
-	 *
 	 * await Endb.math('key', 'add', 100);
 	 * await Endb.math('key', 'div', 5);
 	 * await Endb.math('key', 'subtract', 15);
+	 *
 	 * const element = await Endb.get('key');
 	 * console.log(element); // 5
 	 *
-	 * const operations = ['add', 'sub', 'div', 'mult', 'exp', 'mod'];
+	 * const operations = ['+', '-', '/', '*', '^', '%'];
 	 * operations.forEach(operation => {
 	 *   await Endb.math('key', operation, 100);
 	 * });
@@ -298,11 +267,11 @@ class Endb extends EventEmitter {
 				return data;
 			}
 
-			return this.set(key, _math(this.get(key), operation, operand));
+			return this.set(key, Util._math(this.get(key), operation, operand));
 		}
 
 		const data = await this.get(key);
-		const propValue = _get(data, path);
+		const propValue = Util.get(data, path);
 		if (operation === 'random' || operation === 'rand') {
 			const data = await this.set(
 				key,
@@ -312,7 +281,11 @@ class Endb extends EventEmitter {
 			return data;
 		}
 
-		const res = await this.set(key, _math(propValue, operation, operand), path);
+		const res = await this.set(
+			key,
+			Util._math(propValue, operation, operand),
+			path
+		);
 		return res;
 	}
 
@@ -325,6 +298,7 @@ class Endb extends EventEmitter {
 	 * const { users, members } = Endb.multi(['users', 'members']);
 	 * // With options
 	 * const { users, members } = Endb.multi(['users', 'members'], {
+	 *     namespace: 'mydb',
 	 *     adapter: 'sqlite'
 	 * });
 	 *
@@ -351,18 +325,26 @@ class Endb extends EventEmitter {
 	async push(key, value, path = null, allowDupes = false) {
 		const data = await this.get(key);
 		if (path !== null) {
-			const propValue = _get(data, path);
-			console.log(propValue);
+			const propValue = Util.get(data, path);
+			if (!Array.isArray(propValue)) {
+				throw new TypeError('Target must be an array.');
+			}
+
 			if (!allowDupes && propValue.includes(value)) {
 				throw new Error(
-					'Endb#push: Duplicates elements cannot be pushed. Use "allowDupes" option to disable this.'
+					'Endb#push: duplicates elements cannot be pushed. Use "allowDupes" option to disable this.'
 				);
 			}
 
 			propValue.push(value);
-			_set(data, path, propValue);
+			Util.set(data, path, propValue);
 		} else {
-			if (!allowDupes && data.includes(value)) return;
+			if (!allowDupes && data.includes(value)) {
+				throw new Error(
+					'Endb#push: duplicates elements cannot be pushed. Use "allowDupes" option to disable this.'
+				);
+			}
+
 			data.push(value);
 		}
 
@@ -379,12 +361,18 @@ class Endb extends EventEmitter {
 	async remove(key, value, path = null) {
 		const data = await this.get(key);
 		if (path !== null) {
-			const propValue = _get(data, path);
-				propValue.splice(propValue.indexOf(value), 1);
-				_set(data, path, propValue);
+			const propValue = Util.get(data, path);
+			if (!Array.isArray(propValue)) {
+				throw new TypeError('Endb#remove: target must be an array.');
+			}
+
+			propValue.splice(propValue.indexOf(value), 1);
+			Util.set(data, path, propValue);
 		} else if (Array.isArray(data)) {
-			if (data.indexOf(value) > -1) {
-				dapa.splice(data.indexOf(value), 1);
+			if (data.includes(value)) {
+				data.splice(data.indexOf(value), 1);
+			} else if (Util.isObject(data)) {
+				delete data[value];
 			}
 		}
 
@@ -393,7 +381,7 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * Sets an element, key and value, to the database.
+	 * Sets an element to the database.
 	 * @param {string} key The key of the element to set to the database.
 	 * @param {*} value The value of the element to set to the database.
 	 * @param {string} [path=null] The path of the property to set in the value.
@@ -414,11 +402,11 @@ class Endb extends EventEmitter {
 	 * await endb.set('profile', 100, 'balance');
 	 */
 	set(key, value, path = null) {
-		key = addKeyPrefix(key, this.options.namespace);
+		key = Util.addKeyPrefix(key, this.options.namespace);
 		if (path !== null) {
 			let data = this.options.store.get(key);
 			data = typeof data === 'string' ? this.options.deserialize(data) : data;
-			value = _set(data || {}, path, value);
+			value = Util.set(data || {}, path, value);
 		}
 
 		return Promise.resolve()
@@ -427,6 +415,9 @@ class Endb extends EventEmitter {
 			.then(() => true);
 	}
 
+	/**
+	 * @return {Promise<any[]>}
+	 */
 	async values() {
 		const data = await this.all();
 		return data.map(element => element.value);
@@ -435,4 +426,10 @@ class Endb extends EventEmitter {
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.Util = require('./util');
+module.exports.Util = Util;
+
+/**
+ * Emitted for database connection errors.
+ * @event Endb#error
+ * @param {Error} err The error information.
+ */

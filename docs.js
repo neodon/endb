@@ -23,15 +23,12 @@ Docma.create()
 			server: Docma.ServerType.GITHUB
 		},
 		src: [
-			'./src/**/*.js',
 			{endb: './src/index.js', util: './src/util.js'},
 			{readme: './README.md'}
 		],
 		template: {
-			path: 'default',
 			options: {
 				title: Package.name,
-				outline: 'flat',
 				badges: true,
 				navbar: true,
 				sidebar: true,

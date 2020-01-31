@@ -1,12 +1,12 @@
 'use strict';
 
-const {safeRequire} = require('../util');
+const {Util} = require('../util');
+const pg = Util.safeRequire('pg');
 const Sql = require('./Sql');
-const pg = safeRequire('pg');
 
 module.exports = class PostgreSQL extends Sql {
 	constructor(options = {}) {
-		options = Object.assign(
+		options = Util.mergeDefault(
 			{
 				dialect: 'postgres',
 				uri: 'postgresql://localhost:5432'

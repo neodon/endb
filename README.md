@@ -11,39 +11,39 @@
 [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
 [![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
-If you don't understand something in the documentation, you are experiencing problems, or you just need a gentle nudge in the right direction, please don't hesitate to join our [official Discord server](https://discord.gg/nSZZ2XZ).
+If you have any questions or experiencing problems regarding Endb, please do not hesitate to join our [official Discord](https://discord.gg/nSZZ2XZ).
 
 ## Features
 
-- **Easy-to-use**: *Endb* has a simplistic and easy-to-use promise-based API.
-- [**Adapters**](#Usage): By default, data is stored in memory. You can optionally install and utilize a "storage adapter".
-- [**Third-Party Adapters**](#Third-Party-Adapters): You can optionally utilize third-party adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
-- [**Namespaces**](#Namespaces): Namespaces isolate elements within a database.
-- [**Custom Serializers**](#Custom-Serializers): Utilizes data serialization to ensure consistency across different backends.
-- [**Embeddable**](#Embeddable): *Endb* is designed to be easily embeddable inside modules.
+- [**Easy-to-use**](#usage): *Endb* has a simplistic and easy-to-use promise-based API.
+- [**Adapters**](#usage): By default, data is stored in memory. Optionally, install and utilize an "storage adapter".
+- [**Third-Party Adapters**](#third-party-adapters): You can optionally utilize third-party adapters or build your own.
+- [**Namespaces**](#namespaces): Namespaces isolate elements within a database to enable useful features.
+- [**Custom Serializers**](#custom-serializers): Utilizes its own data serialization methods to ensure consistency across different backends.
+- [**Embeddable**](#embeddable): Designed to be easily embeddable inside modules.
 - **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html).
-- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance; connection errors won't exit or kill the process.
+- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance; connection errors will not exit or kill the process.
 
 ## Installation
 
 ```bash
-npm install endb
+$ npm install endb
 ```
 
-By default, data is stored in memory. You can optionally install and utilize an "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
+By default, data is stored in memory. Optionally, install and utilize an "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
 
 ```bash
-npm install level # LevelDB
-npm install mongojs # MongoDB
-npm install nedb # NeDB
-npm install ioredis # Redis
+$ npm install level # LevelDB
+$ npm install mongojs # MongoDB
+$ npm install nedb # NeDB
+$ npm install ioredis # Redis
 
 # To use SQL database, an additional package 'sql' must be installed and an adapter
-npm install sql
+$ npm install sql
 
-npm install mysql2 # MySQL
-npm install pg # PostgreSQL
-npm install sqlite3 # SQLite
+$ npm install mysql2 # MySQL
+$ npm install pg # PostgreSQL
+$ npm install sqlite3 # SQLite
 ```
 
 ## Usage
@@ -51,6 +51,7 @@ npm install sqlite3 # SQLite
 ```javascript
 const Endb = require('endb');
 
+// One of the following
 const endb = new Endb();
 const endb = new Endb('leveldb://path/to/database');
 const endb = new Endb('nedb://path/to/database');
@@ -60,7 +61,7 @@ const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
 const endb = new Endb('redis://user:pass@localhost:6379');
 const endb = new Endb('sqlite://path/to/database.sqlite');
 
-// Handles connection errors.
+// Handles connection errors
 endb.on('error', err => console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
@@ -92,36 +93,26 @@ await members.get('foo'); // 'members'
 
 You can optionally utilize third-party adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
 
-```js
+```javascript
 const myAdapter = require('./my-adapter');
 const endb = new Endb({ store: myAdapter });
 ```
 
-Any module that follows the [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map) API will work.
-
-```js
-new Endb({ store: new Map() });
-```
-
 For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated module that implements the Map API.
 
-```js
+```javascript
 const Endb = require('endb');
 const QuickLRU = require('quick-lru');
+
 const lru = new QuickLRU({ maxSize: 1000 });
 const endb = new Endb({ store: lru });
 ```
 
-List of third-party adapters supported:
-
-- [quick-lru](https://github.com/sindresorhus/quick-lru) - Simple "Least Recently Used" (LRU) cache
-- [Add Your Own!](https://github.com/chroventer/endb/pulls)
-
 ## Custom Serializers
 
-Utilizes data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
+Endb utilizes its own data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
 
-*Endb* handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html) using its data serialization methods.
+*Endb* handles all the JSON data types including [`Buffer`](https://nodejs.org/api/buffer.html) using its data serialization methods.
 Optionally, pass your own data serialization methods to support extra data types.
 
 ```javascript
@@ -135,7 +126,7 @@ const endb = new Endb({
 
 ## Embeddable
 
-*Endb* is designed to be easily embeddable inside modules. It is recommended to set a namespace for the module. Read more about [Namespaces](#Namespaces). Let us look at an example:
+*Endb* is designed to be easily embeddable inside modules. It is recommended to set a [namespace](#namespaces) for the module.
 
 ```javascript
 class MyModule {
@@ -149,7 +140,7 @@ class MyModule {
 }
 ```
 
-Now the module can be utilized like this:
+Now the module can be used like this:
 
 ```javascript
 const MyModule = require('my-module');

@@ -1,21 +1,18 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {removeKeyPrefix, safeRequire} = require('../util');
-const mongojs = safeRequire('mongojs');
+const {Util} = require('../util');
+const mongojs = Util.safeRequire('mongojs');
 
 module.exports = class MongoDB extends EventEmitter {
-	constructor(url, options = {}) {
+	constructor(options = {}) {
 		super();
-		url = url || {};
-		if (typeof url === 'string') url = {url};
-		if (url.uri) url = Object.assign({url: url.uri}, url);
-		this.options = Object.assign(
+		options.url = options.uri || undefined;
+		this.options = Util.mergeDefault(
 			{
 				url: 'mongodb://127.0.0.1:27017',
 				collection: 'endb'
 			},
-			url,
 			options
 		);
 		this.client = mongojs(this.options.url);
@@ -33,7 +30,7 @@ module.exports = class MongoDB extends EventEmitter {
 			);
 			return obj;
 		}, {});
-		this.client.on('error', err => this.emit('error', err));
+		this.client.on('error', error => this.emit('error', error));
 	}
 
 	all() {
@@ -41,7 +38,7 @@ module.exports = class MongoDB extends EventEmitter {
 			const arr = [];
 			for (const i in data) {
 				arr.push({
-					key: removeKeyPrefix(data[i].key, this.options.namespace),
+					key: Util.removeKeyPrefix(data[i].key, this.options.namespace),
 					value: this.options.deserialize(data[i].value)
 				});
 			}
@@ -52,7 +49,7 @@ module.exports = class MongoDB extends EventEmitter {
 
 	clear() {
 		return this.db
-			.remove({key: new RegExp(`^${this.namespace}:`)})
+			.remove({key: new RegExp(`^${this.options.namespace}:`)})
 			.then(() => undefined);
 	}
 

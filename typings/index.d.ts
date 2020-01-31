@@ -1,25 +1,26 @@
 declare module 'endb' {
   import { EventEmitter } from 'events';
 
-  interface EndbOptions {
-    namespace: string;
-    serialize: Function;
-    deserialize: Function;
-    adapter: string;
-    store: any;
-    collection: string;
-    table: string;
-    keySize: number;
+  type EndbOptions = {
+    uri?: string;
+    namespace?: string;
+    serialize?: Function;
+    deserialize?: Function;
+    adapter?: string;
+    store?: any;
+    collection?: string;
+    table?: string;
+    keySize?: number;
   }
 
-  interface Element {
+  type Element = {
     key: string;
-    value: any;
+    value?: any;
   }
 
   export class Endb extends EventEmitter {
-    public options?: EndbOptions;
-    constructor(uri?: string, options?: EndbOptions);
+    constructor(options?: EndbOptions);
+    public options: EndbOptions;
     public all(): Promise<Element[]>;
     public clear(): Promise<undefined>;
     public delete(key: string | string[]): Promise<boolean|boolean[]>;
@@ -29,24 +30,25 @@ declare module 'endb' {
     public has(key: string): Promise<boolean>;
     public keys(): Promise<string[]>;
     public math(key: string, operation: string, operand: number, path?: string): Promise<true>;
-    public static multi(names: string[], options?: EndbOptions): Object<Endb>;
     public push(key: string, value: any, allowDupes?: boolean): Promise<true>;
     public remove(key: string, value: any): Promise<true>;
     public set(key: string, value: any, path?: null): Promise<true>;
-    public values(): Promise<any[]>
+    public values(): Promise<any[]>;
+    public static multi(names: string[], options?: EndbOptions): Object<Endb>;
   }
 
   export class Util {
     public static addKeyPrefix(key: string | string[], namespace: string): string;
-    public static isBufferLike(x: any): boolean;
+    public static isBufferLike(value: any): boolean;
     public static get(object: object, path: string, defaultValue: object): object | undefined;
-    public static isObject(x: any): boolean;
+    public static isObject(value: any): boolean;
     public static load(options: EndbOptions): any;
     public static parse(text: string): object;
     public static math(base: number, op: string, opand: number): number;
+    public static mergeDefault(def: object, given: object): object;
     public static removeKeyPrefix(key: string, namespace: string): string;
-    public static safeRequire(id: string): any | undefined;
     public static set(object: object, path: string | string[], value: object): object; 
     public static stringify(value: any, space?: string | number): string;
+    private static safeRequire(id: string): any | undefined;
   }
 }

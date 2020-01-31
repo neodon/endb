@@ -1,18 +1,14 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {safeRequire} = require('../util');
-const Ioredis = safeRequire('ioredis');
+const {Util} = require('../util');
+const Ioredis = Util.safeRequire('ioredis');
 
 module.exports = class Redis extends EventEmitter {
-	constructor(uri, options = {}) {
+	constructor(options = {}) {
 		super();
-		options = Object.assign({}, typeof uri === 'string' ? {uri} : uri, options);
-		if (options.uri && typeof options.url === 'undefined') {
-			options.url = options.uri;
-		}
-
-		const client = new Ioredis(options.uri, options);
+		this.options = Util.mergeDefault({}, options);
+		const client = new Ioredis(this.options.uri, this.options);
 		this.db = [
 			'get',
 			'keys',
@@ -26,7 +22,7 @@ module.exports = class Redis extends EventEmitter {
 			obj[method] = require('util').promisify(client[method].bind(client));
 			return obj;
 		}, {});
-		client.on('error', err => this.emit('error', err));
+		client.on('error', error => this.emit('error', error));
 	}
 
 	all() {
@@ -71,6 +67,6 @@ module.exports = class Redis extends EventEmitter {
 	}
 
 	_prefixNamespace() {
-		return `namespace:${this.namespace}`;
+		return `namespace:${this.options.namespace}`;
 	}
 };

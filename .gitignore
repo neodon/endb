@@ -17,3 +17,6 @@ jspm_packages/
 
 # dotenv environment variables file
 .env
+
+# Visual Studio Code
+.vscode/

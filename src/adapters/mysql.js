@@ -1,16 +1,12 @@
 'use strict';
 
-const {safeRequire} = require('../util');
+const {Util} = require('../util');
+const mysql = Util.safeRequire('mysql2/promise');
 const Sql = require('./Sql');
-const mysql = safeRequire('mysql2/promise');
 
 module.exports = class MySQL extends Sql {
 	constructor(options = {}) {
-		if (typeof options === 'string') {
-			options = {uri: options};
-		}
-
-		options = Object.assign(
+		options = Util.mergeDefault(
 			{
 				dialect: 'mysql',
 				uri: 'mysql://localhost'

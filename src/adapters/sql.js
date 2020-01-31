@@ -1,20 +1,19 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {removeKeyPrefix, safeRequire} = require('../util');
-const sql = safeRequire('sql');
+const {Util} = require('../util');
+const sql = Util.safeRequire('sql');
 
 module.exports = class SQL extends EventEmitter {
 	constructor(options = {}) {
 		super();
-		this.options = Object.assign(
+		this.options = Util.mergeDefault(
 			{
 				table: 'endb',
 				keySize: 255
 			},
 			options
 		);
-
 		this.sql = new sql.Sql(this.options.dialect);
 		this.entry = this.sql.define({
 			name: this.options.table,
@@ -46,7 +45,7 @@ module.exports = class SQL extends EventEmitter {
 			const arr = [];
 			for (const i in rows) {
 				arr.push({
-					key: removeKeyPrefix(rows[i].key, this.options.namespace),
+					key: Util.removeKeyPrefix(rows[i].key, this.options.namespace),
 					value: this.options.deserialize(rows[i].value)
 				});
 			}

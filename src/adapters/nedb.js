@@ -1,26 +1,25 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {removeKeyPrefix, safeRequire} = require('../util');
-const Nedb = safeRequire('nedb');
+const {Util} = require('../util');
+const Nedb = Util.safeRequire('nedb');
 
 module.exports = class NeDB extends EventEmitter {
-	constructor(uri, options = {}) {
+	constructor(options = {}) {
 		super();
-		options = Object.assign(
+		this.options = Util.mergeDefault(
 			{
 				uri: 'nedb://endb'
 			},
-			typeof uri === 'string' ? {uri} : uri,
 			options
 		);
-		options.filename = options.uri.replace(/^nedb:\/\//, '');
-		const client = new Nedb(options);
+		this.options.filename = this.options.uri.replace(/^nedb:\/\//, '');
+		const client = new Nedb(this.options);
 		this.db = ['update', 'find', 'findOne', 'remove'].reduce((obj, method) => {
 			obj[method] = require('util').promisify(client[method].bind(client));
 			return obj;
 		}, {});
-		client.on('error', err => this.emit('error', err));
+		client.on('error', error => this.emit('error', error));
 	}
 
 	all() {
@@ -28,7 +27,7 @@ module.exports = class NeDB extends EventEmitter {
 			const arr = [];
 			for (const i in data) {
 				arr.push({
-					key: removeKeyPrefix(data[i].key, this.options.namespace),
+					key: Util.removeKeyPrefix(data[i].key, this.options.namespace),
 					value: this.options.deserialize(data[i].value)
 				});
 			}
@@ -39,7 +38,7 @@ module.exports = class NeDB extends EventEmitter {
 
 	clear() {
 		return this.db
-			.remove({key: new RegExp(`^${this.namespace}:`)})
+			.remove({key: new RegExp(`^${this.options.namespace}:`)})
 			.then(() => undefined);
 	}
 
