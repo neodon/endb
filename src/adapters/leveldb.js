@@ -1,13 +1,18 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {Util} = require('../util');
-const Level = Util.safeRequire('level');
+const {safeRequire} = require('../util');
+const Level = safeRequire('level');
 
 module.exports = class LevelDB extends EventEmitter {
 	constructor(options = {}) {
 		super();
-		options = Util.mergeDefault({uri: 'leveldb://:memory:'}, options);
+		options = Object.assign(
+			{
+				uri: 'leveldb://:memory:'
+			},
+			options
+		);
 		const client = new Level(
 			options.uri.replace(/^leveldb:\/\//, ''),
 			options,

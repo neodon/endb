@@ -1,14 +1,14 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {Util} = require('../util');
-const mongojs = Util.safeRequire('mongojs');
+const {safeRequire, removeKeyPrefix} = require('../util');
+const mongojs = safeRequire('mongojs');
 
 module.exports = class MongoDB extends EventEmitter {
 	constructor(options = {}) {
 		super();
 		options.url = options.uri || undefined;
-		this.options = Util.mergeDefault(
+		this.options = Object.assign(
 			{
 				url: 'mongodb://127.0.0.1:27017',
 				collection: 'endb'
@@ -38,7 +38,7 @@ module.exports = class MongoDB extends EventEmitter {
 			const arr = [];
 			for (const i in data) {
 				arr.push({
-					key: Util.removeKeyPrefix(data[i].key, this.options.namespace),
+					key: removeKeyPrefix(data[i].key, this.options.namespace),
 					value: this.options.deserialize(data[i].value)
 				});
 			}

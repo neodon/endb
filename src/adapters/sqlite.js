@@ -1,12 +1,12 @@
 'use strict';
 
-const {Util} = require('../util');
-const sqlite3 = Util.safeRequire('sqlite3');
+const {safeRequire} = require('../util');
+const sqlite3 = safeRequire('sqlite3');
 const Sql = require('./sql');
 
 module.exports = class SQLite extends Sql {
 	constructor(options = {}) {
-		options = Util.mergeDefault(
+		options = Object.assign(
 			{
 				dialect: 'sqlite',
 				uri: 'sqlite://:memory:'

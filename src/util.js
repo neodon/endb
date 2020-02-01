@@ -31,7 +31,8 @@ class Util {
 	 */
 	static isBufferLike(value) {
 		return (
-			Util.isObject(value) &&
+			value !== null &&
+			typeof value === 'object' &&
 			value.type === 'Buffer' &&
 			(Array.isArray(value.data) || typeof value.data === 'string')
 		);
@@ -50,25 +51,12 @@ class Util {
 		return result === undefined || result === object ? defaultValue : result;
 	}
 
-	/**
-	 * Checks whether a value is an object or not.
-	 * @param {*} value The value to check.
-	 * @return {boolean}
-	 */
-	static isObject(value) {
-		return (
-			value !== null &&
-			(typeof value === 'object' || typeof value === 'function')
-		);
-	}
-
 	static load(options) {
 		const adapters = {
 			level: './adapters/leveldb',
 			leveldb: './adapters/leveldb',
 			mongo: './adapters/mongodb',
 			mongodb: './adapters/mongodb',
-			nedb: './adapters/nedb',
 			mysql: './adapters/mysql',
 			mysql2: './adapters/mysql',
 			postgres: './adapters/postgres',
@@ -145,27 +133,8 @@ class Util {
 			case '%':
 				return base % opand;
 			default:
-				throw new Error('Invalid operation provided.');
+				return opand;
 		}
-	}
-
-	/**
-	 * Sets an object's properties on an other object.
-	 * @param {Object} def Object to set properties of.
-	 * @param {Object} [given] Object to assign properties to.
-	 * @return {Object}
-	 */
-	static mergeDefault(def, given) {
-		if (!given) return def;
-		for (const key in def) {
-			if (!{}.hasOwnProperty.call(given, key)) {
-				given[key] = def[key];
-			} else if (given[key] === new Object(given[key])) {
-				given[key] = this.mergeDefault(def[key], given[key]);
-			}
-		}
-
-		return given;
 	}
 
 	/**
@@ -186,10 +155,10 @@ class Util {
 	 */
 	static safeRequire(id) {
 		try {
-			require(id);
-		} catch (_) {
-			const data = {id, name: id, adapters: ['sqlite3', 'mysql2', 'pg']};
-			if (data.adapters.some(a => a.startsWith(a))) {
+			return require(id);
+		} catch (error) {
+			const data = {id, name: id, adapters: ['sqlite', 'mysql', 'postgres']};
+			if (data.adapters.some(a => id.startsWith(a))) {
 				data.name += ' sql';
 				data.id += ' & sql';
 			}
@@ -197,7 +166,7 @@ class Util {
 			console.error(
 				`Install ${data.id} to continue; run "npm install ${data.name}" to install it.`
 			);
-			process.exit(0);
+			return process.exit(0);
 		}
 	}
 
@@ -276,22 +245,4 @@ class Util {
 	}
 }
 
-module.exports = {
-	Util,
-	/**
-	 * Options for an Endb instance.
-	 * @typedef {Object} EndbOptions
-	 * @property {string} [uri] The connection URI of the database.
-	 * @property {string} [namespace='endb'] The namespace of the database.
-	 * @property {string} [adapter] The storage adapter or backend to use.
-	 * @property {Function} [serialize=Util#stringify] A data serialization function.
-	 * @property {Funciton} [deserialize=Util#parse] A data deserialization function.
-	 * @property {string} [collection='endb'] The name of the collection. Only works for MongoDB.
-	 * @property {string} [table='endb'] The name of the table. Only works for SQL databases.
-	 */
-	EndbOptions: {
-		namespace: 'endb',
-		serialize: Util.stringify,
-		deserialize: Util.parse
-	}
-};
+module.exports = Util;

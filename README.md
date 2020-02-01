@@ -11,7 +11,7 @@
 [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
 [![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
-If you have any questions or experiencing problems regarding Endb, please do not hesitate to join our [official Discord](https://discord.gg/nSZZ2XZ).
+If you have any questions or experiencing issues with Endb, please do not hesitate to join our [official Discord](https://discord.gg/nSZZ2XZ).
 
 ## Features
 
@@ -66,8 +66,8 @@ endb.on('error', err => console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
 await endb.get('foo'); // 'bar'
-await endb.all(); // [ ... ]
 await endb.has('foo'); // true
+await endb.all(); // [ { key: 'foo', value: 'bar' } ]
 await endb.delete('foo'); // true
 await endb.clear(); // undefined
 ```
@@ -91,7 +91,7 @@ await members.get('foo'); // 'members'
 
 ## Third-Party Adapters
 
-You can optionally utilize third-party adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
+You can optionally utilize third-party storage adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
 
 ```javascript
 const myAdapter = require('./my-adapter');

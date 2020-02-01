@@ -1,13 +1,13 @@
 'use strict';
 
 const {EventEmitter} = require('events');
-const {Util} = require('../util');
-const Ioredis = Util.safeRequire('ioredis');
+const {safeRequire} = require('../util');
+const Ioredis = safeRequire('ioredis');
 
 module.exports = class Redis extends EventEmitter {
 	constructor(options = {}) {
 		super();
-		this.options = Util.mergeDefault({}, options);
+		this.options = Object.assign({}, options);
 		const client = new Ioredis(this.options.uri, this.options);
 		this.db = [
 			'get',
