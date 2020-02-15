@@ -1,7 +1,7 @@
 declare module 'endb' {
   import { EventEmitter } from 'events';
 
-  type EndbOptions = {
+  export type EndbOptions = {
     uri?: string;
     namespace?: string;
     serialize?: Function;
@@ -29,10 +29,10 @@ declare module 'endb' {
     public get(key: string, path?: string): Promise<any>;
     public has(key: string): Promise<boolean>;
     public keys(): Promise<string[]>;
-    public math(key: string, operation: string, operand: number, path?: string): Promise<true>;
-    public push(key: string, value: any, allowDupes?: boolean): Promise<true>;
-    public remove(key: string, value: any): Promise<true>;
-    public set(key: string, value: any, path?: null): Promise<true>;
+    public math(key: string, operation: string, operand: number, path?: string): Promise<number>;
+    public push(key: string, value: any, path?: string): Promise<any>;
+    public remove(key: string, value: any, path?: string): Promise<any>;
+    public set(key: string, value: any, path?: string): Promise<true>;
     public values(): Promise<any[]>;
     public static multi(names: string[], options?: EndbOptions): Object<Endb>;
   }
@@ -41,7 +41,6 @@ declare module 'endb' {
     public static addKeyPrefix(key: string | string[], namespace: string): string;
     public static isBufferLike(value: any): boolean;
     public static get(object: object, path: string, defaultValue: object): object | undefined;
-    public static isObject(value: any): boolean;
     public static load(options: EndbOptions): any;
     public static parse(text: string): object;
     public static math(base: number, op: string, opand: number): number;
@@ -50,5 +49,6 @@ declare module 'endb' {
     public static set(object: object, path: string | string[], value: object): object; 
     public static stringify(value: any, space?: string | number): string;
     private static safeRequire(id: string): any | undefined;
+    private static validateOptions(options?: EndbOptions): void;
   }
 }

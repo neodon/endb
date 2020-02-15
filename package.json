@@ -47,8 +47,8 @@
                 "rules": {
                     "no-new-object": 0,
                     "no-return-assign": 0,
-                    "unicorn/no-process-exit": 0,
-                    "no-unused-vars": 0
+                    "no-unused-vars": 0,
+                    "unicorn/no-process-exit": 0
                 }
             }
         ]

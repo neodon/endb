@@ -16,9 +16,9 @@ module.exports = class SQLite extends Sql {
 		options.path = options.uri.replace(/^sqlite:\/\//, '');
 		options.connect = () =>
 			new Promise((resolve, reject) => {
-				const db = new sqlite3.Database(options.path, err => {
-					if (err) {
-						reject(err);
+				const db = new sqlite3.Database(options.path, error => {
+					if (error) {
+						reject(error);
 					} else {
 						if (options.busyTimeout) {
 							db.configure('busyTimeout', options.busyTimeout);

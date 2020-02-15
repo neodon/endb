@@ -12,8 +12,8 @@ Docma.create()
 			meta: [
 				{charset: 'utf-8'},
 				{name: 'viewport', content: 'width=device-width,initial-scale=1.0'},
-				{property: 'og:url', content: 'endb.js.org'},
-				{property: 'og:title', content: 'Endb'},
+				{property: 'og:url', content: Package.homepage},
+				{property: 'og:title', content: Package.name},
 				{property: 'og:description', content: Package.description},
 				{property: 'og:image', content: '/docs/media/logo.png'}
 			],

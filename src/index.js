@@ -25,18 +25,22 @@ class Endb extends EventEmitter {
 		super();
 
 		/**
+		 * The options for the Endb.
 		 * @typedef {Object} EndbOptions
 		 * @property {string} [uri] The connection URI of the database.
 		 * @property {string} [namespace='endb'] The namespace of the database.
 		 * @property {string} [adapter] The storage adapter or backend to use.
+		 * @property {*} [store=Map]
 		 * @property {Function} [serialize=Util#stringify] A data serialization function.
-		 * @property {Funciton} [deserialize=Util#parse] A data deserialization function.
+		 * @property {Function} [deserialize=Util#parse] A data deserialization function.
 		 * @property {string} [collection='endb'] The name of the collection. Only works for MongoDB.
 		 * @property {string} [table='endb'] The name of the table. Only works for SQL databases.
+		 * @property {number} [keySize=255] The maximum size of the keys of elements.
 		 */
 
 		/**
-		 * @type {EndbOptions} The options for the Endb instance.
+		 * The options for Endb.
+		 * @type {EndbOptions}
 		 */
 		this.options = Object.assign(
 			{
@@ -44,8 +48,7 @@ class Endb extends EventEmitter {
 				serialize: stringify,
 				deserialize: parse
 			},
-			typeof options === 'string' ? {uri: options} : options,
-			options
+			typeof options === 'string' ? {uri: options} : options
 		);
 		validateOptions(this.options);
 
@@ -93,10 +96,7 @@ class Endb extends EventEmitter {
 	 * @example
 	 * await Endb.set('foo','bar');
 	 *
-	 * const exists = await Endb.has('foo');
-	 * if (exists) {
-	 *     console.log('Exists!');
-	 * }
+	 * await Endb.clear();
 	 */
 	clear() {
 		return Promise.resolve().then(() => this.options.store.clear());
@@ -199,8 +199,6 @@ class Endb extends EventEmitter {
 	 * @param {string} [path=null] The path of the property to get from the value.
 	 * @returns {Promise<*>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
-	 * await Endb.set('foo', 'bar');
-	 *
 	 * const data = await Endb.get('foo');
 	 * console.log(data); // 'bar'
 	 *
