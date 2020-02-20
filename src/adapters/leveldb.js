@@ -9,7 +9,7 @@ module.exports = class LevelDB extends EventEmitter {
 		super();
 		options = Object.assign(
 			{
-				uri: 'leveldb://:memory:'
+				uri: 'leveldb://db'
 			},
 			options
 		);
