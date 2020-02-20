@@ -1,5 +1,5 @@
 <div align="center">
-    <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="220" alt="Endb" /></a>
+    <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="300" alt="Endb" /></a>
 </div>
 
 > 🗃 Simple key-value storage with support for multiple backends.
@@ -11,7 +11,7 @@
 [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
 [![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 
-If you have any questions or experiencing issues with Endb, please do not hesitate to join our [official Discord](https://discord.gg/nSZZ2XZ).
+If you have any questions or if you are experiencing issues with *Endb*, please do not hesitate to join our [official Discord](#links).
 
 ## Features
 
@@ -49,20 +49,22 @@ $ npm install sqlite3 # SQLite
 ## Usage
 
 ```javascript
+// Import/require the package.
 const Endb = require('endb');
 
-// One of the following
 const endb = new Endb();
-const endb = new Endb('leveldb://path/to/database');
-const endb = new Endb('nedb://path/to/database');
-const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
-const endb = new Endb('mysql://user:pass@localhost:3306/dbname');
-const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
-const endb = new Endb('redis://user:pass@localhost:6379');
-const endb = new Endb('sqlite://path/to/database.sqlite');
+const endb = new Endb({
+    // One of the following
+    uri: 'leveldb://path/to/database',
+    uri: 'mongodb://user:pass@localhost:27017/dbname',
+    uri: 'mysql://user:pass@localhost:3306/dbname',
+    uri: 'postgresql://user:pass@localhost:5432/dbname',
+    uri: 'redis://user:pass@localhost:6379',
+    uri: 'sqlite://path/to/database.sqlite'
+});
 
 // Handles connection errors
-endb.on('error', err => console.log('Connection Error: ', err));
+endb.on('error', error => console.error('Connection Error: ', error));
 
 await endb.set('foo', 'bar'); // true
 await endb.get('foo'); // 'bar'
@@ -98,10 +100,9 @@ const myAdapter = require('./my-adapter');
 const endb = new Endb({ store: myAdapter });
 ```
 
-For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated module that implements the Map API.
+For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated module that has an API similar to that of *Endb*.
 
 ```javascript
-const Endb = require('endb');
 const QuickLRU = require('quick-lru');
 
 const lru = new QuickLRU({ maxSize: 1000 });
@@ -110,9 +111,8 @@ const endb = new Endb({ store: lru });
 
 ## Custom Serializers
 
-Endb utilizes its own data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of numbers or strings) into Buffer instances to ensure consistency across different backends.
+*Endb* handles all the JSON data types including [`Buffer`](https://nodejs.org/api/buffer) using its own data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of strings or numbers) into Buffer instances to ensure consistency across different backends.
 
-*Endb* handles all the JSON data types including [`Buffer`](https://nodejs.org/api/buffer.html) using its data serialization methods.
 Optionally, pass your own data serialization methods to support extra data types.
 
 ```javascript
@@ -132,27 +132,19 @@ const endb = new Endb({
 class MyModule {
     constructor(options) {
         this.db = new Endb({
-            uri: typeof options.store === 'string' && options.store,
-            store: typeof options.store !== && options.store,
-            namespace: 'my-module'
+            uri: typeof opts.store === 'string' && opts.store,
+			store: typeof opts.store !== 'string' && opts.store
+            namespace: 'mymodule'
         });
     }
 }
-```
-
-Now the module can be used like this:
-
-```javascript
-const MyModule = require('my-module');
 
 // Caches data in the memory by default.
 const myModule = new MyModule();
 
 // After installing ioredis.
 const myModule = new MyModule({ store: 'redis://localhost' });
-
-// Third-party module that implements the Map API.
-const myModule = new AwesomeModule({ store: thirdPartyModule });
+const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 ```
 
 ## Links
