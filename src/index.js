@@ -1,7 +1,6 @@
 'use strict';
 
 const EventEmitter = require('events');
-const util = require('util');
 const Util = require('./util');
 
 /**
@@ -106,7 +105,6 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * @deprecated
 	 * Ensures if an element exists in the database. If the element does not exist, sets the element to the database and returns the value.
 	 * @param {string} key The key of the element to ensure.
 	 * @param {*} value The value of the element to ensure.
@@ -408,8 +406,3 @@ class Endb extends EventEmitter {
 module.exports = Endb;
 module.exports.Endb = Endb;
 module.exports.Util = require('./util');
-
-Endb.prototype.ensure = util.deprecate(
-	Endb.prototype.ensure,
-	'Endb#ensure: This method will be deprecated in newer versions.'
-);

@@ -157,14 +157,15 @@ class Util {
 		try {
 			return require(id);
 		} catch (error) {
-			const data = {id, name: id, adapters: ['sqlite', 'mysql', 'postgres']};
-			if (data.adapters.some(a => id.startsWith(a))) {
-				data.name += ' sql';
-				data.id += ' & sql';
+			if (['sqlite', 'mysql', 'postgres'].some(a => id.startsWith(a))) {
+				if (id === 'mysql2/promise') id = 'mysql';
+				id += ' & sql';
 			}
 
 			console.error(
-				`Install ${data.id} to continue; run "npm install ${data.name}" to install it.`
+				`Install ${id} to continue; run "npm i ${id
+					.split(' & ')
+					.join(' ')}" to install.`
 			);
 			return process.exit(0);
 		}
