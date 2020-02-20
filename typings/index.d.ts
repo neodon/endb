@@ -34,7 +34,7 @@ declare module 'endb' {
     public remove(key: string, value: any, path?: string): Promise<any>;
     public set(key: string, value: any, path?: string): Promise<true>;
     public values(): Promise<any[]>;
-    public static multi(names: string[], options?: EndbOptions): Object<Endb>;
+    public static multi(names: string[], options?: EndbOptions): Object;
   }
 
   export class Util {
