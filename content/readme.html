@@ -13,7 +13,7 @@
 <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="Downloads" style="max-width: 100%;"></a>
 <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="GitHub Stars" style="max-width: 100%;"></a>
 <a href="https://github.com/chroventer/endb/blob/master/LICENSE"><img src="https://badgen.net/github/license/chroventer/endb" alt="License" style="max-width: 100%;"></a></p>
-<p>If you have any questions or experiencing problems regarding Endb, please do not hesitate to join our <a href="https://discord.gg/nSZZ2XZ">official Discord</a>.</p>
+<p>If you have any questions or experiencing issues with Endb, please do not hesitate to join our <a href="https://discord.gg/nSZZ2XZ">official Discord</a>.</p>
 <h2 id="features">Features</h2>
 <hr />
 <ul>
@@ -60,8 +60,8 @@ endb.on('error', err =&gt; console.log('Connection Error: ', err));
 
 await endb.set('foo', 'bar'); // true
 await endb.get('foo'); // 'bar'
-await endb.all(); // [ ... ]
 await endb.has('foo'); // true
+await endb.all(); // [ { key: 'foo', value: 'bar' } ]
 await endb.delete('foo'); // true
 await endb.clear(); // undefined</code></pre>
 <h2 id="namespaces">Namespaces</h2>
@@ -79,7 +79,7 @@ await users.get('foo'); // undefined
 await members.get('foo'); // 'members'</code></pre>
 <h2 id="third-party-adapters">Third-Party Adapters</h2>
 <hr />
-<p>You can optionally utilize third-party adapters or build your own. <em>Endb</em> will integrate the third-party adapter and handle complex data types internally.</p>
+<p>You can optionally utilize third-party storage adapters or build your own. <em>Endb</em> will integrate the third-party adapter and handle complex data types internally.</p>
 <pre><code class="javascript">const myAdapter = require('./my-adapter');
 const endb = new Endb({ store: myAdapter });</code></pre>
 <p>For example, <a href="https://github.com/sindresorhus/quick-lru"><code>quick-lru</code></a> is an unrelated module that implements the Map API.</p>
