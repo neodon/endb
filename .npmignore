@@ -12,7 +12,6 @@ yarn-error.log*
 
 # Documentation
 docs/
-docs.js
 .travis.yml
 docs.js
 
@@ -24,6 +23,3 @@ test/
 .gitattributes
 .gitignore
 .nojekyll
-
-# Visual Studio Code
-.vscode/
