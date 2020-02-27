@@ -49,7 +49,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Gets all the elements from the database.
-	 * @return {Promise<*[]>} All the elements in the database.
+	 * @return {Promise<any[]>} All the elements in the database.
 	 */
 	all() {
 		return Promise.resolve()
@@ -399,7 +399,7 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * @return {Promise<*[]>}
+	 * @return {Promise<any[]>}
 	 */
 	async values() {
 		const data = await this.all();
