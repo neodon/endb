@@ -245,7 +245,7 @@ class Endb extends EventEmitter {
 	 */
 	async math(key, operation, operand, path = null) {
 		const value = await this.get(key);
-		if (value == null) {
+		if (value === null || typeof value === 'undefined') {
 			throw new TypeError('Value does not exist in the database.');
 		}
 
@@ -348,7 +348,7 @@ class Endb extends EventEmitter {
 			if (data.includes(value)) {
 				data.splice(data.indexOf(value), 1);
 			}
-		} else if (data != null && typeof data === 'object') {
+		} else if (data !== null && typeof data === 'object') {
 			delete data[value];
 		}
 
