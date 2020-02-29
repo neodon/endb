@@ -245,25 +245,35 @@ class Endb extends EventEmitter {
 	 * console.log(element); // 5
 	 */
 	async math(key, operation, operand, path = null) {
-		const value = await this.get(key);
-		if (value === null || typeof value === 'undefined') {
-			throw new TypeError('Value does not exist in the database.');
-		}
-
-		if (path === null) {
+		if (path !== null) {
+			const propValue = Util.get(await this.get(key), path);
 			if (operation === 'random' || operation === 'rand') {
-				return await this.set(key, Math.round(Math.random() * operand));
+				const data = await this.set(
+					key,
+					Math.round(Math.random() * propValue),
+					path
+				);
+				return data;
 			}
 
-			return await this.set(key, Util.math(value, operation, operand));
+			const data = await this.set(
+				key,
+				Util.math(propValue, operation, operand),
+				path
+			);
+			return data;
 		}
 
-		const propValue = Util.get(value, path);
 		if (operation === 'random' || operation === 'rand') {
-			return await this.set(key, Math.round(Math.random() * propValue), path);
+			const data = await this.set(key, Math.round(Math.random() * operand));
+			return data;
 		}
 
-		return await this.set(key, Util.math(propValue, operation, operand), path);
+		const data = await this.set(
+			key,
+			Util.math(await this.get(key), operation, operand)
+		);
+		return data;
 	}
 
 	/**
