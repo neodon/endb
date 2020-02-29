@@ -218,7 +218,8 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * @return {Promise<string[]>}
+	 * Returns an array that contains the keys of each element.
+	 * @return {Promise<string[]>} An array that contains the keys of each element.
 	 */
 	async keys() {
 		const data = await this.all();
@@ -232,7 +233,7 @@ class Endb extends EventEmitter {
 	 * Possible operations: addition, subtraction, multiply, division, exp, and module.
 	 * @param {number} operand The operand for the operation.
 	 * @param {string} [path=null]
-	 * @return {Promise<number>} The operand for the operation.
+	 * @return {Promise<true>} Returns `true`.
 	 * @example
 	 * await Endb.set('balance', 0);
 	 *
@@ -251,22 +252,18 @@ class Endb extends EventEmitter {
 
 		if (path === null) {
 			if (operation === 'random' || operation === 'rand') {
-				await this.set(key, Math.round(Math.random() * operand));
-				return operand;
+				return await this.set(key, Math.round(Math.random() * operand));
 			}
 
-			await this.set(key, Util.math(value, operation, operand));
-			return operand;
+			return await this.set(key, Util.math(value, operation, operand));
 		}
 
 		const propValue = Util.get(value, path);
 		if (operation === 'random' || operation === 'rand') {
-			await this.set(key, Math.round(Math.random() * propValue), path);
-			return operand;
+			return await this.set(key, Math.round(Math.random() * propValue), path);
 		}
 
-		await this.set(key, Util.math(propValue, operation, operand), path);
-		return operand;
+		return await this.set(key, Util.math(propValue, operation, operand), path);
 	}
 
 	/**
@@ -399,7 +396,8 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * @return {Promise<any[]>}
+	 * Returns an array that contains the values of each element.
+	 * @return {Promise<any[]>} Array that contains the values of each element.
 	 */
 	async values() {
 		const data = await this.all();
