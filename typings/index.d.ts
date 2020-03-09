@@ -29,7 +29,6 @@ declare module 'endb' {
     public get(key: string, path?: string): Promise<any>;
     public has(key: string): Promise<boolean>;
     public keys(): Promise<string[]>;
-    public math(key: string, operation: string, operand: number, path?: string): Promise<number>;
     public push(key: string, value: any, path?: string): Promise<any>;
     public remove(key: string, value: any, path?: string): Promise<any>;
     public set(key: string, value: any, path?: string): Promise<true>;
@@ -48,7 +47,7 @@ declare module 'endb' {
     public static removeKeyPrefix(key: string, namespace: string): string;
     public static set(object: object, path: string | string[], value: object): object; 
     public static stringify(value: any, space?: string | number): string;
-    private static safeRequire(id: string): any | undefined;
-    private static validateOptions(options?: EndbOptions): void;
+    static safeRequire(id: string): any | undefined;
+    static validateOptions(options?: EndbOptions): void;
   }
 }

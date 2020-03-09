@@ -227,56 +227,6 @@ class Endb extends EventEmitter {
 	}
 
 	/**
-	 * Performs a mathematical operation on an element in the database.
-	 * @param {string} key The key of the element.
-	 * @param {string} operation The mathematical operation to execute.
-	 * Possible operations: addition, subtraction, multiply, division, exp, and module.
-	 * @param {number} operand The operand for the operation.
-	 * @param {string} [path=null]
-	 * @return {Promise<true>} Returns `true`.
-	 * @example
-	 * await Endb.set('balance', 0);
-	 *
-	 * await Endb.math('balance', 'add', 100);
-	 * await Endb.math('balance', 'div', 5);
-	 * await Endb.math('balance', 'subtract', 15);
-	 *
-	 * const element = await Endb.get('balance');
-	 * console.log(element); // 5
-	 */
-	async math(key, operation, operand, path = null) {
-		if (path !== null) {
-			const propValue = Util.get(await this.get(key), path);
-			if (operation === 'random' || operation === 'rand') {
-				const data = await this.set(
-					key,
-					Math.round(Math.random() * propValue),
-					path
-				);
-				return data;
-			}
-
-			const data = await this.set(
-				key,
-				Util.math(propValue, operation, operand),
-				path
-			);
-			return data;
-		}
-
-		if (operation === 'random' || operation === 'rand') {
-			const data = await this.set(key, Math.round(Math.random() * operand));
-			return data;
-		}
-
-		const data = await this.set(
-			key,
-			Util.math(await this.get(key), operation, operand)
-		);
-		return data;
-	}
-
-	/**
 	 * Creates multiple instances of Endb.
 	 * @param {string[]} names An array of strings. Each element will create new instance.
 	 * @param {Object} [options=EndbOptions] The options for the instances.
