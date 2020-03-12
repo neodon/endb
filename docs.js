@@ -6,7 +6,6 @@ const Package = require('./package');
 Docma.create()
 	.build({
 		dest: './docs',
-		clean: false,
 		app: {
 			title: Package.name,
 			meta: [
@@ -19,7 +18,6 @@ Docma.create()
 			],
 			base: '/',
 			entrance: 'content:readme',
-			routing: Docma.RoutingMethod.QUERY,
 			server: Docma.ServerType.GITHUB
 		},
 		src: [
@@ -29,10 +27,7 @@ Docma.create()
 		template: {
 			options: {
 				title: Package.name,
-				badges: true,
 				navbar: true,
-				sidebar: true,
-				search: true,
 				navItems: [
 					{
 						label: 'README',
@@ -52,6 +47,9 @@ Docma.create()
 					}
 				]
 			}
+		},
+		markdown: {
+			sanitize: false
 		}
 	})
 	.then(() => console.log('Sucessfully built the documentation.'))
