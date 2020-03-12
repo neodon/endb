@@ -191,7 +191,7 @@ class Util {
 	 * Converts a JavaScript object or value to a JSON string
 	 * @param {*} value The value to convert to a JSON string.
 	 * @param {string|number} [space] A `String` or `Number` object that's used to insert white space into the output JSON string for readability purposes.
-	 * @return A JSON string representing the given value.
+	 * @return {string} A JSON string representing the given value.
 	 */
 	static stringify(value, space) {
 		return JSON.stringify(

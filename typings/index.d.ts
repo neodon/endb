@@ -45,9 +45,9 @@ declare module 'endb' {
     public static math(base: number, op: string, opand: number): number;
     public static mergeDefault(def: object, given: object): object;
     public static removeKeyPrefix(key: string, namespace: string): string;
+    public static safeRequire(id: string): any | undefined;
     public static set(object: object, path: string | string[], value: object): object; 
     public static stringify(value: any, space?: string | number): string;
-    static safeRequire(id: string): any | undefined;
-    static validateOptions(options?: EndbOptions): void;
+    public static validateOptions(options?: EndbOptions): void;
   }
 }
