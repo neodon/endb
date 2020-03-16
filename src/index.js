@@ -229,7 +229,7 @@ class Endb extends EventEmitter {
 	/**
 	 * Creates multiple instances of Endb.
 	 * @param {string[]} names An array of strings. Each element will create new instance.
-	 * @param {Object} [options=EndbOptions] The options for the instances.
+	 * @param {EndbOptions} [options=EndbOptions] The options for the instances.
 	 * @return {Object} An object containing created Endb instances.
 	 * @example
 	 * const { users, members } = Endb.multi(['users', 'members']);
