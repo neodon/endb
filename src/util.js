@@ -44,7 +44,8 @@ class Util {
 				.call(path, regexp)
 				.filter(Boolean)
 				.reduce(
-					(res, key) => (res !== null && res !== undefined ? res[key] : res),
+					(result, key) =>
+						result !== null && result !== undefined ? result[key] : result,
 					object
 				);
 		const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
@@ -167,7 +168,7 @@ class Util {
 					.split(' & ')
 					.join(' ')}" to install.`
 			);
-			return process.exit(0);
+			process.exit(1);
 		}
 	}
 

@@ -27,9 +27,9 @@ module.exports = class LevelDB extends EventEmitter {
 			'get',
 			'put',
 			'close'
-		].reduce((obj, method) => {
-			obj[method] = require('util').promisify(client[method].bind(client));
-			return obj;
+		].reduce((object, method) => {
+			object[method] = require('util').promisify(client[method].bind(client));
+			return object;
 		}, {});
 	}
 
