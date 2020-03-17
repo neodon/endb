@@ -64,6 +64,7 @@ declare module 'endb' {
 			path: string | string[],
 			value: object
 		): object;
+
 		public static stringify(value: any, space?: string | number): string;
 		public static validateOptions(options?: EndbOptions): void;
 	}
