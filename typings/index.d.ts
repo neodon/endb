@@ -24,14 +24,14 @@ declare module 'endb' {
 		public static multi(
 			names: string[],
 			options?: EndbOptions
-		): Record<string, unknown>;
+		): Record<string, Endb>;
 
-		public all(): Promise<Element[]>;
+		public all(): Promise<Element[] | undefined>;
 		public clear(): Promise<undefined>;
 		public delete(key: string | string[]): Promise<boolean | boolean[]>;
-		public ensure(key: string, value: any): Promise<any>;
+		public ensure(key: string, value: any): Promise<any | undefined>;
 		public find(fn: () => any, thisArg?: any): Promise<Element | undefined>;
-		public get(key: string, path?: string): Promise<any>;
+		public get(key: string, path?: string): Promise<any | undefined>;
 		public has(key: string): Promise<boolean>;
 		public keys(): Promise<string[]>;
 		public push(key: string, value: any, path?: string): Promise<any>;
