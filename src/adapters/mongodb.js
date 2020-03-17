@@ -1,6 +1,6 @@
 'use strict';
 
-const {EventEmitter} = require('events');
+const EventEmitter = require('events');
 const {safeRequire, removeKeyPrefix} = require('../util');
 const mongojs = safeRequire('mongojs');
 
