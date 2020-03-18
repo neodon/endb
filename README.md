@@ -4,14 +4,11 @@
 
 > 🗃 Simple key-value storage with support for multiple backends.
 
-[![Discord](https://discordapp.com/api/guilds/658014948118495243/embed.png)](https://discord.gg/nSZZ2XZ)
 [![Build Status](https://travis-ci.com/chroventer/endb.svg?branch=master)](https://travis-ci.com/chroventer/endb)
 [![Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
 [![Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
 [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
 [![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
-
-If you have any questions or if you are experiencing issues with *Endb*, please do not hesitate to join our [official Discord](#links).
 
 ## Features
 
@@ -150,6 +147,5 @@ const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 ## Links
 
 - [Documentation](https://endb.js.org "Documentation")
-- [Discord](https://discord.gg/nSZZ2XZ "Discord")
 - [GitHub](https://github.com/chroventer/endb "GitHub")
 - [NPM](https://npmjs.com/package/endb "NPM")
