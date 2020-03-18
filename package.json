@@ -29,8 +29,11 @@
     },
     "homepage": "https://endb.js.org",
     "devDependencies": {
+        "@commitlint/cli": "^8.3.5",
+        "@commitlint/config-angular": "^8.3.4",
         "ava": "^3.5.0",
         "docma": "^3.2.2",
+        "husky": "^4.2.3",
         "xo": "^0.28.0"
     },
     "xo": {
@@ -50,5 +53,15 @@
                 }
             }
         ]
+    },
+    "commitlint": {
+        "extends": [
+            "@commitlint/config-angular"
+        ]
+    },
+    "husky": {
+        "hooks": {
+          "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+        }
     }
 }
