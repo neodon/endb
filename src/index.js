@@ -235,7 +235,7 @@ class Endb extends EventEmitter {
 	 * @return {true} Returns `true`.
 	 * @example
 	 * balance.set('endb', 100);
-	 * 
+	 *
 	 * balance.math('endb', 'add', 100); // true
 	 */
 	async math(key, operation, operand, path = null) {
