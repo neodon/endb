@@ -227,6 +227,38 @@ class Endb extends EventEmitter {
 	}
 
 	/**
+	 * Performs a mathematical operation on a value of an element.
+	 * @param {string} key The key of the element.
+	 * @param {string} operation The mathematical operation to perform.
+	 * @param {number} operand The right-hand operand.
+	 * @param {string} [path=null] The path of the property to perform mathematical operation on.
+	 * @return {true} Returns `true`.
+	 * @example
+	 * balance.set('endb', 100);
+	 *
+	 * balance.math('endb', 'add', 100); // true
+	 */
+	async math(key, operation, operand, path = null) {
+		const data = await this.get(key);
+		if (path !== null) {
+			const propValue = Util.get(data, path);
+			if (typeof propValue !== 'number')
+				throw new TypeError('The first operand must be a number.');
+			const result = await this.set(
+				key,
+				Util.math(propValue, operation, operand),
+				path
+			);
+			return result;
+		}
+
+		if (typeof data !== 'number')
+			throw new TypeError('The first operand must be a number.');
+		const result = await this.set(key, Util.math(data, operation, operand));
+		return result;
+	}
+
+	/**
 	 * Creates multiple instances of Endb.
 	 * @param {string[]} names An array of strings. Each element will create new instance.
 	 * @param {EndbOptions} [options=EndbOptions] The options for the instances.

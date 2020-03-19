@@ -30,7 +30,7 @@
     "homepage": "https://endb.js.org",
     "devDependencies": {
         "@commitlint/cli": "^8.3.5",
-        "@commitlint/config-conventional": "^8.3.4",
+        "@commitlint/config-angular": "^8.3.4",
         "ava": "^3.5.0",
         "docma": "^3.2.2",
         "husky": "^4.2.3",
@@ -56,8 +56,27 @@
     },
     "commitlint": {
         "extends": [
-            "@commitlint/config-conventional"
-        ]
+            "@commitlint/config-angular"
+        ],
+        "rules": {
+			"type-enum": [
+				2,
+				"always",
+				[
+					"chore",
+					"build",
+					"ci",
+					"docs",
+					"feat",
+					"fix",
+					"perf",
+					"refactor",
+					"revert",
+					"style",
+					"test"
+				]
+			]
+		}
     },
     "husky": {
         "hooks": {

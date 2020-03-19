@@ -102,39 +102,40 @@ class Util {
 	}
 
 	/**
-	 * @param {number} base
-	 * @param {string} op
-	 * @param {number} opand
-	 * @return {number}
+	 * Performs a mathematical operation.
+	 * @param {number} firstOperand The left-hand operand.
+	 * @param {string} operation The mathematical operation to perform.
+	 * @param {number} secondOperand The right-hand operand.
+	 * @return {number} The result of the operation.
 	 */
-	static math(base, op, opand) {
-		switch (op) {
+	static math(firstOperand, operation, secondOperand) {
+		switch (operation) {
 			case 'add':
 			case 'addition':
 			case '+':
-				return base + opand;
+				return firstOperand + secondOperand;
 			case 'sub':
 			case 'subtract':
 			case '-':
-				return base - opand;
+				return firstOperand - secondOperand;
 			case 'mult':
 			case 'multiply':
 			case '*':
-				return base * opand;
+				return firstOperand * secondOperand;
 			case 'div':
 			case 'divide':
 			case '/':
-				return base / opand;
+				return firstOperand / secondOperand;
 			case 'exp':
 			case 'exponent':
 			case '^':
-				return base ** opand;
+				return firstOperand ** secondOperand;
 			case 'mod':
 			case 'modulo':
 			case '%':
-				return base % opand;
+				return firstOperand % secondOperand;
 			default:
-				return opand;
+				return undefined;
 		}
 	}
 
@@ -152,7 +153,6 @@ class Util {
 	 * Safely import modules from `node_modules`; local module and JSOn can be imported using a relative path.
 	 * @param {string} id The name or path of the module.
 	 * @return {*} Exported module content.
-	 * @private
 	 */
 	static safeRequire(id) {
 		try {
