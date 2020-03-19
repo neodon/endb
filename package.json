@@ -1,6 +1,6 @@
 {
     "name": "endb",
-    "version": "0.21.3",
+    "version": "0.21.4",
     "description": "Simple key-value storage with support for multiple backends",
     "main": "src/index.js",
     "typings": "typings/index.d.ts",
@@ -59,24 +59,24 @@
             "@commitlint/config-angular"
         ],
         "rules": {
-			"type-enum": [
-				2,
-				"always",
-				[
-					"chore",
-					"build",
-					"ci",
-					"docs",
-					"feat",
-					"fix",
-					"perf",
-					"refactor",
-					"revert",
-					"style",
-					"test"
-				]
-			]
-		}
+            "type-enum": [
+                2,
+                "always",
+                [
+                    "chore",
+                    "build",
+                    "ci",
+                    "docs",
+                    "feat",
+                    "fix",
+                    "perf",
+                    "refactor",
+                    "revert",
+                    "style",
+                    "test"
+                ]
+            ]
+        }
     },
     "husky": {
         "hooks": {
