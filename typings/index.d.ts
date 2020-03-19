@@ -34,8 +34,20 @@ declare module 'endb' {
 		public get(key: string, path?: string): Promise<any | undefined>;
 		public has(key: string): Promise<boolean>;
 		public keys(): Promise<string[]>;
-		public math(key: string, operation: string, operand: number, path?: string): Promise<true>;
-		public push(key: string, value: any, path?: string): Promise<any>;
+		public math(
+			key: string,
+			operation: string,
+			operand: number,
+			path?: string
+		): Promise<true>;
+
+		public push(
+			key: string,
+			value: any,
+			path?: string,
+			allowDuplicates?: boolean
+		): Promise<any>;
+
 		public remove(key: string, value: any, path?: string): Promise<any>;
 		public set(key: string, value: any, path?: string): Promise<true>;
 		public values(): Promise<any[]>;
@@ -56,7 +68,12 @@ declare module 'endb' {
 
 		public static load(options: EndbOptions): any;
 		public static parse(text: string): object;
-		public static math(firstOperand: number, operation: string, secondOperand: number): number;
+		public static math(
+			firstOperand: number,
+			operation: string,
+			secondOperand: number
+		): number;
+
 		public static mergeDefault(def: object, given: object): object;
 		public static removeKeyPrefix(key: string, namespace: string): string;
 		public static safeRequire(id: string): any | undefined;

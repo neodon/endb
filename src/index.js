@@ -291,23 +291,21 @@ class Endb extends EventEmitter {
 	 * @param {string} key The key of the element to push to.
 	 * @param {*} value The value to push.
 	 * @param {string} [path=null]
+	 * @param {boolean} [allowDuplicates=false] Whether or not, allow duplicates elements in the value.
 	 * @return {Promise<*>} The value to push.
 	 */
-	async push(key, value, path = null) {
+	async push(key, value, path = null, allowDuplicates = false) {
 		const data = await this.get(key);
 		if (path !== null) {
 			const propValue = Util.get(data, path);
-			if (!Array.isArray(propValue)) {
+			if (!Array.isArray(propValue))
 				throw new TypeError('Target must be an array.');
-			}
-
+			if (!allowDuplicates && propValue.includes(value)) return value;
 			propValue.push(value);
 			Util.set(data, path, propValue);
 		} else {
-			if (!Array.isArray(data)) {
-				throw new TypeError('Target must be an array.');
-			}
-
+			if (!Array.isArray(data)) throw new TypeError('Target must be an array.');
+			if (!allowDuplicates && data.includes(value)) return value;
 			data.push(value);
 		}
 

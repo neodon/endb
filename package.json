@@ -64,6 +64,7 @@
                 "always",
                 [
                     "chore",
+                    "types",
                     "build",
                     "ci",
                     "docs",
