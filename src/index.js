@@ -300,13 +300,12 @@ class Endb extends EventEmitter {
 			const propValue = Util.get(data, path);
 			if (!Array.isArray(propValue))
 				throw new TypeError('Target must be an array.');
-			if (!allowDuplicates && propValue.indexOf(value) > -1) return value;
+			if (!allowDuplicates && propValue.includes(value)) return value;
 			propValue.push(value);
 			Util.set(data, path, propValue);
 		} else {
-			if (!Array.isArray(data))
-				throw new TypeError('Target must be an array.');
-			if (!allowDuplicates && data.indexOf(value) > -1) return value;
+			if (!Array.isArray(data)) throw new TypeError('Target must be an array.');
+			if (!allowDuplicates && data.includes(value)) return value;
 			data.push(value);
 		}
 
