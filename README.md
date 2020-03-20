@@ -12,14 +12,14 @@
 
 ## Features
 
-- [**Easy-to-use**](#usage): *Endb* has a simplistic and easy-to-use promise-based API.
-- [**Adapters**](#usage): By default, data is stored in memory. Optionally, install and utilize an "storage adapter".
-- [**Third-Party Adapters**](#third-party-adapters): You can optionally utilize third-party adapters or build your own.
-- [**Namespaces**](#namespaces): Namespaces isolate elements within a database to enable useful features.
-- [**Custom Serializers**](#custom-serializers): Utilizes its own data serialization methods to ensure consistency across different backends.
+- [**Easy-to-use**](#usage): *Endb* has a simplistic and convenient promise-based API.
+- [**Adapters**](#usage): By default, data is cached in memory. Optionally, install and utilize a "storage adapter".
+- [**Third-Party Adapters**](#third-party-adapters): You can optionally utilize third-party storage adapters or build your own.
+- [**Namespaces**](#namespaces): Namespaces isolate elements within the database to enable useful functionalities.
+- [**Custom Serializers**](#custom-serializers): Utilizes its own data serialization methods to ensure consistency across various storage backends.
 - [**Embeddable**](#embeddable): Designed to be easily embeddable inside modules.
 - **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html).
-- **Error-Handling**: Connection errors are sent through, from the adapter to the main instance; connection errors will not exit or kill the process.
+- **Error-Handling**: Connection errors are transmitted through, from the adapter to the main instance; consequently, connection errors do not exit or kill the process.
 
 ## Installation
 
@@ -27,7 +27,7 @@
 $ npm install endb
 ```
 
-By default, data is stored in memory. Optionally, install and utilize an "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
+By default, data is cached in memory. Optionally, install and utilize a "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
 
 ```bash
 $ npm install level # LevelDB
@@ -73,7 +73,7 @@ await endb.clear(); // undefined
 
 ## Namespaces
 
-Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.
+Namespaces isolate elements within the database to avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.
 
 ```javascript
 const users = new Endb({ namespace: 'users' });
@@ -90,14 +90,14 @@ await members.get('foo'); // 'members'
 
 ## Third-Party Adapters
 
-You can optionally utilize third-party storage adapters or build your own. *Endb* will integrate the third-party adapter and handle complex data types internally.
+You can optionally utilize third-party storage adapters or build your own. *Endb* will integrate the third-party storage adapter and handle complex data types internally.
 
 ```javascript
 const myAdapter = require('./my-adapter');
 const endb = new Endb({ store: myAdapter });
 ```
 
-For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated module that has an API similar to that of *Endb*.
+For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated and independent module that has an API similar to that of *Endb*.
 
 ```javascript
 const QuickLRU = require('quick-lru');
@@ -108,7 +108,7 @@ const endb = new Endb({ store: lru });
 
 ## Custom Serializers
 
-*Endb* handles all the JSON data types including [`Buffer`](https://nodejs.org/api/buffer) using its own data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of strings or numbers) into Buffer instances to ensure consistency across different backends.
+*Endb* handles all the JSON data types including Buffer using its data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data, either as arrays of strings or numbers, into Buffer instances to ensure consistency across various backends.
 
 Optionally, pass your own data serialization methods to support extra data types.
 
