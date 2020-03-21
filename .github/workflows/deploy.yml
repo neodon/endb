@@ -14,13 +14,14 @@ jobs:
         run: npm install
       - name: Build documentation
         run: npm run docs:build
-      - name: Deploy documentation
-        if: success()
-        uses: crazy-max/ghaction-github-pages@v1
-        with:
-          build_dir: .
-          commit_message: 'docs: build and deploy docs'
-          fqdn: endb.js.org
-          keep_history: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  deploy:
+    - name: Deploy documentation
+      if: success()
+      uses: crazy-max/ghaction-github-pages@v1
+      with:
+        build_dir: .
+        commit_message: 'docs: build and deploy docs'
+        fqdn: endb.js.org
+        keep_history: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
