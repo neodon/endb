@@ -4,7 +4,7 @@
 
 > 🗃 Simple key-value storage with support for multiple backends.
 
-[![Build Status](https://travis-ci.com/chroventer/endb.svg?branch=master)](https://travis-ci.com/chroventer/endb)
+![Test](https://github.com/chroventer/endb/workflows/Test/badge.svg)
 [![Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
 [![Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
 [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
