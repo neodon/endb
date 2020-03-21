@@ -17,10 +17,10 @@ jobs:
       - name: Build documentation
         run: npm run docs:build
       - name: Deploy documentation
-        uses: JamesIves/github-pages-deploy-action@releases/v2
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v1
         with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          build_dir: .
+          fqdn: endb.js.org
+        env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: .
-          CLEAN: false
