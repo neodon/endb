@@ -17,10 +17,10 @@ jobs:
       - name: Build documentation
         run: npm run docs:build
       - name: Deploy documentation
-        uses: JamesIves/github-pages-deploy-action@releases/v3-beta
+        uses: JamesIves/github-pages-deploy-action@releases/v2
         with:
           ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
-          FOLDER: dist
+          FOLDER: .
           CLEAN: false
