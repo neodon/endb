@@ -1,10 +1,10 @@
-name: Test
+name: Lint
 on: [push, pull_request]
 jobs:
-  job:
-    name: Test
+  test:
+    name: Lint
     runs-on: ubuntu-latest
-    steps:
+    steps: 
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Install Node
@@ -13,5 +13,5 @@ jobs:
           node-version: 12
       - name: Installation
         run: npm install
-      - name: Test
-        run: npm run test
+      - name: Lint
+        run: npm run lint
