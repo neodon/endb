@@ -2,19 +2,19 @@ name: Test
 on: [push, pull_request]
 jobs:
     lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps: 
-      - name: Checkout repository
-        uses: actions/checkout@master
-      - name: Install Node
-        uses: actions/setup-node@master
-        with:
-          node-version: 12
-      - name: Installation
-        run: npm install
-      - name: Lint
-        run: npm run lint
+      name: Lint
+      runs-on: ubuntu-latest
+      steps: 
+        - name: Checkout repository
+          uses: actions/checkout@master
+        - name: Install Node
+          uses: actions/setup-node@master
+          with:
+            node-version: 12
+        - name: Installation
+          run: npm install
+        - name: Lint
+          run: npm run lint
     test:
       name: Test
       runs-on: ubuntu-latest
