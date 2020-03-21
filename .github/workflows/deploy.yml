@@ -19,7 +19,8 @@ jobs:
       - name: Deploy documentation
         uses: JamesIves/github-pages-deploy-action@releases/v3-beta
         with:
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           BRANCH: gh-pages
           FOLDER: dist
-          keep_files: true
+          CLEAN: false
