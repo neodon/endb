@@ -6,7 +6,7 @@
 <blockquote>
 <p>🗃 Simple key-value storage with support for multiple backends.</p>
 </blockquote>
-<p><a href="https://travis-ci.com/chroventer/endb"><img src="https://travis-ci.com/chroventer/endb.svg?branch=master" alt="Build Status" style="max-width: 100%;"></a>
+<p><img src="https://github.com/chroventer/endb/workflows/Test/badge.svg" alt="Test" style="max-width: 100%;">
 <a href="https://david-dm.org/chroventer/endb"><img src="https://img.shields.io/david/chroventer/endb.svg?maxAge=3600" alt="Dependencies" style="max-width: 100%;"></a>
 <a href="https://www.npmjs.com/package/endb"><img src="https://badgen.net/npm/dt/endb" alt="Downloads" style="max-width: 100%;"></a>
 <a href="https://github.com/chroventer/endb"><img src="https://badgen.net/github/stars/chroventer/endb" alt="GitHub Stars" style="max-width: 100%;"></a>
@@ -14,19 +14,19 @@
 <h2 id="features">Features</h2>
 <hr />
 <ul>
-<li><a href="#usage"><strong>Easy-to-use</strong></a>: <em>Endb</em> has a simplistic and easy-to-use promise-based API.</li>
-<li><a href="#usage"><strong>Adapters</strong></a>: By default, data is stored in memory. Optionally, install and utilize an "storage adapter".</li>
-<li><a href="#third-party-adapters"><strong>Third-Party Adapters</strong></a>: You can optionally utilize third-party adapters or build your own.</li>
-<li><a href="#namespaces"><strong>Namespaces</strong></a>: Namespaces isolate elements within a database to enable useful features.</li>
-<li><a href="#custom-serializers"><strong>Custom Serializers</strong></a>: Utilizes its own data serialization methods to ensure consistency across different backends.</li>
+<li><a href="#usage"><strong>Easy-to-use</strong></a>: <em>Endb</em> has a simplistic and convenient promise-based API.</li>
+<li><a href="#usage"><strong>Adapters</strong></a>: By default, data is cached in memory. Optionally, install and utilize a "storage adapter".</li>
+<li><a href="#third-party-adapters"><strong>Third-Party Adapters</strong></a>: You can optionally utilize third-party storage adapters or build your own.</li>
+<li><a href="#namespaces"><strong>Namespaces</strong></a>: Namespaces isolate elements within the database to enable useful functionalities.</li>
+<li><a href="#custom-serializers"><strong>Custom Serializers</strong></a>: Utilizes its own data serialization methods to ensure consistency across various storage backends.</li>
 <li><a href="#embeddable"><strong>Embeddable</strong></a>: Designed to be easily embeddable inside modules.</li>
 <li><strong>Data Types</strong>: Handles all the JSON types including <a href="https://nodejs.org/api/buffer.html"><code>Buffer</code></a>.</li>
-<li><strong>Error-Handling</strong>: Connection errors are sent through, from the adapter to the main instance; connection errors will not exit or kill the process.</li>
+<li><strong>Error-Handling</strong>: Connection errors are transmitted through, from the adapter to the main instance; consequently, connection errors do not exit or kill the process.</li>
 </ul>
 <h2 id="installation">Installation</h2>
 <hr />
 <pre><code class="bash">$ npm install endb</code></pre>
-<p>By default, data is stored in memory. Optionally, install and utilize an "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.</p>
+<p>By default, data is cached in memory. Optionally, install and utilize a "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.</p>
 <pre><code class="bash">$ npm install level # LevelDB
 $ npm install mongojs # MongoDB
 $ npm install nedb # NeDB
@@ -65,7 +65,7 @@ await endb.delete('foo'); // true
 await endb.clear(); // undefined</code></pre>
 <h2 id="namespaces">Namespaces</h2>
 <hr />
-<p>Namespaces isolate elements within a database, avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.</p>
+<p>Namespaces isolate elements within the database to avoid key collisions, separate elements by prefixing the keys, and allow clearance of only one namespace while utilizing the same database.</p>
 <pre><code class="javascript">const users = new Endb({ namespace: 'users' });
 const members = new Endb({ namespace: 'members' });
 
@@ -78,17 +78,17 @@ await users.get('foo'); // undefined
 await members.get('foo'); // 'members'</code></pre>
 <h2 id="third-party-adapters">Third-Party Adapters</h2>
 <hr />
-<p>You can optionally utilize third-party storage adapters or build your own. <em>Endb</em> will integrate the third-party adapter and handle complex data types internally.</p>
+<p>You can optionally utilize third-party storage adapters or build your own. <em>Endb</em> will integrate the third-party storage adapter and handle complex data types internally.</p>
 <pre><code class="javascript">const myAdapter = require('./my-adapter');
 const endb = new Endb({ store: myAdapter });</code></pre>
-<p>For example, <a href="https://github.com/sindresorhus/quick-lru"><code>quick-lru</code></a> is an unrelated module that has an API similar to that of <em>Endb</em>.</p>
+<p>For example, <a href="https://github.com/sindresorhus/quick-lru"><code>quick-lru</code></a> is an unrelated and independent module that has an API similar to that of <em>Endb</em>.</p>
 <pre><code class="javascript">const QuickLRU = require('quick-lru');
 
 const lru = new QuickLRU({ maxSize: 1000 });
 const endb = new Endb({ store: lru });</code></pre>
 <h2 id="custom-serializers">Custom Serializers</h2>
 <hr />
-<p><em>Endb</em> handles all the JSON data types including <a href="https://nodejs.org/api/buffer"><code>Buffer</code></a> using its own data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data (either as arrays of strings or numbers) into Buffer instances to ensure consistency across different backends.</p>
+<p><em>Endb</em> handles all the JSON data types including Buffer using its data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data, either as arrays of strings or numbers, into Buffer instances to ensure consistency across various backends.</p>
 <p>Optionally, pass your own data serialization methods to support extra data types.</p>
 <pre><code class="javascript">const endb = new Endb({
     serialize: JSON.stringify,
