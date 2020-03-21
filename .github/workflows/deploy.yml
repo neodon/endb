@@ -23,7 +23,6 @@ jobs:
           build_dir: .
           commit_message: 'docs: build and deploy docs'
           fqdn: endb.js.org
-          allow_empty_commit: false
           keep_history: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
