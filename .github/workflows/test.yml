@@ -1,0 +1,17 @@
+name: Test
+on: [push, pull_request]
+jobs:
+  job:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Node
+        uses: actions/setup-node@v1.1.0
+        with:
+          node-version: 12
+      - name: Installation
+        run: npm install
+      - name: Test
+        uses: npm run test
