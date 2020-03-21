@@ -15,7 +15,7 @@ jobs:
       - name: Installation
         run: npm install
       - name: Build documentation
-        run: npm run build:docs
+        run: npm run docs:build
       - name: Deploy documentation
         uses: peaceiris/actions-gh-pages@master
         env: 
