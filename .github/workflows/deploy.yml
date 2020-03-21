@@ -1,0 +1,26 @@
+name: Deployment
+on:
+  push:
+    branches: [ master ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Install Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 12
+      - name: Installation
+        run: npm install
+      - name: Build documentation
+        run: npm run build:docs
+      - name: Deploy documentation
+        uses: peaceiris/actions-gh-pages@master
+        env: 
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: master
+          publish_dir: ./public
+          cname: endb.js.org
+          keep_files: true
