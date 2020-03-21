@@ -21,6 +21,7 @@ jobs:
         uses: crazy-max/ghaction-github-pages@v1
         with:
           build_dir: .
+          commit_message: 'docs: build and deploy docs'
           fqdn: endb.js.org
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
