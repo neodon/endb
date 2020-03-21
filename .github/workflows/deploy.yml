@@ -18,7 +18,7 @@ jobs:
         if: success()
         uses: crazy-max/ghaction-github-pages@v1
         with:
-          build_dir: .
+          build_dir: docs
           commit_message: 'docs: build and deploy docs'
           fqdn: endb.js.org
           keep_history: true
