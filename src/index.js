@@ -189,7 +189,7 @@ class Endb extends EventEmitter {
 	 */
 	get(key, path = null) {
 		if (typeof key !== 'string') {
-			throw new TypeError('Endb#get: key must be a string.');
+			throw new TypeError('Endb#get: Key must be a string.');
 		}
 
 		key = Util.addKeyPrefix(key, this.options.namespace);
@@ -198,7 +198,7 @@ class Endb extends EventEmitter {
 			.then(data =>
 				typeof data === 'string' ? this.options.deserialize(data) : data
 			)
-			.then(data => (path === null ? data : Util.get(data, path)))
+			.then(data => path !== null ? Util.get(data, path) : data)
 			.then(data => (data === undefined ? undefined : data));
 	}
 
@@ -303,8 +303,9 @@ class Endb extends EventEmitter {
 		const data = await this.get(key);
 		if (path !== null) {
 			const propValue = Util.get(data, path);
-			if (!Array.isArray(propValue))
+			if (!Array.isArray(propValue)) {
 				throw new TypeError('Target must be an array.');
+			}
 			if (!allowDuplicates && propValue.includes(value)) return value;
 			propValue.push(value);
 			Util.set(data, path, propValue);
@@ -371,14 +372,14 @@ class Endb extends EventEmitter {
 	 */
 	set(key, value, path = null) {
 		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string.');
+			throw new TypeError('Endb#set: Key must be a string.');
 		}
 
 		key = Util.addKeyPrefix(key, this.options.namespace);
 		if (path !== null) {
 			const data = this.options.store.get(key);
 			value = Util.set(
-				typeof data === 'string' ? this.options.deserialize(data) : data || {},
+				(typeof data === 'string' ? this.options.deserialize(data) : data) || {},
 				path,
 				value
 			);
