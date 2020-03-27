@@ -8,7 +8,7 @@ const _unset = require('lodash/unset');
 const Util = require('./util');
 
 /**
- * Simple key-value database with cache and multi adapter support.
+ * Simple key-value storage with support for multiple backends.
  * @extends EventEmitter
  */
 class Endb extends EventEmitter {
@@ -112,6 +112,7 @@ class Endb extends EventEmitter {
 	 * Ensures if an element exists in the database. If the element does not exist, sets the element to the database and returns the value.
 	 * @param {string} key The key of the element to ensure.
 	 * @param {*} value The value of the element to ensure.
+	 * @param {string} [path=null]
 	 * @return {Promise<any|undefined>} The (default) value of the element.
 	 * @example
 	 * await Endb.set('en', 'db');
@@ -220,6 +221,7 @@ class Endb extends EventEmitter {
 	/**
 	 * Checks whether an element exists in the database or not.
 	 * @param {string} key The key of an element to check for.
+	 * @param {string} [path=null] The path of the property to check.
 	 * @return {Promise<boolean>} `true` if the element exists in the database, otherwise `false`.
 	 */
 	async has(key, path = null) {
@@ -313,7 +315,7 @@ class Endb extends EventEmitter {
 	 * Pushes an item to the array value in the database.
 	 * @param {string} key The key of the element to push to.
 	 * @param {*} value The value to push.
-	 * @param {string} [path=null]
+	 * @param {string} [path=null] The path of the property of the value to push.
 	 * @param {boolean} [allowDuplicates=false] Whether or not, allow duplicates elements in the value.
 	 * @return {Promise<*>} The value to push.
 	 */
@@ -340,7 +342,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Removes an item from the array value of an element in the database.
-	 * Note that structured or complex data types such as arrays or objects cannot be removed from the value of the element.
+	 * Note: structured or complex data types such as arrays or objects cannot be removed from the value of the element.
 	 * @param {string} key The key of the element to remove.
 	 * @param {*} value The value to remove. Must be a string.
 	 * @param {string} [path=null] The path of the property to remove.

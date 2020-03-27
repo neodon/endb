@@ -12,6 +12,7 @@ class Util {
 
 	/**
 	 * Adds the namespace as a prefix to the key.
+	 * @static
 	 * @param {string|string[]} key The key(s) of an element.
 	 * @param {string} namespace The namespace of the database.
 	 * @return {string}
@@ -26,6 +27,7 @@ class Util {
 
 	/**
 	 * Checks whether a value is buffer-like or not.
+	 * @static
 	 * @param {*} value The value to check.
 	 * @return {boolean}
 	 */
@@ -38,6 +40,11 @@ class Util {
 		);
 	}
 
+	/**
+	 * @static
+	 * @param {EndbOptions} options The options.
+	 * @return {*|Map} The loaded adapter, otherwise Map.
+	 */
 	static load(options) {
 		const adapters = {
 			level: './adapters/leveldb',
@@ -64,6 +71,7 @@ class Util {
 
 	/**
 	 * Parses a JSON string, constructing the JavaScript value or object described by the string.
+	 * @static
 	 * @param {string} text The string to parse as JSON.
 	 * @return {Object} The `Object` corresponding to the given JSON text.
 	 */
@@ -89,6 +97,7 @@ class Util {
 
 	/**
 	 * Performs a mathematical operation.
+	 * @static
 	 * @param {number} firstOperand The left-hand operand.
 	 * @param {string} operation The mathematical operation to perform.
 	 * @param {number} secondOperand The right-hand operand.
@@ -127,6 +136,7 @@ class Util {
 
 	/**
 	 * Removes the namespace as a prefix from a key.
+	 * @static
 	 * @param {string} key The key of an element.
 	 * @param {string} namespace The namespace of the database.
 	 * @return {string}
@@ -137,6 +147,7 @@ class Util {
 
 	/**
 	 * Safely import modules from `node_modules`; local module and JSOn can be imported using a relative path.
+	 * @static
 	 * @param {string} id The name or path of the module.
 	 * @return {*} Exported module content.
 	 */
@@ -159,7 +170,8 @@ class Util {
 	}
 
 	/**
-	 * Converts a JavaScript object or value to a JSON string
+	 * Converts a JavaScript object or value to a JSON string.
+	 * @static
 	 * @param {*} value The value to convert to a JSON string.
 	 * @param {string|number} [space] A `String` or `Number` object that's used to insert white space into the output JSON string for readability purposes.
 	 * @return {string} A JSON string representing the given value.
@@ -186,6 +198,11 @@ class Util {
 		);
 	}
 
+	/**
+	 * @static
+	 * @param {EndbOptions} options The options.
+	 * @return {undefined}
+	 */
 	static validateOptions(options) {
 		if (options.uri && typeof options.uri !== 'string') {
 			throw new TypeError('The option "uri" must be a string.');
