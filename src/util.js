@@ -38,20 +38,6 @@ class Util {
 		);
 	}
 
-	static get(object, path, defaultValue) {
-		const travel = regexp =>
-			String.prototype.split
-				.call(path, regexp)
-				.filter(Boolean)
-				.reduce(
-					(result, key) =>
-						result !== null && result !== undefined ? result[key] : result,
-					object
-				);
-		const result = travel(/[,[\]]+?/) || travel(/[,[\].]+?/);
-		return result === undefined || result === object ? defaultValue : result;
-	}
-
 	static load(options) {
 		const adapters = {
 			level: './adapters/leveldb',
@@ -170,22 +156,6 @@ class Util {
 			);
 			process.exit(1);
 		}
-	}
-
-	static set(object, path, value) {
-		if (new Object(object) !== object) return object;
-		if (!Array.isArray(path)) path = path.toString().match(/[^.[\]]+/g) || [];
-		path
-			.slice(0, -1)
-			.reduce(
-				(a, c, i) =>
-					new Object(a[c]) === a[c]
-						? a[c]
-						: (a[c] =
-								Math.abs(path[i + 1]) >> 0 === Number(path[i + 1]) ? [] : {}),
-				object
-			)[path[path.length - 1]] = value;
-		return object;
 	}
 
 	/**

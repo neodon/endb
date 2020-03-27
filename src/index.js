@@ -1,6 +1,10 @@
 'use strict';
 
 const EventEmitter = require('events');
+const _get = require('lodash/get');
+const _has = require('lodash/has');
+const _set = require('lodash/set');
+const _unset = require('lodash/unset');
 const Util = require('./util');
 
 /**
@@ -118,19 +122,30 @@ class Endb extends EventEmitter {
 	 * const data = await Endb.ensure('en', 'db');
 	 * console.log(data); // 'db'
 	 */
-	async ensure(key, value = null) {
+	async ensure(key, value = null, path = null) {
 		if (value === null) {
 			throw new TypeError('Value must be provided.');
 		}
 
 		const exists = await this.has(key);
-		if (!exists) {
-			await this.set(key, value);
+		if (path !== null) {
+			if (!exists) throw new Error('Endb#has: Key does not exist.');
+			if (!(await this.has(key, path))) {
+				const value = await this.get(key, value);
+				return value;
+			}
+
+			await this.set(key, value, path);
 			return value;
 		}
 
-		const data = await this.get(key);
-		return data;
+		if (exists) {
+			const result = await this.get(key);
+			return result;
+		}
+
+		await this.set(key, value);
+		return value;
 	}
 
 	async entries() {
@@ -198,7 +213,7 @@ class Endb extends EventEmitter {
 			.then(data =>
 				typeof data === 'string' ? this.options.deserialize(data) : data
 			)
-			.then(data => path !== null ? Util.get(data, path) : data)
+			.then(data => (path !== null ? _get(data, path) : data))
 			.then(data => (data === undefined ? undefined : data));
 	}
 
@@ -207,16 +222,19 @@ class Endb extends EventEmitter {
 	 * @param {string} key The key of an element to check for.
 	 * @return {Promise<boolean>} `true` if the element exists in the database, otherwise `false`.
 	 */
-	async has(key) {
+	async has(key, path = null) {
 		if (typeof key !== 'string') {
 			throw new TypeError('Key must be a string');
 		}
 
+		if (path !== null) {
+			const data = await this.get(key);
+			return _has(data, path);
+		}
+
+		key = Util.addKeyPrefix(key, this.options.namespace);
 		if (this.options.store instanceof Map) {
-			const result = await this.options.store.has(
-				Util.addKeyPrefix(key, this.options.namespace)
-			);
-			return result;
+			return this.options.store.has(key);
 		}
 
 		return Boolean(await this.get(key));
@@ -246,7 +264,7 @@ class Endb extends EventEmitter {
 	async math(key, operation, operand, path = null) {
 		const data = await this.get(key);
 		if (path !== null) {
-			const propValue = Util.get(data, path);
+			const propValue = _get(data, path);
 			if (typeof propValue !== 'number')
 				throw new TypeError('The first operand must be a number.');
 			const result = await this.set(
@@ -302,13 +320,14 @@ class Endb extends EventEmitter {
 	async push(key, value, path = null, allowDuplicates = false) {
 		const data = await this.get(key);
 		if (path !== null) {
-			const propValue = Util.get(data, path);
+			const propValue = _get(data, path);
 			if (!Array.isArray(propValue)) {
 				throw new TypeError('Target must be an array.');
 			}
+
 			if (!allowDuplicates && propValue.includes(value)) return value;
 			propValue.push(value);
-			Util.set(data, path, propValue);
+			_set(data, path, propValue);
 		} else {
 			if (!Array.isArray(data)) throw new TypeError('Target must be an array.');
 			if (!allowDuplicates && data.includes(value)) return value;
@@ -330,13 +349,13 @@ class Endb extends EventEmitter {
 	async remove(key, value, path = null) {
 		const data = await this.get(key);
 		if (path !== null) {
-			const propValue = Util.get(data, path);
-			if (!Array.isArray(propValue)) {
-				throw new TypeError('Target must be an array.');
+			const propValue = _get(data, path);
+			if (Array.isArray(propValue)) {
+				propValue.splice(propValue.indexOf(value), 1);
+				_set(data, path, propValue);
+			} else if (typeof data === 'object') {
+				_unset(data, `${path}.${value}`);
 			}
-
-			propValue.splice(propValue.indexOf(value), 1);
-			Util.set(data, path, propValue);
 		} else if (Array.isArray(data)) {
 			if (data.includes(value)) {
 				data.splice(data.indexOf(value), 1);
@@ -378,8 +397,9 @@ class Endb extends EventEmitter {
 		key = Util.addKeyPrefix(key, this.options.namespace);
 		if (path !== null) {
 			const data = this.options.store.get(key);
-			value = Util.set(
-				(typeof data === 'string' ? this.options.deserialize(data) : data) || {},
+			value = _set(
+				(typeof data === 'string' ? this.options.deserialize(data) : data) ||
+					{},
 				path,
 				value
 			);

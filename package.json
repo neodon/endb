@@ -83,5 +83,8 @@
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
+    },
+    "dependencies": {
+        "lodash": "^4.17.15"
     }
 }
