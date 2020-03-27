@@ -133,6 +133,11 @@ class Endb extends EventEmitter {
 		return data;
 	}
 
+	async entries() {
+		const elements = await this.all();
+		return elements.map(({key, value}) => [key, value]);
+	}
+
 	/**
 	 * Finds a single item where the given function returns a truthy value.
 	 * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.
@@ -222,8 +227,8 @@ class Endb extends EventEmitter {
 	 * @return {Promise<string[]>} An array that contains the keys of each element.
 	 */
 	async keys() {
-		const data = await this.all();
-		return data.map(element => element.key);
+		const elements = await this.all();
+		return elements.map(({key}) => key);
 	}
 
 	/**
@@ -390,8 +395,8 @@ class Endb extends EventEmitter {
 	 * @return {Promise<any[]>} Array that contains the values of each element.
 	 */
 	async values() {
-		const data = await this.all();
-		return data.map(element => element.value);
+		const elements = await this.all();
+		return elements.map(({value}) => value);
 	}
 }
 
