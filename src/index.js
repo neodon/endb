@@ -135,7 +135,7 @@ class Endb extends EventEmitter {
 
 	async entries() {
 		const elements = await this.all();
-		return elements.map(({ key, value }) => [key, value]);
+		return elements.map(({key, value}) => [key, value]);
 	}
 
 	/**
@@ -228,7 +228,7 @@ class Endb extends EventEmitter {
 	 */
 	async keys() {
 		const elements = await this.all();
-		return elements.map(({ key }) => key);
+		return elements.map(({key}) => key);
 	}
 
 	/**
@@ -396,7 +396,7 @@ class Endb extends EventEmitter {
 	 */
 	async values() {
 		const elements = await this.all();
-		return elements.map(({ value }) => value);
+		return elements.map(({value}) => value);
 	}
 }
 
