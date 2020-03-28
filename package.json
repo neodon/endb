@@ -28,63 +28,33 @@
         "url": "https://github.com/chroventer/endb/issues"
     },
     "homepage": "https://endb.js.org",
+    "dependencies": {
+        "lodash": "^4.17.15"
+    },
     "devDependencies": {
         "@commitlint/cli": "^8.3.5",
-        "@commitlint/config-angular": "^8.3.4",
-        "ava": "^3.5.0",
+        "@commitlint/config-conventional": "^8.3.4",
+        "ava": "^3.5.1",
         "docma": "^3.2.2",
         "husky": "^4.2.3",
-        "xo": "^0.28.0"
+        "xo": "^0.28.1"
     },
     "xo": {
         "prettier": true,
         "rules": {
             "guard-for-in": 0,
-            "no-negated-condition": 0
-        },
-        "overrides": [
-            {
-                "files": "src/util.js",
-                "rules": {
-                    "no-new-object": 0,
-                    "no-return-assign": 0,
-                    "no-unused-vars": 0,
-                    "unicorn/no-process-exit": 0
-                }
-            }
-        ]
+            "no-negated-condition": 0,
+            "unicorn/no-process-exit": 0
+        }
     },
     "commitlint": {
         "extends": [
-            "@commitlint/config-angular"
-        ],
-        "rules": {
-            "type-enum": [
-                2,
-                "always",
-                [
-                    "chore",
-                    "types",
-                    "build",
-                    "ci",
-                    "docs",
-                    "feat",
-                    "fix",
-                    "perf",
-                    "refactor",
-                    "revert",
-                    "style",
-                    "test"
-                ]
-            ]
-        }
+            "@commitlint/config-conventional"
+        ]
     },
     "husky": {
         "hooks": {
             "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
-    },
-    "dependencies": {
-        "lodash": "^4.17.15"
     }
 }
