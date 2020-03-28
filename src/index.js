@@ -214,7 +214,7 @@ class Endb extends EventEmitter {
 			.then(data =>
 				typeof data === 'string' ? this.options.deserialize(data) : data
 			)
-			.then(data => (path !== null ? _get(data, path) : data))
+			.then(data => (path === null ? data : _get(data, path)))
 			.then(data => (data === undefined ? undefined : data));
 	}
 

@@ -154,7 +154,7 @@ class Util {
 	static safeRequire(id) {
 		try {
 			return require(id);
-		} catch (error) {
+		} catch (_) {
 			if (['sqlite', 'mysql', 'postgres'].some(a => id.startsWith(a))) {
 				if (id === 'mysql2/promise') id = 'mysql';
 				id += ' & sql';
