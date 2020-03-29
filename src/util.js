@@ -155,17 +155,14 @@ class Util {
 		try {
 			return require(id);
 		} catch (_) {
-			if (['sqlite', 'mysql', 'postgres'].some(a => id.startsWith(a))) {
-				if (id === 'mysql2/promise') id = 'mysql';
+			if (['sqlite3', 'mysql2/promise', 'pg'].includes(id)) {
+				if (id === 'mysql2/promise') id = id.split('/')[0];
 				id += ' & sql';
 			}
 
-			console.error(
-				`Install ${id} to continue; run "npm i ${id
-					.split(' & ')
-					.join(' ')}" to install.`
+			throw new Error(
+				`Install ${id} to continue; run "npm i ${id.replace(' & ', ' ')}" to install.`
 			);
-			process.exit(1);
 		}
 	}
 
