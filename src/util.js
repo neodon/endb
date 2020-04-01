@@ -161,7 +161,10 @@ class Util {
 			}
 
 			throw new Error(
-				`Install ${id} to continue; run "npm i ${id.replace(' & ', ' ')}" to install.`
+				`Install ${id} to continue; run "npm i ${id.replace(
+					' & ',
+					' '
+				)}" to install.`
 			);
 		}
 	}
