@@ -392,8 +392,8 @@ class Endb extends EventEmitter {
 	 * });
 	 * await Endb.set('todo', [ 'Add a authentication system.', 'Refactor the generator' ]);
 	 *
-	 * await endb.set('profile', false, 'verified');
-	 * await endb.set('profile', 100, 'balance');
+	 * await Endb.set('profile', false, 'verified');
+	 * await Endb.set('profile', 100, 'balance');
 	 */
 	set(key, value, path = null) {
 		if (typeof key !== 'string') {
