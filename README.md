@@ -32,7 +32,6 @@ By default, data is cached in memory. Optionally, install and utilize a "storage
 ```bash
 $ npm install level # LevelDB
 $ npm install mongojs # MongoDB
-$ npm install nedb # NeDB
 $ npm install ioredis # Redis
 
 # To use SQL database, an additional package 'sql' must be installed and an adapter
