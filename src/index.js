@@ -13,9 +13,8 @@ const Util = require('./util');
  */
 class Endb extends EventEmitter {
 	/**
-	 * The options for the Endb instance.
+	 * The options for Endb.
 	 * @typedef {Object} EndbOptions
-	 * @memberof Endb
 	 * @property {string} [uri] The connection URI of the database.
 	 * @property {string} [namespace='endb'] The namespace of the database.
 	 * @property {string} [adapter] The storage adapter or backend to use.
@@ -28,10 +27,15 @@ class Endb extends EventEmitter {
 	 */
 
 	/**
-	 * @param {string|EndbOptions} [options={}] The options for the Endb.
+	 * @param {string|EndbOptions} [options={}] The options for Endb.
 	 */
 	constructor(options = {}) {
 		super();
+
+		/**
+		 * The options the database was instantiated with.
+		 * @type {EndbOptions}
+		 */
 		this.options = Object.assign(
 			{
 				namespace: 'endb',
@@ -77,7 +81,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Clears all elements from the database.
-	 * @return {Promise<undefined>} Returns `undefined`
+	 * @return {Promise<undefined>} Returns `undefined`.
 	 */
 	clear() {
 		return Promise.resolve().then(() => this.options.store.clear());
@@ -125,12 +129,12 @@ class Endb extends EventEmitter {
 	 */
 	async ensure(key, value = null, path = null) {
 		if (value === null) {
-			throw new TypeError('Value must be provided.');
+			throw new TypeError('Endb#ensure: Value must be provided.');
 		}
 
 		const exists = await this.has(key);
 		if (path !== null) {
-			if (!exists) throw new Error('Endb#has: Key does not exist.');
+			if (!exists) throw new Error('Endb#ensure: Key does not exist.');
 			if (!(await this.has(key, path))) {
 				const value = await this.get(key, value);
 				return value;
@@ -226,7 +230,7 @@ class Endb extends EventEmitter {
 	 */
 	async has(key, path = null) {
 		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string');
+			throw new TypeError('Endb#has: Key must be a string');
 		}
 
 		if (path !== null) {
