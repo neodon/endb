@@ -39,19 +39,16 @@ $ npm install pg # PostgreSQL
 $ npm install sqlite3 # SQLite</code></pre>
 <h2 id="usage">Usage</h2>
 <hr />
-<pre><code class="javascript">// Import/require the package.
-const Endb = require('endb');
+<pre><code class="javascript">const Endb = require('endb');
 
+// One of the following:
 const endb = new Endb();
-const endb = new Endb({
-    // One of the following
-    uri: 'leveldb://path/to/database',
-    uri: 'mongodb://user:pass@localhost:27017/dbname',
-    uri: 'mysql://user:pass@localhost:3306/dbname',
-    uri: 'postgresql://user:pass@localhost:5432/dbname',
-    uri: 'redis://user:pass@localhost:6379',
-    uri: 'sqlite://path/to/database.sqlite'
-});
+const endb = new Endb('leveldb://path/to/database');
+const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
+const endb = new Endb('mysql://user:pass@localhost:3306/dbname');
+const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');
+const endb = new Endb('redis://user:pass@localhost:6379');
+const endb = new Endb('sqlite://path/to/database.sqlite');
 
 // Handles connection errors
 endb.on('error', error =&gt; console.error('Connection Error: ', error));
