@@ -155,16 +155,8 @@ class Util {
 		try {
 			return require(id);
 		} catch (_) {
-			if (['sqlite3', 'mysql2/promise', 'pg'].includes(id)) {
-				if (id === 'mysql2/promise') id = id.split('/')[0];
-				id += ' & sql';
-			}
-
 			throw new Error(
-				`Install ${id} to continue; run "npm i ${id.replace(
-					' & ',
-					' '
-				)}" to install.`
+				`Install ${id} to continue; run "npm i ${id}" to install.`
 			);
 		}
 	}
