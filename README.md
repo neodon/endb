@@ -2,7 +2,7 @@
     <a href="https://endb.js.org"><img src="docs/media/logo.png" width="300" height="300" alt="Endb" /></a>
 </div>
 
-> 🗃 Simple key-value storage with support for multiple backends.
+> Simple key-value storage with support for multiple backends.
 
 ![Test](https://github.com/chroventer/endb/workflows/Test/badge.svg)
 [![Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
@@ -24,22 +24,22 @@
 ## Installation
 
 ```bash
-$ npm install endb
+npm install endb
 ```
 
 By default, data is cached in memory. Optionally, install and utilize a "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
 
 ```bash
-$ npm install level # LevelDB
-$ npm install mongojs # MongoDB
-$ npm install ioredis # Redis
+npm install level # LevelDB
+npm install mongodb # MongoDB
+npm install ioredis # Redis
 
-# To use SQL database, an additional package 'sql' must be installed and an adapter
-$ npm install sql
+# To use SQL-based databases, an additional package 'sql' must be installed and an adapter
+npm install sql
 
-$ npm install mysql2 # MySQL
-$ npm install pg # PostgreSQL
-$ npm install sqlite3 # SQLite
+npm install mysql2 # MySQL
+npm install pg # PostgreSQL
+npm install sqlite3 # SQLite
 ```
 
 ## Usage
@@ -135,7 +135,7 @@ class MyModule {
 // Caches data in the memory by default.
 const myModule = new MyModule();
 
-// After installing ioredis.
+// After installing 'ioredis'.
 const myModule = new MyModule({ store: 'redis://localhost' });
 const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 ```
