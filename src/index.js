@@ -5,7 +5,31 @@ const _get = require('lodash/get');
 const _has = require('lodash/has');
 const _set = require('lodash/set');
 const _unset = require('lodash/unset');
-const Util = require('./util');
+const {parse, stringify} = require('buffer-json');
+
+const load = (options) => {
+	const adapters = {
+		level: './adapters/leveldb',
+		leveldb: './adapters/leveldb',
+		mongo: './adapters/mongodb',
+		mongodb: './adapters/mongodb',
+		mysql: './adapters/mysql',
+		mysql2: './adapters/mysql',
+		postgres: './adapters/postgres',
+		postgresql: './adapters/postgres',
+		redis: './adapters/redis',
+		sqlite: './adapters/sqlite',
+		sqlite3: './adapters/sqlite'
+	};
+	if (options.adapter || options.uri) {
+		const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
+		if (adapters[adapter] !== undefined) {
+			return new (require(adapters[adapter]))(options);
+		}
+	}
+
+	return new Map();
+};
 
 /**
  * Simple key-value storage with support for multiple backends.
@@ -39,84 +63,78 @@ class Endb extends EventEmitter {
 		this.options = Object.assign(
 			{
 				namespace: 'endb',
-				serialize: Util.stringify,
-				deserialize: Util.parse
+				serialize: stringify,
+				deserialize: parse
 			},
 			typeof options === 'string' ? {uri: options} : options
 		);
-		Util.validateOptions(this.options);
 
 		if (!this.options.store) {
-			this.options.store = Util.load(Object.assign({}, this.options));
+			this.options.store = load(this.options);
 		}
 
 		if (typeof this.options.store.on === 'function') {
-			this.options.store.on('error', error => this.emit('error', error));
+			this.options.store.on('error', (error) => this.emit('error', error));
 		}
+
+		this.options.store.namespace = this.options.namespace;
 	}
 
 	/**
 	 * Gets all the elements from the database.
-	 * @return {Promise<any[]|undefined>} All the elements in the database.
+	 * @return {Promise<any[]>} All the elements in the database.
 	 */
-	all() {
-		return Promise.resolve()
-			.then(() => {
-				if (this.options.store instanceof Map) {
-					const data = [];
-					for (const [key, value] of this.options.store) {
-						data.push({
-							key: Util.removeKeyPrefix(key, this.options.namespace),
-							value: this.options.deserialize(value)
-						});
-					}
+	async all() {
+		const elements = [];
+		if (this.options.store instanceof Map) {
+			for (const [key, value] of this.options.store) {
+				elements.push({
+					key: this._removeKeyPrefix(key),
+					value: this.options.deserialize(value)
+				});
+			}
 
-					return data;
-				}
+			return elements;
+		}
 
-				return this.options.store.all();
-			})
-			.then(data => (data === undefined ? undefined : data));
+		const data = await this.options.store.all();
+		for (const {key, value} of data) {
+			elements.push({
+				key: this._removeKeyPrefix(key),
+				value: this.options.deserialize(value)
+			});
+		}
+
+		return elements;
 	}
 
 	/**
 	 * Clears all elements from the database.
 	 * @return {Promise<undefined>} Returns `undefined`.
 	 */
-	clear() {
-		return Promise.resolve().then(() => this.options.store.clear());
+	async clear() {
+		return this.options.store.clear();
 	}
 
 	/**
 	 * Deletes an element from the database by key.
 	 * @param {string|string[]} key The key(s) of the element to remove from the database.
-	 * @return {Promise<boolean|boolean[]>} `true` if the element(s) is deleted successfully, otherwise `false`.
+	 * @return {Promise<boolean>} `true` if the element is deleted successfully, otherwise `false`.
 	 * @example
 	 * await Endb.set('foo', 'bar'); // true
 	 *
 	 * await Endb.delete('foo'); // true
-	 * await Endb.delete(['foo', 'fizz']); // [ true, false ]
 	 */
-	delete(key) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Key must be a string');
-		}
-
-		key = Util.addKeyPrefix(key, this.options.namespace);
-		return Promise.resolve().then(() => {
-			if (Array.isArray(key)) {
-				return Promise.all(key.map(k => this.options.store.delete(k)));
-			}
-
-			return this.options.store.delete(key);
-		});
+	async delete(key) {
+		key = this._addKeyPrefix(key);
+		return this.options.store.delete(key);
 	}
 
 	/**
 	 * Ensures if an element exists in the database. If the element does not exist, sets the element to the database and returns the value.
 	 * @param {string} key The key of the element to ensure.
 	 * @param {*} value The value of the element to ensure.
-	 * @param {string} [path=null]
+	 * @param {?string} [path]
 	 * @return {Promise<any|undefined>} The (default) value of the element.
 	 * @example
 	 * await Endb.set('en', 'db');
@@ -127,17 +145,13 @@ class Endb extends EventEmitter {
 	 * const data = await Endb.ensure('en', 'db');
 	 * console.log(data); // 'db'
 	 */
-	async ensure(key, value = null, path = null) {
-		if (value === null) {
-			throw new TypeError('Endb#ensure: Value must be provided.');
-		}
-
+	async ensure(key, value, path = null) {
 		const exists = await this.has(key);
 		if (path !== null) {
-			if (!exists) throw new Error('Endb#ensure: Key does not exist.');
+			if (!exists) throw new Error('Endb#ensure: key does not exist.');
 			if (!(await this.has(key, path))) {
-				const value = await this.get(key, value);
-				return value;
+				const result = await this.get(key, value);
+				return result;
 			}
 
 			await this.set(key, value, path);
@@ -187,9 +201,7 @@ class Endb extends EventEmitter {
 
 		const data = await this.all();
 		for (const {key, value} of data) {
-			if (fn(value, key)) {
-				return value;
-			}
+			if (fn(value, key)) return value;
 		}
 
 		return undefined;
@@ -198,7 +210,7 @@ class Endb extends EventEmitter {
 	/**
 	 * Gets the value of an element from the database by key.
 	 * @param {string} key The key of the element to get.
-	 * @param {string} [path=null] The path of the property to get from the value.
+	 * @param {?string} [path] The path of the property to get from the value.
 	 * @return {Promise<*|undefined>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
 	 * const data = await Endb.get('foo');
@@ -207,38 +219,28 @@ class Endb extends EventEmitter {
 	 * // Using path feature
 	 * await Endb.get('profile', 'verified'); // false
 	 */
-	get(key, path = null) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Endb#get: Key must be a string.');
-		}
-
-		key = Util.addKeyPrefix(key, this.options.namespace);
-		return Promise.resolve()
-			.then(() => this.options.store.get(key))
-			.then(data =>
-				typeof data === 'string' ? this.options.deserialize(data) : data
-			)
-			.then(data => (path === null ? data : _get(data, path)))
-			.then(data => (data === undefined ? undefined : data));
+	async get(key, path = null) {
+		key = this._addKeyPrefix(key);
+		const data = await this.options.store.get(key);
+		const deserializedData =
+			typeof data === 'string' ? this.options.deserialize(data) : data;
+		if (path !== null) return _get(deserializedData, path);
+		return deserializedData === undefined ? undefined : deserializedData;
 	}
 
 	/**
 	 * Checks whether an element exists in the database or not.
 	 * @param {string} key The key of an element to check for.
-	 * @param {string} [path=null] The path of the property to check.
+	 * @param {?string} [path] The path of the property to check.
 	 * @return {Promise<boolean>} `true` if the element exists in the database, otherwise `false`.
 	 */
 	async has(key, path = null) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Endb#has: Key must be a string');
-		}
-
 		if (path !== null) {
 			const data = await this.get(key);
 			return _has(data, path);
 		}
 
-		key = Util.addKeyPrefix(key, this.options.namespace);
+		key = this._addKeyPrefix(key);
 		if (this.options.store instanceof Map) {
 			return this.options.store.has(key);
 		}
@@ -260,7 +262,7 @@ class Endb extends EventEmitter {
 	 * @param {string} key The key of the element.
 	 * @param {string} operation The mathematical operation to perform.
 	 * @param {number} operand The right-hand operand.
-	 * @param {string} [path=null] The path of the property to perform mathematical operation on.
+	 * @param {?string} [path] The path of the property to perform mathematical operation on.
 	 * @return {true} Returns `true`.
 	 * @example
 	 * balance.set('endb', 100);
@@ -272,18 +274,18 @@ class Endb extends EventEmitter {
 		if (path !== null) {
 			const propValue = _get(data, path);
 			if (typeof propValue !== 'number')
-				throw new TypeError('The first operand must be a number.');
+				throw new TypeError('Endb#path: first operand must be a number.');
 			const result = await this.set(
 				key,
-				Util.math(propValue, operation, operand),
+				_math(propValue, operation, operand),
 				path
 			);
 			return result;
 		}
 
 		if (typeof data !== 'number')
-			throw new TypeError('The first operand must be a number.');
-		const result = await this.set(key, Util.math(data, operation, operand));
+			throw new TypeError('Endb#path: first operand must be a number.');
+		const result = await this.set(key, _math(data, operation, operand));
 		return result;
 	}
 
@@ -304,7 +306,7 @@ class Endb extends EventEmitter {
 	 */
 	static multi(names, options = {}) {
 		if (!Array.isArray(names) || names.length === 0) {
-			throw new TypeError('Names must be an array of strings.');
+			throw new TypeError('Endb#math: names must be an array of strings.');
 		}
 
 		const instances = {};
@@ -319,7 +321,7 @@ class Endb extends EventEmitter {
 	 * Pushes an item to the array value in the database.
 	 * @param {string} key The key of the element to push to.
 	 * @param {*} value The value to push.
-	 * @param {string} [path=null] The path of the property of the value to push.
+	 * @param {?string} [path] The path of the property of the value to push.
 	 * @param {boolean} [allowDuplicates=false] Whether or not, allow duplicates elements in the value.
 	 * @return {Promise<*>} The value to push.
 	 */
@@ -328,14 +330,15 @@ class Endb extends EventEmitter {
 		if (path !== null) {
 			const propValue = _get(data, path);
 			if (!Array.isArray(propValue)) {
-				throw new TypeError('Target must be an array.');
+				throw new TypeError('Endb#push: target must be an array.');
 			}
 
 			if (!allowDuplicates && propValue.includes(value)) return value;
 			propValue.push(value);
 			_set(data, path, propValue);
 		} else {
-			if (!Array.isArray(data)) throw new TypeError('Target must be an array.');
+			if (!Array.isArray(data))
+				throw new TypeError('Endb#push: target must be an array.');
 			if (!allowDuplicates && data.includes(value)) return value;
 			data.push(value);
 		}
@@ -349,7 +352,7 @@ class Endb extends EventEmitter {
 	 * Note: structured or complex data types such as arrays or objects cannot be removed from the value of the element.
 	 * @param {string} key The key of the element to remove.
 	 * @param {*} value The value to remove. Must be a string.
-	 * @param {string} [path=null] The path of the property to remove.
+	 * @param {?string} [path] The path of the property to remove.
 	 * @return {Promise<*>} The value to remove.
 	 */
 	async remove(key, value, path = null) {
@@ -378,7 +381,7 @@ class Endb extends EventEmitter {
 	 * Sets an element to the database.
 	 * @param {string} key The key of the element to set to the database.
 	 * @param {*} value The value of the element to set to the database.
-	 * @param {string} [path=null] The path of the property to set in the value.
+	 * @param {?string} [path] The path of the property to set in the value.
 	 * @return {Promise<true>} Returns `true`.
 	 * @example
 	 * await Endb.set('foo', 'bar');
@@ -395,26 +398,16 @@ class Endb extends EventEmitter {
 	 * await Endb.set('profile', false, 'verified');
 	 * await Endb.set('profile', 100, 'balance');
 	 */
-	set(key, value, path = null) {
-		if (typeof key !== 'string') {
-			throw new TypeError('Endb#set: Key must be a string.');
-		}
-
-		key = Util.addKeyPrefix(key, this.options.namespace);
+	async set(key, value, path = null) {
+		key = this._addKeyPrefix(key);
 		if (path !== null) {
-			const data = this.options.store.get(key);
-			value = _set(
-				(typeof data === 'string' ? this.options.deserialize(data) : data) ||
-					{},
-				path,
-				value
-			);
+			const data = await this.get(key);
+			value = _set(data || {}, path, value);
 		}
 
-		return Promise.resolve()
-			.then(() => this.options.serialize(value))
-			.then(value => this.options.store.set(key, value))
-			.then(() => true);
+		const serializedData = this.options.serialize(value);
+		await this.options.store.set(key, serializedData);
+		return true;
 	}
 
 	/**
@@ -425,8 +418,55 @@ class Endb extends EventEmitter {
 		const elements = await this.all();
 		return elements.map(({value}) => value);
 	}
+
+	_addKeyPrefix(key) {
+		return `${this.options.namespace}:${key}`;
+	}
+
+	_removeKeyPrefix(key) {
+		return key.replace(`${this.options.namespace}:`, '');
+	}
 }
+
+const _math = (firstOperand, operation, secondOperand) => {
+	switch (operation) {
+		case 'add':
+		case 'addition':
+		case '+':
+			return firstOperand + secondOperand;
+		case 'sub':
+		case 'subtract':
+		case '-':
+			return firstOperand - secondOperand;
+		case 'mult':
+		case 'multiply':
+		case '*':
+			return firstOperand * secondOperand;
+		case 'div':
+		case 'divide':
+		case '/':
+			return firstOperand / secondOperand;
+		case 'exp':
+		case 'exponent':
+		case '^':
+			return firstOperand ** secondOperand;
+		case 'mod':
+		case 'modulo':
+		case '%':
+			return firstOperand % secondOperand;
+		default:
+			return undefined;
+	}
+};
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.Util = require('./util');
+module.exports.safeRequire = (name) => {
+	try {
+		return require(name);
+	} catch (_) {
+		throw new Error(
+			`${name} package has not been found installed. Try to install it: npm i ${name}`
+		);
+	}
+};
