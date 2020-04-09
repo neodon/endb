@@ -6,6 +6,7 @@ const Package = require('./package');
 Docma.create()
 	.build({
 		dest: './docs',
+		debug: 16,
 		app: {
 			title: Package.name,
 			meta: [
@@ -14,14 +15,14 @@ Docma.create()
 				{property: 'og:url', content: Package.homepage},
 				{property: 'og:title', content: Package.name},
 				{property: 'og:description', content: Package.description},
-				{property: 'og:image', content: '/docs/media/logo.png'}
+				{property: 'og:image', content: 'docs/media/logo.png'}
 			],
 			base: '/',
 			entrance: 'content:readme',
 			server: Docma.ServerType.GITHUB
 		},
 		src: [
-			{endb: './src/index.js', util: './src/util.js'},
+			{endb: Package.main},
 			{readme: './README.md'}
 		],
 		template: {
@@ -41,7 +42,7 @@ Docma.create()
 					},
 					{
 						label: 'GitHub',
-						href: Package.repository.url.split('+')[1],
+						href: Package.repository,
 						target: '_blank',
 						iconClass: 'ico-md ico-github'
 					}
