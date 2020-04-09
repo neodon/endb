@@ -1,7 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const {removeKeyPrefix, safeRequire} = require('../util');
+const {safeRequire} = require('..');
 const sql = safeRequire('sql');
 
 module.exports = class SQL extends EventEmitter {
@@ -14,8 +14,8 @@ module.exports = class SQL extends EventEmitter {
 			},
 			options
 		);
-		this.sql = new sql.Sql(this.options.dialect);
-		this.entry = this.sql.define({
+		const db = new sql.Sql(this.options.dialect);
+		this.entry = db.define({
 			name: this.options.table,
 			columns: [
 				{
@@ -29,67 +29,48 @@ module.exports = class SQL extends EventEmitter {
 				}
 			]
 		});
-		const table = this.entry
-			.create()
-			.ifNotExists()
-			.toString();
-		const connection = this.options
-			.connect()
-			.then(query => query(table).then(() => query))
-			.catch(error => this.emit('error', error));
-		this.query = sqlString => connection.then(query => query(sqlString));
-	}
-
-	all() {
-		return this.query(this.entry.select('*').toString()).then(rows => {
-			const array = [];
-			for (const i in rows) {
-				array.push({
-					key: removeKeyPrefix(rows[i].key, this.options.namespace),
-					value: this.options.deserialize(rows[i].value)
-				});
-			}
-
-			return array;
+		const connected = this.options.connect().then(async (query) => {
+			const createTable = this.entry.create().ifNotExists().toString();
+			await query(createTable);
+			return query;
 		});
+		this.query = async (sqlString) => {
+			const query = await connected;
+			if (query) return query(sqlString);
+		};
 	}
 
-	clear() {
-		const del = this.entry
-			.delete(this.entry.key.like(`${this.options.namespace}:%`))
-			.toString();
-		return this.query(del).then(() => undefined);
+	async all() {
+		const select = this.entry.select('*').toString();
+		const rows = await this.query(select);
+		return rows;
 	}
 
-	delete(key) {
-		const select = this.entry
-			.select()
-			.where({key})
-			.toString();
+	async clear() {
 		const del = this.entry
 			.delete()
-			.where({key})
+			.where(this.entry.key.like(`${this.options.namespace}:%`))
 			.toString();
-		return this.query(select).then(rows => {
-			const row = rows[0];
-			if (row === undefined) return false;
-			return this.query(del).then(() => true);
-		});
+		await this.query(del);
 	}
 
-	get(key) {
-		const select = this.entry
-			.select()
-			.where({key})
-			.toString();
-		return this.query(select).then(rows => {
-			const row = rows[0];
-			if (row === undefined) return undefined;
-			return row === undefined ? undefined : row.value;
-		});
+	async delete(key) {
+		const select = this.entry.select().where({key}).toString();
+		const del = this.entry.delete().where({key}).toString();
+		const [row] = await this.query(select);
+		if (row === undefined) return false;
+		await this.query(del);
+		return true;
 	}
 
-	set(key, value) {
+	async get(key) {
+		const select = this.entry.select().where({key}).toString();
+		const [row] = await this.query(select);
+		if (row === undefined) return;
+		return row.value;
+	}
+
+	async set(key, value) {
 		let upsert;
 		if (this.options.dialect === 'mysql') {
 			value = value.replace(/\\/g, '\\\\');

@@ -1,37 +1,29 @@
 'use strict';
 
-const {safeRequire} = require('../util');
+const {promisify} = require('util');
+const {safeRequire} = require('..');
 const sqlite3 = safeRequire('sqlite3');
 const Sql = require('./sql');
 
 module.exports = class SQLite extends Sql {
 	constructor(options = {}) {
-		options = Object.assign(
-			{
-				dialect: 'sqlite',
-				uri: 'sqlite://:memory:'
-			},
-			options
-		);
-		options.path = options.uri.replace(/^sqlite:\/\//, '');
-		options.connect = () =>
-			new Promise((resolve, reject) => {
-				const db = new sqlite3.Database(options.path, error => {
-					if (error) {
-						reject(error);
-					} else {
+		const {uri = 'sqlite://:memory:'} = options;
+		const path = uri.replace(/^sqlite:\/\//, '');
+		super({
+			dialect: 'sqlite',
+			async connect() {
+				return new Promise((resolve, reject) => {
+					const db = new sqlite3.Database(path, (error) => {
+						if (error) reject(error);
 						if (options.busyTimeout) {
 							db.configure('busyTimeout', options.busyTimeout);
 						}
 
-						resolve(db);
-					}
+						resolve(promisify(db.all.bind(db)));
+					});
 				});
-			}).then(db =>
-				require('util')
-					.promisify(db.all)
-					.bind(db)
-			);
-		super(options);
+			},
+			...options
+		});
 	}
 };

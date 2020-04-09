@@ -1,25 +1,24 @@
 'use strict';
 
-const {safeRequire} = require('../util');
+const {safeRequire} = require('..');
 const pg = safeRequire('pg');
 const Sql = require('./Sql');
 
 module.exports = class PostgreSQL extends Sql {
 	constructor(options = {}) {
-		options = Object.assign(
-			{
-				dialect: 'postgres',
-				uri: 'postgresql://localhost:5432'
+		const {uri = 'postgresql://localhost:5432'} = options;
+		super({
+			dialect: 'postgres',
+			async connect() {
+				const pool = new pg.Pool({connectionString: uri});
+				const query = async (sqlString) => {
+					const {rows} = await pool.query(sqlString);
+					return rows;
+				};
+
+				return Promise.resolve(query);
 			},
-			options
-		);
-		options.connect = () =>
-			Promise.resolve().then(() => {
-				const client = new pg.Pool({
-					connectionString: options.uri
-				});
-				return sql => client.query(sql).then(data => data.rows);
-			});
-		super(options);
+			...options
+		});
 	}
 };
