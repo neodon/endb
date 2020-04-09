@@ -6,15 +6,9 @@
     "typings": "typings/index.d.ts",
     "scripts": {
         "test": "ava --serial",
-        "test:watch": "ava --watch",
         "lint": "xo src",
-        "lint:fix": "xo src --fix",
         "docs:build": "node docs.js",
         "prepublishOnly": "npm run lint && npm test"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/chroventer/endb.git"
     },
     "keywords": [
         "endb",
@@ -22,13 +16,13 @@
         "cache",
         "javascript"
     ],
-    "author": "chroventer (https://github.com/chroventer)",
     "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/chroventer/endb/issues"
-    },
+    "author": "chroventer (https://github.com/chroventer)",
     "homepage": "https://endb.js.org",
+    "repository": "github:chroventer/endb",
+    "bugs": "https://github.com/chroventer/endb/issues",
     "dependencies": {
+        "buffer-json": "^2.0.0",
         "lodash": "^4.17.15"
     },
     "devDependencies": {
@@ -36,15 +30,14 @@
         "@commitlint/config-conventional": "^8.3.4",
         "ava": "^3.5.1",
         "docma": "^3.2.2",
-        "husky": "^4.2.3",
-        "xo": "^0.28.1"
+        "husky": "^4.2.4",
+        "xo": "^0.29.0"
     },
     "xo": {
         "prettier": true,
         "rules": {
             "guard-for-in": 0,
-            "no-negated-condition": 0,
-            "unicorn/no-process-exit": 0
+            "no-negated-condition": 0
         }
     },
     "commitlint": {
