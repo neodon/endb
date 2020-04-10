@@ -110,7 +110,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Clears all elements from the database.
-	 * @return {Promise<undefined>} Returns `undefined`.
+	 * @return {Promise<void>} Returns `undefined`.
 	 */
 	async clear() {
 		return this.options.store.clear();
@@ -118,7 +118,7 @@ class Endb extends EventEmitter {
 
 	/**
 	 * Deletes an element from the database by key.
-	 * @param {string|string[]} key The key(s) of the element to remove from the database.
+	 * @param {string} key The key(s) of the element to remove from the database.
 	 * @return {Promise<boolean>} `true` if the element is deleted successfully, otherwise `false`.
 	 * @example
 	 * await Endb.set('foo', 'bar'); // true
@@ -135,7 +135,7 @@ class Endb extends EventEmitter {
 	 * @param {string} key The key of the element to ensure.
 	 * @param {*} value The value of the element to ensure.
 	 * @param {?string} [path]
-	 * @return {Promise<any|undefined>} The (default) value of the element.
+	 * @return {Promise<void|any>} The (default) value of the element.
 	 * @example
 	 * await Endb.set('en', 'db');
 	 *
@@ -179,7 +179,7 @@ class Endb extends EventEmitter {
 	 * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.
 	 * @param {Function} fn The function to execute on each value in the element.
 	 * @param {*} [thisArg] Object to use as `this` inside callback.
-	 * @return {Promise<*|undefined>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
+	 * @return {Promise<*|void>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
 	 * @example
 	 * await Endb.set('foo', 'bar');
 	 * await Endb.set('profile', {
@@ -211,7 +211,7 @@ class Endb extends EventEmitter {
 	 * Gets the value of an element from the database by key.
 	 * @param {string} key The key of the element to get.
 	 * @param {?string} [path] The path of the property to get from the value.
-	 * @return {Promise<*|undefined>} The value of the element, or `undefined` if the element cannot be found in the database.
+	 * @return {Promise<*|void>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
 	 * const data = await Endb.get('foo');
 	 * console.log(data); // 'bar'
@@ -351,9 +351,9 @@ class Endb extends EventEmitter {
 	 * Removes an item from the array value of an element in the database.
 	 * Note: structured or complex data types such as arrays or objects cannot be removed from the value of the element.
 	 * @param {string} key The key of the element to remove.
-	 * @param {*} value The value to remove. Must be a string.
+	 * @param {string} value The value to remove.
 	 * @param {?string} [path] The path of the property to remove.
-	 * @return {Promise<*>} The value to remove.
+	 * @return {Promise<string>} The value to remove.
 	 */
 	async remove(key, value, path = null) {
 		const data = await this.get(key);
@@ -382,7 +382,7 @@ class Endb extends EventEmitter {
 	 * @param {string} key The key of the element to set to the database.
 	 * @param {*} value The value of the element to set to the database.
 	 * @param {?string} [path] The path of the property to set in the value.
-	 * @return {Promise<true>} Returns `true`.
+	 * @return {Promise<boolean>} Returns a boolean.
 	 * @example
 	 * await Endb.set('foo', 'bar');
 	 * await Endb.set('total', 400);
