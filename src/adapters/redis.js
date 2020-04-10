@@ -7,22 +7,9 @@ const Ioredis = safeRequire('ioredis');
 module.exports = class Redis extends EventEmitter {
 	constructor(options = {}) {
 		super();
-		this.options = Object.assign({}, options);
-		const client = new Ioredis(this.options.uri, this.options);
-		this.db = [
-			'get',
-			'keys',
-			'set',
-			'sadd',
-			'del',
-			'srem',
-			'smembers',
-			'end'
-		].reduce((object, method) => {
-			object[method] = require('util').promisify(client[method].bind(client));
-			return object;
-		}, {});
-		client.on('error', (error) => this.emit('error', error));
+		const {uri} = options;
+		this.db = new Ioredis(uri, options);
+		this.db.on('error', (error) => this.emit('error', error));
 	}
 
 	all() {
