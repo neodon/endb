@@ -1,89 +1,62 @@
 declare module 'endb' {
 	import {EventEmitter} from 'events';
 
-	export type EndbOptions = {
+	type MaybePromise<T> = T | Promise<T>;
+
+	export interface EndbAdapter {
+		namespace: string;
+		on?(event: 'error', callback: (error: Error) => void | never): void;
+		all(): MaybePromise<{ key: string; value: any }[]>;
+		clear(): MaybePromise<void>;
+		delete(key: string): MaybePromise<boolean>;
+		get(key: string): MaybePromise<void | any>;
+		set(key: string, value: any): MaybePromise<unknown>;
+	}
+
+	export interface EndbOptions {
 		uri?: string;
-		namespace?: string;
-		serialize?: () => any;
-		deserialize?: () => any;
+		namespace: string;
 		adapter?: string;
-		store?: any;
+		store: EndbAdapter;
 		collection?: string;
 		table?: string;
 		keySize?: number;
-	};
+		serialize(x: any): any;
+		deserialize(x: any): any;
+	}
 
-	type Element = {
-		key: string;
-		value?: any;
-	};
+	export function safeRequire(name: string): any;
 
 	export class Endb extends EventEmitter {
 		public options: EndbOptions;
-		constructor(options?: EndbOptions);
+		constructor(options?: string | EndbOptions);
 		public static multi(
 			names: string[],
 			options?: EndbOptions
-		): Record<string, Endb>;
-
-		public all(): Promise<Element[] | undefined>;
-		public clear(): Promise<undefined>;
-		public delete(key: string | string[]): Promise<boolean | boolean[]>;
-		public ensure(key: string, value: any): Promise<any | undefined>;
-		public find(fn: () => any, thisArg?: any): Promise<Element | undefined>;
-		public get(key: string, path?: string): Promise<any | undefined>;
+		): { [name: string]: Endb }[];
+		public all(): Promise<{ key: string; value: any; }[]>;
+		public clear(): Promise<void>;
+		public delete(key: string | string[]): Promise<boolean>;
+		public ensure(key: string, value: any): Promise<void | any>;
+		public entries(): Promise<any[][]>;
+		public find(fn: (value: any, key: string) => any, thisArg?: any): Promise<{ key: string; value: any; } | void>;
+		public get(key: string, path?: string): Promise<any | void>;
 		public has(key: string): Promise<boolean>;
-		public keys(): Promise<string[]>;
+		public keys(): Promise<string[][]>;
 		public math(
 			key: string,
 			operation: string,
 			operand: number,
 			path?: string
-		): Promise<true>;
-
+		): Promise<boolean>;
 		public push(
 			key: string,
 			value: any,
 			path?: string,
 			allowDuplicates?: boolean
 		): Promise<any>;
-
 		public remove(key: string, value: any, path?: string): Promise<any>;
-		public set(key: string, value: any, path?: string): Promise<true>;
-		public values(): Promise<any[]>;
-	}
-
-	export class Util {
-		public static addKeyPrefix(
-			key: string | string[],
-			namespace: string
-		): string;
-
-		public static isBufferLike(value: any): boolean;
-		public static get(
-			object: object,
-			path: string,
-			defaultValue: object
-		): object | undefined;
-
-		public static load(options: EndbOptions): any;
-		public static parse(text: string): object;
-		public static math(
-			firstOperand: number,
-			operation: string,
-			secondOperand: number
-		): number;
-
-		public static mergeDefault(def: object, given: object): object;
-		public static removeKeyPrefix(key: string, namespace: string): string;
-		public static safeRequire(id: string): any | undefined;
-		public static set(
-			object: object,
-			path: string | string[],
-			value: object
-		): object;
-
-		public static stringify(value: any, space?: string | number): string;
-		public static validateOptions(options?: EndbOptions): void;
+		public set(key: string, value: any, path?: string): Promise<boolean>;
+		public values(): Promise<any[][]>;
 	}
 }
