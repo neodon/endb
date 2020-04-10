@@ -135,11 +135,11 @@
     "$docmaLink": "?api=endb#Endb#all"
   },
   {
-    "comment": "/**\n\t * Clears all elements from the database.\n\t * @return {Promise<undefined>} Returns `undefined`.\n\t */",
+    "comment": "/**\n\t * Clears all elements from the database.\n\t * @return {Promise<void>} Returns `undefined`.\n\t */",
     "meta": {
       "range": [
-        3137,
-        3192
+        3132,
+        3187
       ],
       "filename": "index.js",
       "lineno": 115,
@@ -160,7 +160,7 @@
       {
         "type": {
           "names": [
-            "Promise.<undefined>"
+            "Promise.<void>"
           ]
         },
         "description": "Returns `undefined`."
@@ -178,11 +178,11 @@
     "$docmaLink": "?api=endb#Endb#clear"
   },
   {
-    "comment": "/**\n\t * Deletes an element from the database by key.\n\t * @param {string|string[]} key The key(s) of the element to remove from the database.\n\t * @return {Promise<boolean>} `true` if the element is deleted successfully, otherwise `false`.\n\t * @example\n\t * await Endb.set('foo', 'bar'); // true\n\t *\n\t * await Endb.delete('foo'); // true\n\t */",
+    "comment": "/**\n\t * Deletes an element from the database by key.\n\t * @param {string} key The key(s) of the element to remove from the database.\n\t * @return {Promise<boolean>} `true` if the element is deleted successfully, otherwise `false`.\n\t * @example\n\t * await Endb.set('foo', 'bar'); // true\n\t *\n\t * await Endb.delete('foo'); // true\n\t */",
     "meta": {
       "range": [
-        3536,
-        3632
+        3522,
+        3618
       ],
       "filename": "index.js",
       "lineno": 128,
@@ -205,8 +205,7 @@
       {
         "type": {
           "names": [
-            "string",
-            "Array.<string>"
+            "string"
           ]
         },
         "description": "The key(s) of the element to remove from the database.",
@@ -237,11 +236,11 @@
     "$docmaLink": "?api=endb#Endb#delete"
   },
   {
-    "comment": "/**\n\t * Ensures if an element exists in the database. If the element does not exist, sets the element to the database and returns the value.\n\t * @param {string} key The key of the element to ensure.\n\t * @param {*} value The value of the element to ensure.\n\t * @param {?string} [path]\n\t * @return {Promise<any|undefined>} The (default) value of the element.\n\t * @example\n\t * await Endb.set('en', 'db');\n\t *\n\t * const data = await Endb.ensure('foo', 'bar');\n\t * console.log(data); // 'bar'\n\t *\n\t * const data = await Endb.ensure('en', 'db');\n\t * console.log(data); // 'db'\n\t */",
+    "comment": "/**\n\t * Ensures if an element exists in the database. If the element does not exist, sets the element to the database and returns the value.\n\t * @param {string} key The key of the element to ensure.\n\t * @param {*} value The value of the element to ensure.\n\t * @param {?string} [path]\n\t * @return {Promise<void|any>} The (default) value of the element.\n\t * @example\n\t * await Endb.set('en', 'db');\n\t *\n\t * const data = await Endb.ensure('foo', 'bar');\n\t * console.log(data); // 'bar'\n\t *\n\t * const data = await Endb.ensure('en', 'db');\n\t * console.log(data); // 'db'\n\t */",
     "meta": {
       "range": [
-        4212,
-        4678
+        4193,
+        4659
       ],
       "filename": "index.js",
       "lineno": 148,
@@ -297,7 +296,7 @@
       {
         "type": {
           "names": [
-            "Promise.<(any|undefined)>"
+            "Promise.<(void|any)>"
           ]
         },
         "description": "The (default) value of the element."
@@ -317,11 +316,11 @@
     "$docmaLink": "?api=endb#Endb#ensure"
   },
   {
-    "comment": "/**\n\t * Finds a single item where the given function returns a truthy value.\n\t * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.\n\t * The database elements is mapped by their `key`. If you want to find an element by key, you should use the `get` method instead.\n\t * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.\n\t * @param {Function} fn The function to execute on each value in the element.\n\t * @param {*} [thisArg] Object to use as `this` inside callback.\n\t * @return {Promise<*|undefined>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned\n\t * @example\n\t * await Endb.set('foo', 'bar');\n\t * await Endb.set('profile', {\n\t *   id: 1234567890,\n\t *   username: 'user',\n\t *   verified: true,\n\t *   nil: null,\n\t *   hobbies: ['programming']\n\t * });\n\t *\n\t * await Endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }\n\t * await Endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }\n\t * await Endb.find(v => v.desc === 'desc'); // undefined\n\t */",
+    "comment": "/**\n\t * Finds a single item where the given function returns a truthy value.\n\t * Behaves like {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/find Array.prototype.find}.\n\t * The database elements is mapped by their `key`. If you want to find an element by key, you should use the `get` method instead.\n\t * See {@link https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Map/get MDN} for more details.\n\t * @param {Function} fn The function to execute on each value in the element.\n\t * @param {*} [thisArg] Object to use as `this` inside callback.\n\t * @return {Promise<*|void>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned\n\t * @example\n\t * await Endb.set('foo', 'bar');\n\t * await Endb.set('profile', {\n\t *   id: 1234567890,\n\t *   username: 'user',\n\t *   verified: true,\n\t *   nil: null,\n\t *   hobbies: ['programming']\n\t * });\n\t *\n\t * await Endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }\n\t * await Endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }\n\t * await Endb.find(v => v.desc === 'desc'); // undefined\n\t */",
     "meta": {
       "range": [
-        5992,
-        6223
+        5968,
+        6199
       ],
       "filename": "index.js",
       "lineno": 197,
@@ -366,7 +365,7 @@
       {
         "type": {
           "names": [
-            "Promise.<(*|undefined)>"
+            "Promise.<(*|void)>"
           ]
         },
         "description": "The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned"
@@ -386,11 +385,11 @@
     "$docmaLink": "?api=endb#Endb#find"
   },
   {
-    "comment": "/**\n\t * Gets the value of an element from the database by key.\n\t * @param {string} key The key of the element to get.\n\t * @param {?string} [path] The path of the property to get from the value.\n\t * @return {Promise<*|undefined>} The value of the element, or `undefined` if the element cannot be found in the database.\n\t * @example\n\t * const data = await Endb.get('foo');\n\t * console.log(data); // 'bar'\n\t *\n\t * // Using path feature\n\t * await Endb.get('profile', 'verified'); // false\n\t */",
+    "comment": "/**\n\t * Gets the value of an element from the database by key.\n\t * @param {string} key The key of the element to get.\n\t * @param {?string} [path] The path of the property to get from the value.\n\t * @return {Promise<*|void>} The value of the element, or `undefined` if the element cannot be found in the database.\n\t * @example\n\t * const data = await Endb.get('foo');\n\t * console.log(data); // 'bar'\n\t *\n\t * // Using path feature\n\t * await Endb.get('profile', 'verified'); // false\n\t */",
     "meta": {
       "range": [
-        6717,
-        7058
+        6688,
+        7029
       ],
       "filename": "index.js",
       "lineno": 222,
@@ -437,7 +436,7 @@
       {
         "type": {
           "names": [
-            "Promise.<(*|undefined)>"
+            "Promise.<(*|void)>"
           ]
         },
         "description": "The value of the element, or `undefined` if the element cannot be found in the database."
@@ -460,8 +459,8 @@
     "comment": "/**\n\t * Checks whether an element exists in the database or not.\n\t * @param {string} key The key of an element to check for.\n\t * @param {?string} [path] The path of the property to check.\n\t * @return {Promise<boolean>} `true` if the element exists in the database, otherwise `false`.\n\t */",
     "meta": {
       "range": [
-        7351,
-        7635
+        7322,
+        7606
       ],
       "filename": "index.js",
       "lineno": 237,
@@ -528,8 +527,8 @@
     "comment": "/**\n\t * Returns an array that contains the keys of each element.\n\t * @return {Promise<string[]>} An array that contains the keys of each element.\n\t */",
     "meta": {
       "range": [
-        7790,
-        7883
+        7761,
+        7854
       ],
       "filename": "index.js",
       "lineno": 255,
@@ -571,8 +570,8 @@
     "comment": "/**\n\t * Performs a mathematical operation on a value of an element.\n\t * @param {string} key The key of the element.\n\t * @param {string} operation The mathematical operation to perform.\n\t * @param {number} operand The right-hand operand.\n\t * @param {?string} [path] The path of the property to perform mathematical operation on.\n\t * @return {true} Returns `true`.\n\t * @example\n\t * balance.set('endb', 100);\n\t *\n\t * balance.math('endb', 'add', 100); // true\n\t */",
     "meta": {
       "range": [
-        8348,
-        8921
+        8319,
+        8892
       ],
       "filename": "index.js",
       "lineno": 272,
@@ -662,8 +661,8 @@
     "comment": "/**\n\t * Creates multiple instances of Endb.\n\t * @param {string[]} names An array of strings. Each element will create new instance.\n\t * @param {EndbOptions} [options=EndbOptions] The options for the instances.\n\t * @return {Object} An object containing created Endb instances.\n\t * @example\n\t * const endb = Endb.multi(['users', 'members']);\n\t * const endb = Endb.multi(['users', 'members'], {\n\t *     uri: 'sqlite://endb.sqlite',\n\t *     namespace: 'mydb'\n\t * });\n\t *\n\t * await enbb.users.set('foo', 'bar');\n\t * await endb.members.set('bar', 'foo');\n\t */",
     "meta": {
       "range": [
-        9479,
-        9767
+        9450,
+        9738
       ],
       "filename": "index.js",
       "lineno": 307,
@@ -765,8 +764,8 @@
     "comment": "/**\n\t * Pushes an item to the array value in the database.\n\t * @param {string} key The key of the element to push to.\n\t * @param {*} value The value to push.\n\t * @param {?string} [path] The path of the property of the value to push.\n\t * @param {boolean} [allowDuplicates=false] Whether or not, allow duplicates elements in the value.\n\t * @return {Promise<*>} The value to push.\n\t */",
     "meta": {
       "range": [
-        10154,
-        10787
+        10125,
+        10758
       ],
       "filename": "index.js",
       "lineno": 328,
@@ -852,11 +851,11 @@
     "$docmaLink": "?api=endb#Endb#push"
   },
   {
-    "comment": "/**\n\t * Removes an item from the array value of an element in the database.\n\t * Note: structured or complex data types such as arrays or objects cannot be removed from the value of the element.\n\t * @param {string} key The key of the element to remove.\n\t * @param {*} value The value to remove. Must be a string.\n\t * @param {?string} [path] The path of the property to remove.\n\t * @return {Promise<*>} The value to remove.\n\t */",
+    "comment": "/**\n\t * Removes an item from the array value of an element in the database.\n\t * Note: structured or complex data types such as arrays or objects cannot be removed from the value of the element.\n\t * @param {string} key The key of the element to remove.\n\t * @param {string} value The value to remove.\n\t * @param {?string} [path] The path of the property to remove.\n\t * @return {Promise<string>} The value to remove.\n\t */",
     "meta": {
       "range": [
-        11218,
-        11806
+        11181,
+        11769
       ],
       "filename": "index.js",
       "lineno": 358,
@@ -890,10 +889,10 @@
       {
         "type": {
           "names": [
-            "*"
+            "string"
           ]
         },
-        "description": "The value to remove. Must be a string.",
+        "description": "The value to remove.",
         "name": "value"
       },
       {
@@ -913,7 +912,7 @@
       {
         "type": {
           "names": [
-            "Promise.<*>"
+            "Promise.<string>"
           ]
         },
         "description": "The value to remove."
@@ -930,11 +929,11 @@
     "$docmaLink": "?api=endb#Endb#remove"
   },
   {
-    "comment": "/**\n\t * Sets an element to the database.\n\t * @param {string} key The key of the element to set to the database.\n\t * @param {*} value The value of the element to set to the database.\n\t * @param {?string} [path] The path of the property to set in the value.\n\t * @return {Promise<true>} Returns `true`.\n\t * @example\n\t * await Endb.set('foo', 'bar');\n\t * await Endb.set('total', 400);\n\t * await Endb.set('exists', false);\n\t * await Endb.set('profile', {\n\t *   id: 1234567890,\n\t *   username: 'user',\n\t *   verified: true,\n\t *   nil: null\n\t * });\n\t * await Endb.set('todo', [ 'Add a authentication system.', 'Refactor the generator' ]);\n\t *\n\t * await Endb.set('profile', false, 'verified');\n\t * await Endb.set('profile', 100, 'balance');\n\t */",
+    "comment": "/**\n\t * Sets an element to the database.\n\t * @param {string} key The key of the element to set to the database.\n\t * @param {*} value The value of the element to set to the database.\n\t * @param {?string} [path] The path of the property to set in the value.\n\t * @return {Promise<boolean>} Returns a boolean.\n\t * @example\n\t * await Endb.set('foo', 'bar');\n\t * await Endb.set('total', 400);\n\t * await Endb.set('exists', false);\n\t * await Endb.set('profile', {\n\t *   id: 1234567890,\n\t *   username: 'user',\n\t *   verified: true,\n\t *   nil: null\n\t * });\n\t * await Endb.set('todo', [ 'Add a authentication system.', 'Refactor the generator' ]);\n\t *\n\t * await Endb.set('profile', false, 'verified');\n\t * await Endb.set('profile', 100, 'balance');\n\t */",
     "meta": {
       "range": [
-        12548,
-        12851
+        12517,
+        12820
       ],
       "filename": "index.js",
       "lineno": 401,
@@ -991,10 +990,10 @@
       {
         "type": {
           "names": [
-            "Promise.<true>"
+            "Promise.<boolean>"
           ]
         },
-        "description": "Returns `true`."
+        "description": "Returns a boolean."
       }
     ],
     "examples": [
@@ -1014,8 +1013,8 @@
     "comment": "/**\n\t * Returns an array that contains the values of each element.\n\t * @return {Promise<any[]>} Array that contains the values of each element.\n\t */",
     "meta": {
       "range": [
-        13004,
-        13103
+        12973,
+        13072
       ],
       "filename": "index.js",
       "lineno": 417,
