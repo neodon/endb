@@ -7,10 +7,11 @@ declare module 'endb' {
 	export interface EndbAdapter {
 		on?(event: 'error', callback: (error: Error) => void | never): void;
 		namespace: string;
-		all(): OrPromise<{ key: string; value: any }[]>;
+		all<T>(): OrPromise<Element<T>[]>;
 		clear(): OrPromise<void>;
 		delete(key: string): OrPromise<boolean>;
 		get(key: string): OrPromise<void | any>;
+		has?(key: string): OrPromise<boolean>;
 		set(key: string, value: any): OrPromise<unknown>;
 	}
 
