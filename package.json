@@ -6,7 +6,7 @@
     "typings": "typings/index.d.ts",
     "scripts": {
         "test": "ava --serial",
-        "test:docker": "docker-compose up --build --exit-code-from test",
+        "test:docker": "docker-compose --verbose up --build --exit-code-from test",
         "posttest:docker": "docker-compose down --rmi local",
         "lint": "xo src",
         "docs:build": "node docs.js",
