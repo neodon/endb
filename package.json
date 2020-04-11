@@ -6,6 +6,8 @@
     "typings": "typings/index.d.ts",
     "scripts": {
         "test": "ava --serial",
+        "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test",
+        "posttest:docker": "docker-compose down --rmi local",
         "lint": "xo src",
         "docs:build": "node docs.js",
         "prepublishOnly": "npm run lint && npm test"
@@ -23,31 +25,28 @@
     "bugs": "https://github.com/chroventer/endb/issues",
     "dependencies": {
         "buffer-json": "^2.0.0",
-        "lodash": "^4.17.15"
+        "ioredis": "^4.16.2",
+        "level": "^6.0.1",
+        "lodash": "^4.17.15",
+        "mongodb": "^3.5.5",
+        "mysql2": "^2.1.0",
+        "pg": "^8.0.2",
+        "sql": "^0.78.0",
+        "sqlite3": "^4.1.1"
     },
     "devDependencies": {
-        "@commitlint/cli": "^8.3.5",
-        "@commitlint/config-conventional": "^8.3.4",
         "ava": "^3.5.1",
         "docma": "^3.2.2",
-        "husky": "^4.2.4",
         "xo": "^0.29.0"
+    },
+    "ava": {
+        "files": ["!test/functions.js"]
     },
     "xo": {
         "prettier": true,
         "rules": {
             "guard-for-in": 0,
             "no-negated-condition": 0
-        }
-    },
-    "commitlint": {
-        "extends": [
-            "@commitlint/config-conventional"
-        ]
-    },
-    "husky": {
-        "hooks": {
-            "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
         }
     }
 }
