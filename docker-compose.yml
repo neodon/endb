@@ -20,7 +20,7 @@ services:
     postgres:
         image: postgres:latest
         <<: *silent
-        command: ['-c', 'max_connection=200']
+        command: ['-c', 'max_connections=200']
         environment: 
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: endb
