@@ -1,31 +1,44 @@
 name: Test
 on: [push, pull_request]
 jobs:
-    lint:
-      name: Lint
-      runs-on: ubuntu-latest
-      steps: 
-        - name: Checkout repository
-          uses: actions/checkout@master
-        - name: Install Node
-          uses: actions/setup-node@master
-          with:
-            node-version: 12
-        - name: Installation
-          run: npm install
-        - name: Lint
-          run: npm run lint
-    test:
-      name: Test
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout repository
-          uses: actions/checkout@master
-        - name: Install Node
-          uses: actions/setup-node@master
-          with:
-            node-version: 12
-        - name: Installation
-          run: npm install
-        - name: Test
-          run: npm run test
+  container-job:
+    runs-on: ubuntu-latest
+    container: 'node:12.16.2'
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps: 
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Install Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 12
+      - name: Installation
+        run: npm install
+      - name: Lint
+        run: npm run lint
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@master
+      - name: Install Node
+        uses: actions/setup-node@master
+        with:
+          node-version: 12
+      - name: Installation
+        run: npm install
+      - name: Docker
+        run: npm run test:docker
+      - name: Test
+        run: npm run test
+      - name: Posttest
+        run: npm run posttest:docker
