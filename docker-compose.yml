@@ -1,7 +1,4 @@
-version: '3'
-
-logging:
-    driver: 'none'
+version: '3.0'
 
 services:
     redis:
@@ -9,6 +6,7 @@ services:
 
     mongo:
         image: mongo:latest
+
     mysql:
         image: mysql:5
         environment:
