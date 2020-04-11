@@ -54,6 +54,6 @@ module.exports = class Redis extends EventEmitter {
 	}
 
 	_prefixNamespace() {
-		return `namespace:${this.options.namespace}`;
+		return `namespace:${this.namespace}`;
 	}
 };

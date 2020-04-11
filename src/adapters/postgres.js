@@ -2,7 +2,7 @@
 
 const {safeRequire} = require('..');
 const pg = safeRequire('pg');
-const Sql = require('./Sql');
+const Sql = require('./sql');
 
 module.exports = class PostgreSQL extends Sql {
 	constructor(options = {}) {
