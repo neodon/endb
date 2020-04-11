@@ -1,20 +1,16 @@
 version: '3'
 
-x-silent: &silent
-    logging:
-        driver: 'none'
+logging:
+    driver: 'none'
 
 services:
     redis:
         image: redis:latest
-        <<: *silent
 
     mongo:
         image: mongo:latest
-        <<: *silent
     mysql:
         image: mysql:5
-        <<: *silent
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
             MYSQL_USER: mysql
@@ -23,13 +19,12 @@ services:
 
     postgres:
         image: postgres:latest
-        <<: *silent
         command: ['-c', 'max_connections=200']
         environment: 
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: endb
             POSTGRES_DB: endb_test
-            
+
     test:
         build: .
         environment:
