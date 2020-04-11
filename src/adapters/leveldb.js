@@ -7,65 +7,55 @@ const Level = safeRequire('level');
 module.exports = class LevelDB extends EventEmitter {
 	constructor(options = {}) {
 		super();
-		options = Object.assign(
-			{
-				uri: 'leveldb://db'
-			},
-			options
-		);
-		const client = new Level(
-			options.uri.replace(/^leveldb:\/\//, ''),
-			options,
-			(error) => {
-				if (error) this.emit('error', error);
-			}
-		);
-		this.db = [
-			'del',
-			'createKeyStream',
-			'createReadStream',
-			'get',
-			'put',
-			'close'
-		].reduce((object, method) => {
-			object[method] = require('util').promisify(client[method].bind(client));
-			return object;
-		}, {});
-	}
-
-	all() {
-		return this.db.createReadStream().then((stream) => {
-			stream.on('data', (data) => {
-				return data;
-			});
+		const {uri = 'leveldb://db'} = options;
+		this.db = new Level(uri.replace(/^leveldb:\/\//, ''), options, (error) => {
+			if (error) this.emit('error', error);
 		});
 	}
 
-	clear() {
-		return this.db.createKeyStream().then((stream) => {
-			stream.on('data', async (data) => {
-				await this.db.del(data);
-			});
-			return undefined;
-		});
-	}
-
-	close() {
-		return this.db.close().then(() => undefined);
-	}
-
-	delete(key) {
-		return this.db.del(key).then((data) => data > 0);
-	}
-
-	get(key) {
-		return this.db.get(key).then((data) => {
-			if (data === null) return undefined;
+	async all() {
+		const stream = await this.db.createReadStream();
+		stream.on('data', (data) => {
 			return data;
 		});
 	}
 
-	set(key, value) {
+	async clear() {
+		const stream = await this.db.createKeyStream();
+		stream.on('data', async (data) => {
+			await this.db.del(data);
+		});
+
+		return undefined;
+	}
+
+	async close() {
+		await this.db.close();
+		return undefined;
+	}
+
+	async delete(key) {
+		const data = this.db.del(key);
+		return data > 0;
+	}
+
+	async get(key) {
+		const data = await this.db.get(key);
+		return data;
+	}
+
+	async has(key) {
+		return this.db
+			.get(key)
+			.then((value) => {
+				if (value) return true;
+			})
+			.catch((error) => {
+				if (error) return false;
+			});
+	}
+
+	async set(key, value) {
 		return this.db.put(key, value);
 	}
 };

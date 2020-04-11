@@ -9,12 +9,9 @@ const {parse, stringify} = require('buffer-json');
 
 const load = (options) => {
 	const adapters = {
-		level: './adapters/leveldb',
 		leveldb: './adapters/leveldb',
-		mongo: './adapters/mongodb',
 		mongodb: './adapters/mongodb',
 		mysql: './adapters/mysql',
-		mysql2: './adapters/mysql',
 		postgres: './adapters/postgres',
 		postgresql: './adapters/postgres',
 		redis: './adapters/redis',
@@ -237,12 +234,16 @@ class Endb extends EventEmitter {
 	async has(key, path = null) {
 		if (path !== null) {
 			const data = await this.get(key);
-			return _has(data, path);
+			return _has(data || {}, path);
 		}
 
 		key = this._addKeyPrefix(key);
-		if (this.options.store instanceof Map) {
-			return this.options.store.has(key);
+		if (
+			typeof this.options.store.has !== 'undefined' &&
+			typeof this.options.store.has === 'function'
+		) {
+			const result = await this.options.store.has(key);
+			return result;
 		}
 
 		return Boolean(await this.get(key));
