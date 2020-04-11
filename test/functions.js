@@ -8,17 +8,16 @@ const apiTest = (test, Endb, options = {}) => {
 
   test.serial('All methods returns a Promise.', (t) => {
     const endb = new Endb(options);
-    t.true(endb.all() instanceof Promise);
-    t.true(endb.clear() instanceof Promise);
-    t.true(endb.delete('foo') instanceof Promise);
     t.true(endb.ensure('foo', 'bar') instanceof Promise);
-    t.true(endb.entries() instanceof Promise);
-    t.true(endb.find((value) => value === 'bar') instanceof Promise);
     t.true(endb.get('foo') instanceof Promise);
     t.true(endb.has('foo') instanceof Promise);
-    t.true(endb.keys() instanceof Promise);
     t.true(endb.set('foo', 'bar') instanceof Promise);
+    t.true(endb.all() instanceof Promise);
+    t.true(endb.entries() instanceof Promise);
+    t.true(endb.keys() instanceof Promise);
     t.true(endb.values() instanceof Promise);
+    t.true(endb.delete('foo') instanceof Promise);
+    t.true(endb.clear() instanceof Promise);
   });
 
   test.serial('Endb#set resolves to true', async (t) => {
@@ -70,10 +69,10 @@ const adapterTest = (test, Endb, goodUri, badUri) => {
   });
 
   test.serial.cb('Connection errors are emitted', (t) => {
+    t.plan(1);
     const endb = new Endb(badUri);
     endb.on('error', () => {
       t.pass();
-      t.end();
     });
   });
 };

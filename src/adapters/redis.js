@@ -12,13 +12,9 @@ module.exports = class Redis extends EventEmitter {
 		this.db.on('error', (error) => this.emit('error', error));
 	}
 
-	all() {
-		return this.db.keys('*').then((data) => {
-			for (const element of data) {
-				if (element === null) return undefined;
-				return element;
-			}
-		});
+	async all() {
+		const data = await this.db.keys();
+		return data;
 	}
 
 	clear() {
@@ -29,7 +25,7 @@ module.exports = class Redis extends EventEmitter {
 	}
 
 	close() {
-		return this.db.end().then(() => undefined);
+		return this.db.disconnect().then(() => undefined);
 	}
 
 	delete(key) {
