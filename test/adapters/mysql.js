@@ -9,9 +9,7 @@ const {
   MYSQL_PASSWORD,
   MYSQL_DATABASE = 'endb_test',
 } = process.env;
-const uri = `mysql://${MYSQL_USER}${
-  MYSQL_PASSWORD ? `:${MYSQL_PASSWORD}` : ''
-}@${MYSQL_HOST}/${MYSQL_DATABASE}`;
+const uri = `mysql://${MYSQL_USER}${MYSQL_PASSWORD ? `:${MYSQL_PASSWORD}` : ''}@${MYSQL_HOST}/${MYSQL_DATABASE}`;
 
-adapterTest(test, Endb, uri, 'mysql://foo');
+adapterTest(test, Endb, uri);
 endbTest(test, Endb, { uri });

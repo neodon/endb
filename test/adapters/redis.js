@@ -6,5 +6,5 @@ const { endbTest, adapterTest } = require('../functions');
 const { REDIS_HOST = 'localhost' } = process.env;
 const uri = `redis://${REDIS_HOST}`;
 
-adapterTest(test, Endb, uri, 'redis://foo');
+adapterTest(test, Endb, uri);
 endbTest(test, Endb, { uri });

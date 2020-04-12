@@ -9,9 +9,7 @@ const {
   POSTGRES_PASSWORD,
   POSTGRES_DB = 'endb_test',
 } = process.env;
-const uri = `postgresql://${POSTGRES_USER}${
-  POSTGRES_PASSWORD ? `:${POSTGRES_PASSWORD}` : ''
-}@${POSTGRES_HOST}:5432/${POSTGRES_DB}`;
+const uri = `postgresql://${POSTGRES_USER}${POSTGRES_PASSWORD ? `:${POSTGRES_PASSWORD}` : ''}@${POSTGRES_HOST}:5432/${POSTGRES_DB}`;
 
-adapterTest(test, Endb, uri, 'postgresql://foo');
+adapterTest(test, Endb, uri);
 endbTest(test, Endb, { uri });

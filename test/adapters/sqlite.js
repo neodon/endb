@@ -7,7 +7,6 @@ const { endbTest, adapterTest } = require('../functions');
 adapterTest(
   test,
   Endb,
-  'sqlite://test.sqlite',
-  'sqlite://path/to/database.sqlite'
+  'sqlite://test.sqlite'
 );
 endbTest(test, Endb, { uri: 'sqlite://test.sqlite', busyTimeout: 30000 });

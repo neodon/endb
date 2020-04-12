@@ -18,7 +18,7 @@ module.exports = class MongoDB extends EventEmitter {
 		this.db = new Promise((resolve) => {
 			mongodb.MongoClient.connect(
 				this.options.url,
-				{useUnifiedTopology: options.useUnifiedTopology || true },
+				{useUnifiedTopology: options.useUnifiedTopology || true},
 				(error, client) => {
 					if (error !== null) return this.emit('error', error);
 					const db = client.db();

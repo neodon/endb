@@ -58,9 +58,15 @@ const apiTest = (test, Endb, options = {}) => {
   });
 };
 
-const adapterTest = (test, Endb, goodUri, badUri) => {
+const adapterTest = (test, Endb, options) => {
+  test.beforeEach(() => {
+    const endb = new Endb(options);
+    await endb.clear();
+  });
+
   test.serial('URI automatically loads the storage adapters', async (t) => {
-    const endb = new Endb(goodUri);
+    t.timeout(60000);
+    const endb = new Endb(options);
     await endb.clear();
     t.is(await endb.get('foo'), undefined);
     await endb.set('foo', 'bar');
