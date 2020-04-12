@@ -6,11 +6,11 @@ const Sql = require('./sql');
 
 module.exports = class MySQL extends Sql {
 	constructor(options = {}) {
-		const {uri = 'mysql://localhost'} = options;
+		options = Object.assign({uri: 'mysql://localhost'}, options);
 		super({
 			dialect: 'mysql',
 			async connect() {
-				const connection = await mysql.createConnection(uri);
+				const connection = await mysql.createConnection(options.uri);
 				const query = async (sqlString) => {
 					const [row] = await connection.execute(sqlString);
 					return row;

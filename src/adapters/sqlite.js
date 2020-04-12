@@ -7,8 +7,8 @@ const Sql = require('./sql');
 
 module.exports = class SQLite extends Sql {
 	constructor(options = {}) {
-		const {uri = 'sqlite://:memory:'} = options;
-		const path = uri.replace(/^sqlite:\/\//, '');
+		options = Object.assign({uri: 'sqlite://:memory:'}, options);
+		const path = options.uri.replace(/^sqlite:\/\//, '');
 		super({
 			dialect: 'sqlite',
 			async connect() {
