@@ -4,7 +4,8 @@
 
 > Simple key-value storage with support for multiple backends.
 
-![Test](https://github.com/chroventer/endb/workflows/Test/badge.svg)
+[![Discord](https://discordapp.com/api/guilds/697425515363172362/embed.png)](https://discord.gg/d5SYmjj)
+[![Test](https://github.com/chroventer/endb/workflows/Test/badge.svg)](https://github.com/chroventer/endb)
 [![Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
 [![Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
 [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
