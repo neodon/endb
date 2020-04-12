@@ -40,6 +40,7 @@
         "level": "^6.0.1"
     },
     "ava": {
+        "timeout": "30s",
         "files": [
             "!test/functions.js"
         ]
