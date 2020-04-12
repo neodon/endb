@@ -11,4 +11,4 @@ adapterTest(
   Endb,
   uri
 );
-endbTest(test, Endb, { uri: 'mongodb://127.0.0.1:2701' });
+endbTest(test, Endb, { uri });
