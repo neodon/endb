@@ -2,7 +2,7 @@
 
 const EventEmitter = require('events');
 const {safeRequire} = require('..');
-const mongodb = require('mongodb');
+const mongodb = safeRequire('mongodb');
 
 module.exports = class MongoDB extends EventEmitter {
 	constructor(options = {}) {
@@ -11,15 +11,14 @@ module.exports = class MongoDB extends EventEmitter {
 		this.options = Object.assign(
 			{
 				url: 'mongodb://127.0.0.1:27017',
-				collection: 'endb',
-				useUnifiedTopology: true
+				collection: 'endb'
 			},
 			options
 		);
 		this.db = new Promise((resolve) => {
 			mongodb.MongoClient.connect(
 				this.options.url,
-				{ useUnifiedTopology: options.useUnifiedTopology },
+				{useUnifiedTopology: options.useUnifiedTopology || true },
 				(error, client) => {
 					if (error !== null) return this.emit('error', error);
 					const db = client.db();

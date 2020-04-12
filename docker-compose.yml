@@ -1,14 +1,21 @@
-version: '3.0'
+version: '3.7'
+
+x-silent: &silent
+logging:
+    driver: 'none'
 
 services:
     redis:
         image: redis:latest
+        <<: *silent
 
     mongo:
         image: mongo:latest
+        <<: *silent
 
     mysql:
         image: mysql:5
+        <<: *silent
         environment:
             MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
             MYSQL_USER: mysql
@@ -17,6 +24,7 @@ services:
 
     postgres:
         image: postgres:latest
+        <<: *silent
         command: ['-c', 'max_connections=200']
         environment: 
             POSTGRES_USER: postgres

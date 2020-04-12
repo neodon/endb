@@ -10,7 +10,7 @@
         "test:docker": "docker-compose up --build --abort-on-container-exit --exit-code-from test",
         "posttest:docker": "docker-compose down --rmi local",
         "docs:build": "node docs.js",
-        "prepublishOnly": "npm run lint && npm test"
+        "prepublishOnly": "npm run lint && ava test/index.js"
     },
     "keywords": [
         "endb",
