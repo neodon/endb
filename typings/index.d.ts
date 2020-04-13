@@ -11,7 +11,7 @@ declare module 'endb' {
 		clear(): OrPromise<void>;
 		delete(key: string): OrPromise<boolean>;
 		get(key: string): OrPromise<void | any>;
-		has?(key: string): OrPromise<boolean>;
+		has(key: string): OrPromise<boolean>;
 		set(key: string, value: any): OrPromise<unknown>;
 	}
 
