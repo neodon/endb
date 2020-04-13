@@ -1,8 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const {safeRequire} = require('..');
-const sql = safeRequire('sql');
+const sql = require('sql');
 
 module.exports = class SQL extends EventEmitter {
 	constructor(options = {}) {

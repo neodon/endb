@@ -1,8 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const {safeRequire} = require('..');
-const redis = safeRequire('redis');
+const redis = require('redis');
 
 module.exports = class Redis extends EventEmitter {
 	constructor(options = {}) {

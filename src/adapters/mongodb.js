@@ -1,8 +1,7 @@
 'use strict';
 
 const EventEmitter = require('events');
-const {safeRequire} = require('..');
-const mongodb = safeRequire('mongodb');
+const mongodb = require('mongodb');
 
 module.exports = class MongoDB extends EventEmitter {
 	constructor(options = {}) {

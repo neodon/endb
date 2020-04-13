@@ -1,7 +1,6 @@
 'use strict';
 
-const {safeRequire} = require('..');
-const mysql = safeRequire('mysql2/promise');
+const mysql = require('mysql2/promise');
 const Sql = require('./sql');
 
 module.exports = class MySQL extends Sql {

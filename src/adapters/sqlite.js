@@ -1,8 +1,7 @@
 'use strict';
 
 const {promisify} = require('util');
-const {safeRequire} = require('..');
-const sqlite3 = safeRequire('sqlite3');
+const sqlite3 = require('sqlite3');
 const Sql = require('./sql');
 
 module.exports = class SQLite extends Sql {

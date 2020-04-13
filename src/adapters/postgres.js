@@ -1,7 +1,6 @@
 'use strict';
 
-const {safeRequire} = require('..');
-const pg = safeRequire('pg');
+const pg = require('pg');
 const Sql = require('./sql');
 
 module.exports = class PostgreSQL extends Sql {
