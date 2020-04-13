@@ -7,13 +7,11 @@ const sql = safeRequire('sql');
 module.exports = class SQL extends EventEmitter {
 	constructor(options = {}) {
 		super();
-		this.options = Object.assign(
-			{
-				table: 'endb',
-				keySize: 255
-			},
-			options
-		);
+		this.options = {
+			table: 'endb',
+			keySize: 255,
+			...options
+		};
 		const db = new sql.Sql(this.options.dialect);
 		this.entry = db.define({
 			name: this.options.table,
@@ -29,11 +27,14 @@ module.exports = class SQL extends EventEmitter {
 				}
 			]
 		});
-		const connected = this.options.connect().then(async (query) => {
-			const createTable = this.entry.create().ifNotExists().toString();
-			await query(createTable);
-			return query;
-		});
+		const connected = this.options
+			.connect()
+			.then(async (query) => {
+				const createTable = this.entry.create().ifNotExists().toString();
+				await query(createTable);
+				return query;
+			})
+			.catch((error) => this.emit('error', error));
 		this.query = async (sqlString) => {
 			const query = await connected;
 			if (query) return query(sqlString);
@@ -49,7 +50,7 @@ module.exports = class SQL extends EventEmitter {
 	async clear() {
 		const del = this.entry
 			.delete()
-			.where(this.entry.key.like(`${this.options.namespace}:%`))
+			.where(this.entry.key.like(`${this.namespace}:%`))
 			.toString();
 		await this.query(del);
 	}
@@ -66,8 +67,14 @@ module.exports = class SQL extends EventEmitter {
 	async get(key) {
 		const select = this.entry.select().where({key}).toString();
 		const [row] = await this.query(select);
-		if (row === undefined) return;
+		if (row === undefined) return undefined;
 		return row.value;
+	}
+
+	async has(key) {
+		const select = this.entry.select(key).where({key}).toString();
+		const row = await this.query(select);
+		return row;
 	}
 
 	async set(key, value) {

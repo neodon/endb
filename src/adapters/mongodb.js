@@ -8,13 +8,11 @@ module.exports = class MongoDB extends EventEmitter {
 	constructor(options = {}) {
 		super();
 		options.url = options.uri || undefined;
-		this.options = Object.assign(
-			{
-				url: 'mongodb://127.0.0.1:27017',
-				collection: 'endb'
-			},
-			options
-		);
+		this.options = {
+			url: 'mongodb://127.0.0.1:27017',
+			collection: 'endb',
+			...options
+		};
 		this.db = new Promise((resolve) => {
 			mongodb.MongoClient.connect(
 				this.options.url,
@@ -44,7 +42,7 @@ module.exports = class MongoDB extends EventEmitter {
 
 	async clear() {
 		const collection = await this.db;
-		await collection.deleteMany({key: new RegExp(`^${this.namespace}`)});
+		await collection.deleteMany({key: new RegExp(`^${this.namespace}:`)});
 	}
 
 	async close() {
@@ -62,6 +60,11 @@ module.exports = class MongoDB extends EventEmitter {
 		const collection = await this.db;
 		const doc = await collection.findOne({key});
 		return doc === null ? undefined : doc.value;
+	}
+
+	async has(key) {
+		const collection = await this.db;
+		return collection.find({key}).limit(1);
 	}
 
 	async set(key, value) {

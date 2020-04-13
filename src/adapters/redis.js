@@ -2,14 +2,31 @@
 
 const EventEmitter = require('events');
 const {safeRequire} = require('..');
-const Ioredis = safeRequire('ioredis');
+const redis = safeRequire('redis');
 
 module.exports = class Redis extends EventEmitter {
 	constructor(options = {}) {
 		super();
-		const {uri} = options;
-		this.db = new Ioredis(uri, options);
-		this.db.on('error', (error) => this.emit('error', error));
+		if (options.uri && typeof options.url === 'undefined') {
+			options.url = options.uri;
+		}
+
+		const client = redis.createClient(options);
+		this.db = [
+			'get',
+			'set',
+			'sadd',
+			'del',
+			'exists',
+			'srem',
+			'keys',
+			'smembers'
+		].reduce((object, method) => {
+			const fn = client[method];
+			object[method] = require('util').promisify(fn.bind(client));
+			return object;
+		}, {});
+		client.on('error', (error) => this.emit('error', error));
 	}
 
 	async all() {
@@ -17,36 +34,37 @@ module.exports = class Redis extends EventEmitter {
 		return data;
 	}
 
-	clear() {
-		return this.db
-			.smembers(this._prefixNamespace())
-			.then((data) => this.db.del(data.concat(this._prefixNamespace())))
-			.then(() => undefined);
+	async clear() {
+		const namespace = this._prefixNamespace();
+		const keys = await this.db.smembers(namespace);
+		await this.db.del(...keys.concat(namespace));
 	}
 
-	close() {
-		return this.db.disconnect().then(() => undefined);
+	async close() {
+		await this.db.disconnect();
+		return undefined;
 	}
 
-	delete(key) {
-		return this.db.del(key).then((data) => {
-			return this.db.srem(this._prefixNamespace(), key).then(() => data > 0);
-		});
+	async delete(key) {
+		const items = await this.db.del(key);
+		await this.db.srem(this._prefixNamespace(), key);
+		return items > 0;
 	}
 
-	get(key) {
-		return this.db.get(key).then((data) => {
-			if (data === null) return undefined;
-			return data;
-		});
+	async get(key) {
+		const value = await this.db.get(key);
+		if (value === null) return;
+		return value;
 	}
 
-	set(key, value) {
-		return Promise.resolve()
-			.then(() => {
-				return this.db.set(key, value);
-			})
-			.then(() => this.db.sadd(this._prefixNamespace(), key));
+	async has(key) {
+		return this.db.exists(key);
+	}
+
+	async set(key, value) {
+		if (typeof value === 'undefined') return;
+		await this.db.set(key, value);
+		return this.db.sadd(this._prefixNamespace(), key);
 	}
 
 	_prefixNamespace() {

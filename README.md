@@ -28,12 +28,11 @@
 npm install endb
 ```
 
-By default, data is cached in memory. Optionally, install and utilize a "storage adapter". Officially supported adapters are LevelDB, MongoDB, NeDB, MySQL, PostgreSQL, Redis, and SQLite.
+By default, data is cached in memory. Optionally, install and utilize a "storage adapter". Officially supported adapters are MongoDB, Redis, MySQL, PostgreSQL, and SQLite.
 
 ```bash
-npm install level # LevelDB
-npm install mongodb # MongoDB
-npm install ioredis # Redis
+npm install mongodb
+npm install redis
 
 # To use SQL-based databases, an additional package 'sql' must be installed and an adapter
 npm install sql
@@ -50,7 +49,6 @@ const Endb = require('endb');
 
 // One of the following:
 const endb = new Endb();
-const endb = new Endb('leveldb://path/to/database');
 const endb = new Endb('mongodb://user:pass@localhost:27017/dbname');
 const endb = new Endb('mysql://user:pass@localhost:3306/dbname');
 const endb = new Endb('postgresql://user:pass@localhost:5432/dbname');

@@ -9,7 +9,6 @@ const {parse, stringify} = require('buffer-json');
 
 const load = (options) => {
 	const adapters = {
-		leveldb: './adapters/leveldb',
 		mongodb: './adapters/mongodb',
 		mysql: './adapters/mysql',
 		postgres: './adapters/postgres',
@@ -57,14 +56,12 @@ class Endb extends EventEmitter {
 		 * The options the database was instantiated with.
 		 * @type {EndbOptions}
 		 */
-		this.options = Object.assign(
-			{
-				namespace: 'endb',
-				serialize: stringify,
-				deserialize: parse
-			},
-			typeof options === 'string' ? {uri: options} : options
-		);
+		this.options = {
+			namespace: 'endb',
+			serialize: stringify,
+			deserialize: parse,
+			...(typeof options === 'string' ? {uri: options} : options)
+		};
 
 		if (!this.options.store) {
 			this.options.store = load(this.options);
@@ -82,23 +79,25 @@ class Endb extends EventEmitter {
 	 * @return {Promise<any[]>} All the elements in the database.
 	 */
 	async all() {
-		const elements = [];
-		if (this.options.store instanceof Map) {
-			for (const [key, value] of this.options.store) {
+		const {store, deserialize} = this.options;
+		if (store instanceof Map) {
+			const elements = [];
+			for (const [key, value] of store) {
 				elements.push({
 					key: this._removeKeyPrefix(key),
-					value: this.options.deserialize(value)
+					value: deserialize(value)
 				});
 			}
 
 			return elements;
 		}
 
-		const data = await this.options.store.all();
+		const elements = [];
+		const data = await store.all();
 		for (const {key, value} of data) {
 			elements.push({
 				key: this._removeKeyPrefix(key),
-				value: this.options.deserialize(value)
+				value: deserialize(value)
 			});
 		}
 
@@ -110,7 +109,8 @@ class Endb extends EventEmitter {
 	 * @return {Promise<void>} Returns `undefined`.
 	 */
 	async clear() {
-		return this.options.store.clear();
+		const {store} = this.options;
+		return store.clear();
 	}
 
 	/**
@@ -124,7 +124,8 @@ class Endb extends EventEmitter {
 	 */
 	async delete(key) {
 		key = this._addKeyPrefix(key);
-		return this.options.store.delete(key);
+		const {store} = this.options;
+		return store.delete(key);
 	}
 
 	/**
@@ -146,7 +147,8 @@ class Endb extends EventEmitter {
 		const exists = await this.has(key);
 		if (path !== null) {
 			if (!exists) throw new Error('Endb#ensure: key does not exist.');
-			if (!(await this.has(key, path))) {
+			const propValue = await this.has(key, path);
+			if (!propValue) {
 				const result = await this.get(key, value);
 				return result;
 			}
@@ -218,11 +220,13 @@ class Endb extends EventEmitter {
 	 */
 	async get(key, path = null) {
 		key = this._addKeyPrefix(key);
-		const data = await this.options.store.get(key);
+		const {store, deserialize} = this.options;
+		const data = await store.get(key);
 		const deserializedData =
-			typeof data === 'string' ? this.options.deserialize(data) : data;
+			typeof data === 'string' ? deserialize(data) : data;
+		if (deserializedData === undefined) return;
 		if (path !== null) return _get(deserializedData, path);
-		return deserializedData === undefined ? undefined : deserializedData;
+		return deserializedData;
 	}
 
 	/**
@@ -238,15 +242,9 @@ class Endb extends EventEmitter {
 		}
 
 		key = this._addKeyPrefix(key);
-		if (
-			typeof this.options.store.has !== 'undefined' &&
-			typeof this.options.store.has === 'function'
-		) {
-			const result = await this.options.store.has(key);
-			return result;
-		}
-
-		return Boolean(await this.get(key));
+		const {store} = this.options;
+		const exists = await store.has(key);
+		return exists;
 	}
 
 	/**
@@ -274,8 +272,10 @@ class Endb extends EventEmitter {
 		const data = await this.get(key);
 		if (path !== null) {
 			const propValue = _get(data, path);
-			if (typeof propValue !== 'number')
+			if (typeof propValue !== 'number') {
 				throw new TypeError('Endb#path: first operand must be a number.');
+			}
+
 			const result = await this.set(
 				key,
 				_math(propValue, operation, operand),
@@ -284,8 +284,10 @@ class Endb extends EventEmitter {
 			return result;
 		}
 
-		if (typeof data !== 'number')
+		if (typeof data !== 'number') {
 			throw new TypeError('Endb#path: first operand must be a number.');
+		}
+
 		const result = await this.set(key, _math(data, operation, operand));
 		return result;
 	}
@@ -401,13 +403,12 @@ class Endb extends EventEmitter {
 	 */
 	async set(key, value, path = null) {
 		key = this._addKeyPrefix(key);
+		const {store, serialize} = this.options;
 		if (path !== null) {
-			const data = await this.get(key);
-			value = _set(data || {}, path, value);
+			value = _set((await this.get(key)) || {}, path, value);
 		}
 
-		const serializedData = this.options.serialize(value);
-		await this.options.store.set(key, serializedData);
+		await store.set(key, serialize(value));
 		return true;
 	}
 
