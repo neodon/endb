@@ -72,9 +72,9 @@ module.exports = class SQL extends EventEmitter {
 	}
 
 	async has(key) {
-		const select = this.entry.select(key).where({key}).toString();
-		const row = await this.query(select);
-		return row;
+		const select = this.entry.select().where({key}).toString();
+		const [row] = await this.query(select);
+		return !!row;
 	}
 
 	async set(key, value) {
