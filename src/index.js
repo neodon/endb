@@ -17,10 +17,12 @@ const load = (options) => {
 		sqlite: './adapters/sqlite',
 		sqlite3: './adapters/sqlite'
 	};
+	const validAdapters = Object.keys(adapters);
 	if (options.adapter || options.uri) {
 		const adapter = options.adapter || /^[^:]*/.exec(options.uri)[0];
-		if (adapters[adapter] !== undefined) {
-			return new (require(adapters[adapter]))(options);
+		if (validAdapters.includes(adapter)) {
+			const Adapter = require(adapters[adapter]);
+			return new Adapter(options);
 		}
 	}
 
@@ -35,15 +37,15 @@ class Endb extends EventEmitter {
 	/**
 	 * The options for Endb.
 	 * @typedef {Object} EndbOptions
-	 * @property {string} [uri] The connection URI of the database.
+	 * @property {string} [uri] The connection URI for the driver.
 	 * @property {string} [namespace='endb'] The namespace of the database.
-	 * @property {string} [adapter] The storage adapter or backend to use.
+	 * @property {string} [adapter] The storage adapter or driver to use.
 	 * @property {*} [store=Map]
-	 * @property {Function} [serialize=Util.stringify] A data serialization function.
-	 * @property {Function} [deserialize=Util.parse] A data deserialization function.
+	 * @property {Function} [serialize=stringify] Data serialization function.
+	 * @property {Function} [deserialize=parse] Data deserialization function.
 	 * @property {string} [collection='endb'] The name of the collection. Only works for MongoDB.
-	 * @property {string} [table='endb'] The name of the table. Only works for SQL databases.
-	 * @property {number} [keySize=255] The maximum size of the keys of elements.
+	 * @property {string} [table='endb'] The name of the table. Only works for SQL-based databases.
+	 * @property {number} [keySize=255] The maximum size of the keys of elements. Only works for SQL-based databases.
 	 */
 
 	/**
@@ -118,9 +120,9 @@ class Endb extends EventEmitter {
 	 * @param {string} key The key(s) of the element to remove from the database.
 	 * @return {Promise<boolean>} `true` if the element is deleted successfully, otherwise `false`.
 	 * @example
-	 * await Endb.set('foo', 'bar'); // true
+	 * await endb.set('foo', 'bar'); // true
 	 *
-	 * await Endb.delete('foo'); // true
+	 * await endb.delete('foo'); // true
 	 */
 	async delete(key) {
 		key = this._addKeyPrefix(key);
@@ -135,12 +137,12 @@ class Endb extends EventEmitter {
 	 * @param {?string} [path]
 	 * @return {Promise<void|any>} The (default) value of the element.
 	 * @example
-	 * await Endb.set('en', 'db');
+	 * await endb.set('en', 'db');
 	 *
-	 * const data = await Endb.ensure('foo', 'bar');
+	 * const data = await endb.ensure('foo', 'bar');
 	 * console.log(data); // 'bar'
 	 *
-	 * const data = await Endb.ensure('en', 'db');
+	 * const data = await endb.ensure('en', 'db');
 	 * console.log(data); // 'db'
 	 */
 	async ensure(key, value, path = null) {
@@ -180,18 +182,9 @@ class Endb extends EventEmitter {
 	 * @param {*} [thisArg] Object to use as `this` inside callback.
 	 * @return {Promise<*|void>} The first element in the database that satisfies the provided testing function. Otherwise `undefined` is returned
 	 * @example
-	 * await Endb.set('foo', 'bar');
-	 * await Endb.set('profile', {
-	 *   id: 1234567890,
-	 *   username: 'user',
-	 *   verified: true,
-	 *   nil: null,
-	 *   hobbies: ['programming']
-	 * });
-	 *
-	 * await Endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
-	 * await Endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }
-	 * await Endb.find(v => v.desc === 'desc'); // undefined
+	 * await endb.find(v => v === 'bar'); // { key: 'foo', value: 'bar' }
+	 * await endb.find(v => v.verified === true); // { key: 'profile', value: { ... } }
+	 * await endb.find(v => v.desc === 'desc'); // undefined
 	 */
 	async find(fn, thisArg) {
 		if (typeof thisArg !== 'undefined') {
@@ -212,11 +205,11 @@ class Endb extends EventEmitter {
 	 * @param {?string} [path] The path of the property to get from the value.
 	 * @return {Promise<*|void>} The value of the element, or `undefined` if the element cannot be found in the database.
 	 * @example
-	 * const data = await Endb.get('foo');
+	 * const data = await endb.get('foo');
 	 * console.log(data); // 'bar'
 	 *
 	 * // Using path feature
-	 * await Endb.get('profile', 'verified'); // false
+	 * await endb.get('profile', 'verified'); // false
 	 */
 	async get(key, path = null) {
 		key = this._addKeyPrefix(key);
@@ -340,8 +333,10 @@ class Endb extends EventEmitter {
 			propValue.push(value);
 			_set(data, path, propValue);
 		} else {
-			if (!Array.isArray(data))
+			if (!Array.isArray(data)) {
 				throw new TypeError('Endb#push: target must be an array.');
+			}
+
 			if (!allowDuplicates && data.includes(value)) return value;
 			data.push(value);
 		}
@@ -387,19 +382,19 @@ class Endb extends EventEmitter {
 	 * @param {?string} [path] The path of the property to set in the value.
 	 * @return {Promise<boolean>} Returns a boolean.
 	 * @example
-	 * await Endb.set('foo', 'bar');
-	 * await Endb.set('total', 400);
-	 * await Endb.set('exists', false);
-	 * await Endb.set('profile', {
+	 * await endb.set('foo', 'bar');
+	 * await endb.set('total', 400);
+	 * await endb.set('exists', false);
+	 * await endb.set('profile', {
 	 *   id: 1234567890,
 	 *   username: 'user',
 	 *   verified: true,
 	 *   nil: null
 	 * });
-	 * await Endb.set('todo', [ 'Add a authentication system.', 'Refactor the generator' ]);
+	 * await endb.set('todo', [ 'Add a authentication system.', 'Refactor the generator' ]);
 	 *
-	 * await Endb.set('profile', false, 'verified');
-	 * await Endb.set('profile', 100, 'balance');
+	 * await endb.set('profile', false, 'verified');
+	 * await endb.set('profile', 100, 'balance');
 	 */
 	async set(key, value, path = null) {
 		key = this._addKeyPrefix(key);
@@ -463,12 +458,3 @@ const _math = (firstOperand, operation, secondOperand) => {
 
 module.exports = Endb;
 module.exports.Endb = Endb;
-module.exports.safeRequire = (name) => {
-	try {
-		return require(name);
-	} catch (_) {
-		throw new Error(
-			`${name} package has not been found installed. Try to install it: npm i ${name}`
-		);
-	}
-};
