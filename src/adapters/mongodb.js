@@ -36,7 +36,7 @@ module.exports = class MongoDB extends EventEmitter {
 
 	async all() {
 		const collection = await this.db;
-		return collection.find({}).toArray();
+		return collection.find({key: new RegExp(`^${this.namespace}:`)}).toArray();
 	}
 
 	async clear() {
@@ -63,7 +63,7 @@ module.exports = class MongoDB extends EventEmitter {
 
 	async has(key) {
 		const collection = await this.db;
-		return collection.find({key}).limit(1);
+		return collection.find({key}).count() > 0;
 	}
 
 	async set(key, value) {

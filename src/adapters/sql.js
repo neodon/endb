@@ -41,7 +41,10 @@ module.exports = class SQL extends EventEmitter {
 	}
 
 	async all() {
-		const select = this.entry.select('*').toString();
+		const select = this.entry
+			.select('*')
+			.where(this.entry.key.like(`${this.namespace}:%`))
+			.toString();
 		const rows = await this.query(select);
 		return rows;
 	}
