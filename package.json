@@ -66,7 +66,8 @@
         "prettier": true,
         "rules": {
             "guard-for-in": 0,
-            "no-negated-condition": 0
+            "no-negated-condition": 0,
+            "no-await-in-loop": 0
         }
     }
 }

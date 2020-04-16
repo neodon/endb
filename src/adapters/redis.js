@@ -29,10 +29,10 @@ module.exports = class Redis extends EventEmitter {
 	}
 
 	async all() {
-		const keys = await this.db.keys('*');
+		const keys = await this.db.keys(`${this.namespace}*`);
 		const elements = [];
 		for (const key of keys) {
-			const value = this.db.get(key);
+			const value = await this.db.get(key);
 			elements.push({key, value});
 		}
 
