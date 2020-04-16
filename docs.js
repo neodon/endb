@@ -15,16 +15,13 @@ Docma.create()
 				{property: 'og:url', content: Package.homepage},
 				{property: 'og:title', content: Package.name},
 				{property: 'og:description', content: Package.description},
-				{property: 'og:image', content: 'docs/media/logo.png'}
+				{property: 'og:image', content: 'media/logo.png'}
 			],
 			base: '/',
 			entrance: 'content:readme',
 			server: Docma.ServerType.GITHUB
 		},
-		src: [
-			{endb: Package.main},
-			{readme: './README.md'}
-		],
+		src: [{endb: Package.main}, {readme: './README.md'}],
 		template: {
 			options: {
 				title: Package.name,
