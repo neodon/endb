@@ -99,7 +99,7 @@ class Endb extends EventEmitter {
 		for (const {key, value} of data) {
 			elements.push({
 				key: this._removeKeyPrefix(key),
-				value: deserialize(value)
+				value: typeof value === 'string' ? deserialize(value) : value
 			});
 		}
 
