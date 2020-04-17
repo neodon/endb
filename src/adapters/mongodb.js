@@ -13,24 +13,20 @@ module.exports = class MongoDB extends EventEmitter {
 			...options
 		};
 		this.db = new Promise((resolve) => {
-			mongodb.MongoClient.connect(
-				this.options.url,
-				{useUnifiedTopology: options.useUnifiedTopology || true},
-				(error, client) => {
-					if (error !== null) return this.emit('error', error);
-					const db = client.db();
-					const collection = db.collection(this.options.collection);
-					db.on('error', (error) => this.emit('error', error));
-					collection.createIndex(
-						{key: 1},
-						{
-							unique: true,
-							background: true
-						}
-					);
-					resolve(collection);
-				}
-			);
+			mongodb.MongoClient.connect(this.options.url, (error, client) => {
+				if (error !== null) return this.emit('error', error);
+				const db = client.db();
+				const collection = db.collection(this.options.collection);
+				db.on('error', (error) => this.emit('error', error));
+				collection.createIndex(
+					{key: 1},
+					{
+						unique: true,
+						background: true
+					}
+				);
+				resolve(collection);
+			});
 		});
 	}
 
