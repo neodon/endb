@@ -4,6 +4,16 @@
     "description": "Simple key-value storage with support for multiple backends.",
     "main": "src/index.js",
     "typings": "typings/index.d.ts",
+    "exports": {
+        ".": [
+            {
+                "require": "src/index.js",
+                "import": "src/index.mjs"
+            },
+            "src/index.js"
+        ],
+        "./esm": "src/index.mjs"
+    },
     "scripts": {
         "lint": "xo src",
         "lint:fix": "xo src --fix",
