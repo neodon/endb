@@ -1,36 +1,29 @@
-<div align="center">
-    <a href="https://endb.js.org"><img src="media/logo.png" width="300" height="300" alt="Endb" /></a>
-</div>
+![Endb](media/logo.png)
 
+# Endb &middot; [![Test](https://github.com/chroventer/endb/workflows/Test/badge.svg)](https://github.com/chroventer/endb) [![Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb) [![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb) [![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
 > Simple key-value storage with support for multiple backends.
 
-[![Discord](https://discordapp.com/api/guilds/697425515363172362/embed.png)](https://discord.gg/d5SYmjj)
-[![Test](https://github.com/chroventer/endb/workflows/Test/badge.svg)](https://github.com/chroventer/endb)
-[![Dependencies](https://img.shields.io/david/chroventer/endb.svg?maxAge=3600)](https://david-dm.org/chroventer/endb)
-[![Downloads](https://badgen.net/npm/dt/endb)](https://www.npmjs.com/package/endb)
-[![GitHub Stars](https://badgen.net/github/stars/chroventer/endb)](https://github.com/chroventer/endb)
-[![License](https://badgen.net/github/license/chroventer/endb)](https://github.com/chroventer/endb/blob/master/LICENSE)
-
-## Features
-
-- [**Easy-to-use**](#usage): *Endb* has a simplistic and convenient promise-based API.
+- [**Easy-to-use**](#usage): Endb has a simplistic and convenient promise-based API.
 - [**Adapters**](#usage): By default, data is cached in memory. Optionally, install and utilize a "storage adapter".
 - [**Third-Party Adapters**](#third-party-adapters): You can optionally utilize third-party storage adapters or build your own.
 - [**Namespaces**](#namespaces): Namespaces isolate elements within the database to enable useful functionalities.
 - [**Custom Serializers**](#custom-serializers): Utilizes its own data serialization methods to ensure consistency across various storage backends.
 - [**Embeddable**](#embeddable): Designed to be easily embeddable inside modules.
-- **Data Types**: Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html).
-- **Error-Handling**: Connection errors are transmitted through, from the adapter to the main instance; consequently, connection errors do not exit or kill the process.
+- [**Data Types**](#custom-serializers): Handles all the JSON types including [`Buffer`](https://nodejs.org/api/buffer.html).
+- [**Error-Handling**](#usage): Connection errors are transmitted through, from the adapter to the main instance; consequently, connection errors do not exit or kill the process.
 
 ## Installation
 
-```bash
+**Node.js 12.0 or newer is required.**
+
+```shell
 npm install endb
 ```
 
-By default, data is cached in memory. Optionally, install and utilize a "storage adapter". Officially supported adapters are MongoDB, Redis, MySQL, PostgreSQL, and SQLite.
+By default, data is cached in memory. Optionally, install and utilize a "storage adapter".
+Officially supported adapters are MongoDB, Redis, MySQL, PostgreSQL, and SQLite.
 
-```bash
+```shell
 npm install mongodb
 npm install redis
 
@@ -85,14 +78,15 @@ await members.get('foo'); // 'members'
 
 ## Third-Party Adapters
 
-You can optionally utilize third-party storage adapters or build your own. *Endb* will integrate the third-party storage adapter and handle complex data types internally.
+You can optionally utilize third-party storage adapters or build your own.
+Endb will integrate the third-party storage adapter and handle complex data types internally.
 
 ```javascript
 const myAdapter = require('./my-adapter');
 const endb = new Endb({ store: myAdapter });
 ```
 
-For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated and independent module that has an API similar to that of *Endb*.
+For example, [`quick-lru`](https://github.com/sindresorhus/quick-lru) is an unrelated and independent module that has an API similar to that of Endb.
 
 ```javascript
 const QuickLRU = require('quick-lru');
@@ -103,8 +97,7 @@ const endb = new Endb({ store: lru });
 
 ## Custom Serializers
 
-*Endb* handles all the JSON data types including Buffer using its data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data, either as arrays of strings or numbers, into Buffer instances to ensure consistency across various backends.
-
+Endb handles all the JSON data types including Buffer using its data serialization methods that encode Buffer data as a base64-encoded string, and decode JSON objects which contain buffer-like data, either as arrays of strings or numbers, into Buffer instances to ensure consistency across various backends.
 Optionally, pass your own data serialization methods to support extra data types.
 
 ```javascript
@@ -118,7 +111,8 @@ const endb = new Endb({
 
 ## Embeddable
 
-*Endb* is designed to be easily embeddable inside modules. It is recommended to set a [namespace](#namespaces) for the module.
+Endb is designed to be easily embeddable inside modules.
+It is recommended to set a [namespace](#namespaces) for the module.
 
 ```javascript
 class MyModule {
@@ -134,7 +128,7 @@ class MyModule {
 // Caches data in the memory by default.
 const myModule = new MyModule();
 
-// After installing 'ioredis'.
+// After installing "redis".
 const myModule = new MyModule({ store: 'redis://localhost' });
 const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 ```
@@ -142,5 +136,6 @@ const myModule = new AwesomeModule({ store: thirdPartyAdapter });
 ## Links
 
 - [Documentation](https://endb.js.org "Documentation")
+- [Discord](https://discord.gg/d5SYmjj)
 - [GitHub](https://github.com/chroventer/endb "GitHub")
 - [NPM](https://npmjs.com/package/endb "NPM")
