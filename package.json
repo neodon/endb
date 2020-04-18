@@ -7,12 +7,12 @@
     "exports": {
         ".": [
             {
-                "require": "src/index.js",
-                "import": "src/index.mjs"
+                "require": "./src/index.js",
+                "import": "./esm/index.mjs"
             },
-            "src/index.js"
+            "./src/index.js"
         ],
-        "./esm": "src/index.mjs"
+        "./esm": "./esm/index.mjs"
     },
     "scripts": {
         "lint": "xo src",
